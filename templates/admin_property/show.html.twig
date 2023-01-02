@@ -1,0 +1,38 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Property{% endblock %}
+
+{% block body %}
+    <h1>Property</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ property.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ property.name }}</td>
+            </tr>
+            <tr>
+                <th>DataType</th>
+                <td>{{ property.dataType }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ property.createdAt ? property.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ property.updatedAt ? property.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_property_index') }}">back to list</a>
+
+    <a href="{{ path('app_admin_property_edit', {'id': property.id}) }}">edit</a>
+
+    {{ include('admin_property/_delete_form.html.twig') }}
+{% endblock %}

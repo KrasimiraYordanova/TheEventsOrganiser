@@ -1,0 +1,19 @@
+// CREATE SPACE BETWEEN TITLE AND TABLE/FORM
+.table-container {
+    margin-top: 3rem;
+}
+
+// EDIT AND DELETE BUTTON ON LIST PAGE - SPACED AND ALIGNED 
+.actionButtons-flex {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+// HEADER FOR CREATE NEW PAGE - TITLE ON ONE SIDE BUTTON CREATE ON THE OTHER
+.header-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

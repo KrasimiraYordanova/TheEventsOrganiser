@@ -1,0 +1,28 @@
+{% extends 'admin.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}New EventType
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+
+		<div class="marginTop">
+			<h1 class="primary">Create new Event Type</h1>
+		</div>
+
+		{{ form_start(form, {'attr': {'class': 'table-container'}}) }}
+		<div class="error-message">
+			{{ form_errors(form, {'attr': {'class': 'error-input'}}) }}
+		</div>
+		{{ form_row(form.name) }}
+		<button class="button">{{ button_label|default('Save') }}</button>
+		<a class="button" href="{{ path('app_admin_eventtype_index') }}">dismiss</a>
+		{{ form_end(form) }}
+
+		{# {{ include('admin_eventtype/_form.html.twig') }} #}
+
+
+	</div>
+{% endblock %}
+

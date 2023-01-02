@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guest index{% endblock %}
+
+{% block body %}
+    <h1>Guest index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Rdsvp</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Diet</th>
+                <th>Token</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for guest in guests %}
+            <tr>
+                <td>{{ guest.id }}</td>
+                <td>{{ guest.name }}</td>
+                <td>{{ guest.rdsvp }}</td>
+                <td>{{ guest.address }}</td>
+                <td>{{ guest.email }}</td>
+                <td>{{ guest.phone }}</td>
+                <td>{{ guest.diet }}</td>
+                <td>{{ guest.token }}</td>
+                <td>{{ guest.createdAt ? guest.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ guest.updatedAt ? guest.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_user_guest_show', {'id': guest.id}) }}">show</a>
+                    <a href="{{ path('app_user_guest_edit', {'id': guest.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_guest_new') }}">Create new</a>
+
+     <div>Guests attending: {{attendings['attending'] }} </div>
+     <div>Guests declines: {{declines['declined'] }} </div>
+     <div>Guests vegans: {{vegans['vegan'] }} </div>
+     <div>Guests vegeratians: {{vegetarians['vegetarian'] }} </div>
+     <div>Guests omnivores: {{omnivores['omnivore'] }} </div>
+{% endblock %}

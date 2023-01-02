@@ -1,0 +1,13 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Edit EventType{% endblock %}
+
+{% block body %}
+    <h1>Edit EventType</h1>
+
+    {{ include('admin_eventtype/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_admin_eventtype_index') }}">back to list</a>
+
+    {{ include('admin_eventtype/_delete_form.html.twig') }}
+{% endblock %}

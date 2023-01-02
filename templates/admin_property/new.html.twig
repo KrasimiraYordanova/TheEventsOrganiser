@@ -1,0 +1,30 @@
+{% extends 'admin.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}New Property{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+
+		<div class="marginTop">
+			<h1 class="primary">Create new Property</h1>
+		</div>
+
+		{{ form_start(form, {'attr': {'class': 'table-container'}}) }}
+		<div class="error-message">
+			{{ form_errors(form, {'attr': {'class': 'error-input'}}) }}
+		</div>
+		{{ form_row(form.name) }}
+		{{ form_row(form.dataType) }}
+		{{ form_row(form.eventType) }}
+		<button class="button">{{ button_label|default('Save') }}</button>
+		<a class="button" href="{{ path('app_admin_property_index') }}">Dismiss</a>
+		{{ form_end(form) }}
+
+
+	</div>
+
+    
+{% endblock %}
