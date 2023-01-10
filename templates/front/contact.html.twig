@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<!-- SECTION FORM -->
+	<section id="contact-a" class="text-center py-3">
+
+		<div class="container">
+
+			<div class="contactform__container">
+				<h2 class="section-title">Contactez Nous</h2>
+				<p class="lead">Vouz pouvez nous contacter en envoyant ce formulaire rempli</p>
+				<form class="form-contact" action="process.php" method="POST">
+					<div class="text-fields">
+						<input type="text" name="name" class="text-input name-input" placeholder="Name" required/>
+						<input type="text" name="subject" class="text-input subject-input" placeholder="Subject"/>
+						<input type="email" name="email" class="text-input email-input" placeholder="Email Address" required/>
+						<input type="text" name="phone" class="text-input phone-input" placeholder="Phone Number"/>
+						<textarea name="message" class="text-input message-input" placeholder="Enter Message" required></textarea>
+					</div>
+					<button type="submit" class="btn btn__light formBtn">Envoyer</button>
+				</form>
+			</div>
+
+			<div class="address">
+				<p>Adresse: Event Planner - UK</p>
+				<p>114 Hampshere street London SW1W8SS</p>
+				<p>Tel: 07.52.17.98.779</p>
+				<p>
+					<a href="krasynova@yahoo.com.com">
+						<i class="icon fa-solid fa-envelope"></i>
+					</a>
+				</p>
+			</div>
+
+		</div>
+	</section>
+
+{% endblock %}

@@ -38,12 +38,13 @@ class Guest
     #[ORM\Column(length: 255)]
     private ?string $token = null;
 
-    #[ORM\ManyToOne(inversedBy: 'guest')]
+
+    #[ORM\ManyToOne(inversedBy: 'guests')]
     #[ORM\JoinColumn(nullable: false)]
     private ?EventList $eventList = null;
 
     #[ORM\ManyToOne(inversedBy: 'guests')]
-    private ?Tabletab $tabletab = null;
+    private ?Tabletab $tableTab = null;
 
     public function getId(): ?int
     {
@@ -146,14 +147,14 @@ class Guest
         return $this;
     }
 
-    public function getTabletab(): ?Tabletab
+    public function getTableTab(): ?Tabletab
     {
-        return $this->tabletab;
+        return $this->tableTab;
     }
 
-    public function setTabletab(?Tabletab $tabletab): self
+    public function setTableTab(?Tabletab $tableTab): self
     {
-        $this->tabletab = $tabletab;
+        $this->tableTab = $tableTab;
 
         return $this;
     }

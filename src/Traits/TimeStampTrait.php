@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait TimeStampTrait {
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: false)]
     private ?\DateTime $createdAt = null;
 
     #[ORM\Column(nullable: true)]
@@ -40,7 +40,7 @@ trait TimeStampTrait {
     #[ORM\PrePersist()]
     public function onPrePersist() {
         $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        //$this->updatedAt = new \DateTime();
     }
 
     #[ORM\PreUpdate()]

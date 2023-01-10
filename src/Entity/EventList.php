@@ -45,33 +45,34 @@ class EventList
     #[ORM\ManyToOne(inversedBy: 'eventLists')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $client = null;
+    
+    #[ORM\OneToMany(mappedBy: 'eventList', targetEntity: EventProperty::class)]
+    private Collection $eventProperties;
 
     #[ORM\OneToMany(mappedBy: 'eventList', targetEntity: Rdv::class)]
-    private Collection $rdv;
+    private Collection $rdvs;
 
     #[ORM\OneToMany(mappedBy: 'eventList', targetEntity: Checklist::class)]
-    private Collection $checklist;
+    private Collection $checklists;
 
     #[ORM\OneToMany(mappedBy: 'eventList', targetEntity: Picture::class)]
-    private Collection $picture;
-
-    #[ORM\OneToMany(mappedBy: 'eventList', targetEntity: Tabletab::class)]
-    private Collection $tabletab;
+    private Collection $pictures;
+    
+    #[ORM\OneToMany(mappedBy: 'eventList', targetEntity: Guest::class)]
+    private Collection $guests;
 
     #[ORM\OneToMany(mappedBy: 'eventList', targetEntity: Expense::class)]
-    private Collection $expense;
-
-    #[ORM\OneToMany(mappedBy: 'eventList', targetEntity: Guest::class)]
-    private Collection $guest;
+    private Collection $expenses;
 
     public function __construct()
     {
-        $this->rdv = new ArrayCollection();
-        $this->checklist = new ArrayCollection();
-        $this->picture = new ArrayCollection();
-        $this->tabletab = new ArrayCollection();
-        $this->expense = new ArrayCollection();
-        $this->guest = new ArrayCollection();
+        
+        $this->eventProperties = new ArrayCollection();
+        $this->rdvs = new ArrayCollection();
+        $this->checklists = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
+        $this->guests = new ArrayCollection();
+        $this->expenses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,17 +177,47 @@ class EventList
     }
 
     /**
+     * @return Collection<int, EventProperty>
+     */
+    public function getEventProperties(): Collection
+    {
+        return $this->eventProperties;
+    }
+
+    public function addEventProperty(EventProperty $eventProperty): self
+    {
+        if (!$this->eventProperties->contains($eventProperty)) {
+            $this->eventProperties->add($eventProperty);
+            $eventProperty->setEventList($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventProperty(EventProperty $eventProperty): self
+    {
+        if ($this->eventProperties->removeElement($eventProperty)) {
+            // set the owning side to null (unless already changed)
+            if ($eventProperty->getEventList() === $this) {
+                $eventProperty->setEventList(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Rdv>
      */
-    public function getRdv(): Collection
+    public function getRdvs(): Collection
     {
-        return $this->rdv;
+        return $this->rdvs;
     }
 
     public function addRdv(Rdv $rdv): self
     {
-        if (!$this->rdv->contains($rdv)) {
-            $this->rdv->add($rdv);
+        if (!$this->rdvs->contains($rdv)) {
+            $this->rdvs->add($rdv);
             $rdv->setEventList($this);
         }
 
@@ -195,7 +226,7 @@ class EventList
 
     public function removeRdv(Rdv $rdv): self
     {
-        if ($this->rdv->removeElement($rdv)) {
+        if ($this->rdvs->removeElement($rdv)) {
             // set the owning side to null (unless already changed)
             if ($rdv->getEventList() === $this) {
                 $rdv->setEventList(null);
@@ -208,15 +239,15 @@ class EventList
     /**
      * @return Collection<int, Checklist>
      */
-    public function getChecklist(): Collection
+    public function getChecklists(): Collection
     {
-        return $this->checklist;
+        return $this->checklists;
     }
 
     public function addChecklist(Checklist $checklist): self
     {
-        if (!$this->checklist->contains($checklist)) {
-            $this->checklist->add($checklist);
+        if (!$this->checklists->contains($checklist)) {
+            $this->checklists->add($checklist);
             $checklist->setEventList($this);
         }
 
@@ -225,7 +256,7 @@ class EventList
 
     public function removeChecklist(Checklist $checklist): self
     {
-        if ($this->checklist->removeElement($checklist)) {
+        if ($this->checklists->removeElement($checklist)) {
             // set the owning side to null (unless already changed)
             if ($checklist->getEventList() === $this) {
                 $checklist->setEventList(null);
@@ -238,15 +269,15 @@ class EventList
     /**
      * @return Collection<int, Picture>
      */
-    public function getPicture(): Collection
+    public function getPictures(): Collection
     {
-        return $this->picture;
+        return $this->pictures;
     }
 
     public function addPicture(Picture $picture): self
     {
-        if (!$this->picture->contains($picture)) {
-            $this->picture->add($picture);
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures->add($picture);
             $picture->setEventList($this);
         }
 
@@ -255,7 +286,7 @@ class EventList
 
     public function removePicture(Picture $picture): self
     {
-        if ($this->picture->removeElement($picture)) {
+        if ($this->pictures->removeElement($picture)) {
             // set the owning side to null (unless already changed)
             if ($picture->getEventList() === $this) {
                 $picture->setEventList(null);
@@ -266,29 +297,29 @@ class EventList
     }
 
     /**
-     * @return Collection<int, Tabletab>
+     * @return Collection<int, Guest>
      */
-    public function getTabletab(): Collection
+    public function getGuests(): Collection
     {
-        return $this->tabletab;
+        return $this->guests;
     }
 
-    public function addTabletab(Tabletab $tabletab): self
+    public function addGuest(Guest $guest): self
     {
-        if (!$this->tabletab->contains($tabletab)) {
-            $this->tabletab->add($tabletab);
-            $tabletab->setEventList($this);
+        if (!$this->guests->contains($guest)) {
+            $this->guests->add($guest);
+            $guest->setEventList($this);
         }
 
         return $this;
     }
 
-    public function removeTabletab(Tabletab $tabletab): self
+    public function removeGuest(Guest $guest): self
     {
-        if ($this->tabletab->removeElement($tabletab)) {
+        if ($this->guests->removeElement($guest)) {
             // set the owning side to null (unless already changed)
-            if ($tabletab->getEventList() === $this) {
-                $tabletab->setEventList(null);
+            if ($guest->getEventList() === $this) {
+                $guest->setEventList(null);
             }
         }
 
@@ -298,15 +329,15 @@ class EventList
     /**
      * @return Collection<int, Expense>
      */
-    public function getExpense(): Collection
+    public function getExpenses(): Collection
     {
-        return $this->expense;
+        return $this->expenses;
     }
 
     public function addExpense(Expense $expense): self
     {
-        if (!$this->expense->contains($expense)) {
-            $this->expense->add($expense);
+        if (!$this->expenses->contains($expense)) {
+            $this->expenses->add($expense);
             $expense->setEventList($this);
         }
 
@@ -315,40 +346,10 @@ class EventList
 
     public function removeExpense(Expense $expense): self
     {
-        if ($this->expense->removeElement($expense)) {
+        if ($this->expenses->removeElement($expense)) {
             // set the owning side to null (unless already changed)
             if ($expense->getEventList() === $this) {
                 $expense->setEventList(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Guest>
-     */
-    public function getGuest(): Collection
-    {
-        return $this->guest;
-    }
-
-    public function addGuest(Guest $guest): self
-    {
-        if (!$this->guest->contains($guest)) {
-            $this->guest->add($guest);
-            $guest->setEventList($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGuest(Guest $guest): self
-    {
-        if ($this->guest->removeElement($guest)) {
-            // set the owning side to null (unless already changed)
-            if ($guest->getEventList() === $this) {
-                $guest->setEventList(null);
             }
         }
 

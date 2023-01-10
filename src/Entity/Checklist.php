@@ -26,9 +26,11 @@ class Checklist
     #[ORM\Column(nullable: true)]
     private ?bool $isChecked = null;
 
-    #[ORM\ManyToOne(inversedBy: 'checklist')]
+    #[ORM\ManyToOne(inversedBy: 'checklists')]
     #[ORM\JoinColumn(nullable: false)]
     private ?EventList $eventList = null;
+
+  
 
     public function getId(): ?int
     {

@@ -18,8 +18,11 @@ class Rdv
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
@@ -30,9 +33,10 @@ class Rdv
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $time = null;
 
-    #[ORM\ManyToOne(inversedBy: 'rdv')]
+    #[ORM\ManyToOne(inversedBy: 'rdvs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?EventList $eventList = null;
+
 
     public function getId(): ?int
     {
@@ -44,9 +48,21 @@ class Rdv
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
@@ -92,9 +108,9 @@ class Rdv
         return $this->eventList;
     }
 
-    public function setEventList(?EventList $eventList): self
+    public function setEventList(?EventList $event): self
     {
-        $this->eventList = $eventList;
+        $this->eventList = $event;
 
         return $this;
     }

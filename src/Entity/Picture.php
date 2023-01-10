@@ -26,10 +26,11 @@ class Picture
     #[ORM\Column(length: 255)]
     private ?string $album = null;
 
-    #[ORM\ManyToOne(inversedBy: 'picture')]
+    #[ORM\ManyToOne(inversedBy: 'pictures')]
     #[ORM\JoinColumn(nullable: false)]
     private ?EventList $eventList = null;
 
+  
     public function getId(): ?int
     {
         return $this->id;
@@ -82,4 +83,6 @@ class Picture
 
         return $this;
     }
+
+   
 }

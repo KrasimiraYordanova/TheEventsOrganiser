@@ -32,9 +32,10 @@ class Expense
     #[ORM\Column(nullable: true)]
     private ?float $totalPaid = null;
 
-    #[ORM\ManyToOne(inversedBy: 'expense')]
+    #[ORM\ManyToOne(inversedBy: 'expenses')]
     #[ORM\JoinColumn(nullable: false)]
     private ?EventList $eventList = null;
+
 
     public function getId(): ?int
     {

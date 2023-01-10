@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <title>{% block title %}{% endblock %}</title>
+        {# <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"> #}
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -14,6 +14,87 @@
         {% endblock %}
     </head>
     <body>
+
+    
+    <nav class="nav nav__header">
+        <h3 class="dashboard-tertiary nav__logo">Event Planner</h3>
+        <!-- <img src="images/GAIA-FINAL-LOGO.png" alt="GAIA" class="nav__logo" id="logo" data-version-number="3.0" /> -->
+        <ul class="nav__links">
+            <li class="nav__item">
+                <a href="{{ path('front_index') }}" id="0" data-anchor="0" class="nav__link">Accueil</a>
+            </li>
+            <li class="nav__item">
+                <a href="contact.html" id="1" data-anchor="1"
+                    class="nav__link nav__link--btn btn--show-modal">Contact</a>
+            </li>
+            <li class="nav__item">
+                <a href="#" id="2" data-anchor="2" class="nav__link">Login</a>
+            </li>
+            <li class="nav__item">
+                <a href="#" id="3" data-anchor="3" class="nav__link">Registration</a>
+            </li>
+
+            <li class="nav__item dropdown">
+                <a href="#" id="4" data-anchor="4" class="nav__link"><i class="fa-solid fa-user"></i></a>
+                <ul class="dropdown-menu hidden">
+                    <li><a class="dropdown-menu__link" href="#">Account</a></li>
+                    <li><a class="dropdown-menu__link" href="{{ path('app_logout') }}#">Logout</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+    
+    {% block nav %} 
+    {% endblock %}
+
         {% block body %}{% endblock %}
+
+        {# {% block footer %} #}
+
+        <footer class="footer">
+
+        <div class="footer__top">
+            <h1 class="hero-title">Event Planner</h1>
+
+            <div class="social">
+                <a class="social__anchor" href="#" target="_blank"><i class="icon fa-brands fa-linkedin"></i></a>
+                <a class="social__anchor" href="#" target="_blank"><i class="icon fa-brands fa-twitter"></i></i></a>
+                <a class="social__anchor" href="#" target="_blank"><i class="icon fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+
+        <div class="footer__nav-address">
+            <div class="footer__nav">
+                <ul class="footer__links ">
+                    <li class="footer__item">
+                        <a href="index.html" class="footer__link">Home</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="contact.html" class="footer__link">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer__address">
+                <p><span class="strong">Adresse</span class="strong"> : Event Planner - UK</p>
+                <p>114 Hampshere street London SW1W8SS</p>
+                <p><span class="strong">Tel: 07.52.17.98.779</span class="strong"></p>
+            </div>
+        </div>
+
+        <div class="footer__rights">
+            <p>
+                Copyright &copy; <span class="yearJS"></span> | Event Planner | Tous droits réservés.
+            </p>
+            <p>
+                <a class="footer__rights__anchor footer__rights__anchor--1" href="politics.html">Engagement de
+                    confidentialité</a> <a class="footer__rights__anchor" href="legals.html">Mentions légales</a>
+            </p>
+        </div>
+
+    </footer>
+
+            {# {% endblock %} #}
     </body>
 </html>

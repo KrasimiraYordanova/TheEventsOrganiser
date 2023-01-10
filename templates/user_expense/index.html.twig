@@ -1,47 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends 'userbase.html.twig' %}
 
-{% block title %}Expense index{% endblock %}
+{% block title %}Expense{% endblock %}
 
 {% block body %}
-    <h1>Expense index</h1>
+<div class="dashboard-center-container">
+        <div class="item-border">
+            <h2 class="item-title">Suivi budgétaire</h2>
+            <div class="item-summery">
+                <h3 class="item-count">Budget total: </h3>
+                <h3 class="item-count">Total payé: {{totalPaid['paidTotal'] |format_currency('EUR')}}</h3>
+                <h3 class="item-count">Total restant: </h3>
+            </div>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>Description</th>
-                <th>TotalCost</th>
-                <th>TotalPaid</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+        <div class="bkgrnd-block">
         {% for expense in expenses %}
-            <tr>
-                <td>{{ expense.id }}</td>
-                <td>{{ expense.name }}</td>
-                <td>{{ expense.slug }}</td>
-                <td>{{ expense.description }}</td>
-                <td>{{ expense.totalCost }}</td>
-                <td>{{ expense.totalPaid }}</td>
-                <td>{{ expense.createdAt ? expense.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ expense.updatedAt ? expense.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_user_expense_show', {'id': expense.id}) }}">show</a>
-                    <a href="{{ path('app_user_expense_edit', {'id': expense.id}) }}">edit</a>
-                </td>
-            </tr>
+            <div class="item-list">
+                <p class="item-parag budget-item-parag">{{ expense.name }}</p>
+                <div class="item-summery">
+                    <p class="item-count">Coût total: {{ expense.totalCost }}</p>
+                    <p class="item-count">Total payé: {{ expense.totalPaid }}</p>
+                    <p class="item-count">Total restant: {{ expense.totalCost -  expense.totalPaid }}</p>
+                </div>
+                <div class="action-buttons">
+                    <p><a href="{{ path('app_user_expense_edit', {'id': expense.id}) }}"><i class="fa-solid fa-pen"></i></a>
+                    <p>{{ include('user_expense/_delete_form.html.twig') }}</p>
+                </div>
+            </div>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <p>no records found</p>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
-<div>Total Paid: {{totalPaid['paidTotal'] |format_currency('EUR')}} </div>
-    <a href="{{ path('app_user_expense_new') }}">Create new</a>
+
+            
+        </div>
+        <a href="#" class="btn btn-item">Add dépense</a>
+    </div>
+  
 {% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard principal
+{% endblock %}
+
+{% block body %}
+
+	 <div class="dashboard-center-container">
+        <h1 class="dashboard-title">My Event Planner</h1>
+        <div class="bkgrnd-block">
+            <div class="flex-block">
+                <div class="left">
+				
+                    <h2 class="dashboard-secondary"><a href="{{ path('app_user_eventlist_index') }}">Tous mes événements</a></h2>
+                    <h2 class="dashboard-secondary">Mes événements actuels</h2>
+                    <div class="list">
+                        <h3 class="dashboard-tertiary">Wedding</h3>
+                        <h3 class="dashboard-tertiary">Babyshower</h3>
+                        <h3 class="dashboard-tertiary">Hen's party</h3>
+                    </div>
+                    <h2 class="dashboard-secondary">Mes trois derniers événements passés</h2>
+                    <div class="list">
+                        <h3 class="dashboard-tertiary">Wedding</h3>
+                        <h3 class="dashboard-tertiary">Babyshower</h3>
+                        <h3 class="dashboard-tertiary">Hen's party</h3>
+                    </div>
+                </div>
+                <div class="right">
+                    <h2 class="dashboard-secondary">Créez votre événement</h2>
+                    <div class="eventtype-list list">
+					{% for eventType in eventTypes %}
+                        <h3 class="dashboard-tertiary"><a href="{{ path('app_maindashboard', {'id': eventType.id}) }}"> {{ eventType.name }} </a></h3>
+					{% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

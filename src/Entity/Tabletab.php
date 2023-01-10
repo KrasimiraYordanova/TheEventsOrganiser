@@ -22,11 +22,7 @@ class Tabletab
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tabletab')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?EventList $eventList = null;
-
-    #[ORM\OneToMany(mappedBy: 'tabletab', targetEntity: Guest::class)]
+    #[ORM\OneToMany(mappedBy: 'tableTab', targetEntity: Guest::class)]
     private Collection $guests;
 
     public function __construct()
@@ -34,8 +30,8 @@ class Tabletab
         $this->guests = new ArrayCollection();
     }
 
-
-
+    
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -53,18 +49,6 @@ class Tabletab
         return $this;
     }
 
-    public function getEventList(): ?EventList
-    {
-        return $this->eventList;
-    }
-
-    public function setEventList(?EventList $eventList): self
-    {
-        $this->eventList = $eventList;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Guest>
      */
@@ -77,7 +61,7 @@ class Tabletab
     {
         if (!$this->guests->contains($guest)) {
             $this->guests->add($guest);
-            $guest->setTabletab($this);
+            $guest->setTableTab($this);
         }
 
         return $this;
@@ -87,13 +71,11 @@ class Tabletab
     {
         if ($this->guests->removeElement($guest)) {
             // set the owning side to null (unless already changed)
-            if ($guest->getTabletab() === $this) {
-                $guest->setTabletab(null);
+            if ($guest->getTableTab() === $this) {
+                $guest->setTableTab(null);
             }
         }
 
         return $this;
-    }
-
-   
+    }   
 }

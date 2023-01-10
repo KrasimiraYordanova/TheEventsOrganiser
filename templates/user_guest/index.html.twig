@@ -3,55 +3,49 @@
 {% block title %}Guest index{% endblock %}
 
 {% block body %}
-    <h1>Guest index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Rdsvp</th>
-                <th>Address</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Diet</th>
-                <th>Token</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for guest in guests %}
-            <tr>
-                <td>{{ guest.id }}</td>
-                <td>{{ guest.name }}</td>
-                <td>{{ guest.rdsvp }}</td>
-                <td>{{ guest.address }}</td>
-                <td>{{ guest.email }}</td>
-                <td>{{ guest.phone }}</td>
-                <td>{{ guest.diet }}</td>
-                <td>{{ guest.token }}</td>
-                <td>{{ guest.createdAt ? guest.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ guest.updatedAt ? guest.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_user_guest_show', {'id': guest.id}) }}">show</a>
-                    <a href="{{ path('app_user_guest_edit', {'id': guest.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
+<div class="dashboard-center-container">
+        <div class="item-border">
+            <h2 class="item-title">Guest</h2>
+            <div class="item-summery">
+                <h3 class="item-count">Participe: {{attendings['attending'] }}</h3>
+                <h3 class="item-count">Décliné: {{declines['declined'] }} </h3>
+                <h3 class="item-count">En attente de réponse: </h3>
+                <h3 class="item-count">Guests vegans: {{vegans['vegan'] }}</h3>
+                <h3 class="item-count">Guests vegeratians: {{vegetarians['vegetarian'] }} </h3>
+                <h3 class="item-count">Guests omnivores: {{omnivores['omnivore'] }} </h3>
+            </div>
+        </div>
+
+        <div class="bkgrnd-block">
+            <div class="item-list">
+            {% for guest in guests %}
+                <div class="item-list-single">
+                    <div class="guest-list-single">
+                        <p class="item-parag">{{ guest.name }}</p>
+                        <p class="item-parag">{{ guest.rdsvp }}</p>
+                        <p class="item-parag">{{ guest.phone }}</p>
+                    </div>
+                    <div class="action-buttons">
+                        <p><a href="#"><i class="fa-solid fa-pen"></i></a>
+                        <p>{{ include('user_guest/_delete_form.html.twig') }}</p>
+                    </div>
+                </div>
+                {% else %}
+            
+                <p>no records found</p>
+            
         {% endfor %}
-        </tbody>
-    </table>
+            </div>
+        </div>
+        <a href="#" class="modal btn btn-item">Add guest</a>
+</div>
 
-    <a href="{{ path('app_user_guest_new') }}">Create new</a>
+    
 
-     <div>Guests attending: {{attendings['attending'] }} </div>
-     <div>Guests declines: {{declines['declined'] }} </div>
-     <div>Guests vegans: {{vegans['vegan'] }} </div>
-     <div>Guests vegeratians: {{vegetarians['vegetarian'] }} </div>
-     <div>Guests omnivores: {{omnivores['omnivore'] }} </div>
+    
 {% endblock %}
+
+{# <a href="{{ path('app_user_guest_new') }}">Create new</a> #}
+{# <a href="{{ path('app_user_guest_show', {'id': guest.id}) }}">show</a>
+<a href="{{ path('app_user_guest_edit', {'id': guest.id}) }}">edit</a> #}

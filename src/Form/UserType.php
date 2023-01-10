@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
@@ -21,6 +22,7 @@ class UserType extends AbstractType
             ->add('firstname')
             ->add('lastname')
             ->add('email')
+            ->add('image')
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
@@ -57,7 +59,15 @@ class UserType extends AbstractType
             ->add('isVerified')
             // ->add('createdAt')
             // ->add('updatedAt')
-            // ->add('client')
+            ->add('client', CollectionType::class, [
+                'entry_type' => ClientType::class,
+                'entry_options' => [
+                    'label' => false,
+                ],
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true
+            ])
         ;
     }
 
