@@ -25,14 +25,15 @@
         <div class="container-home">
 
             <div class="section-header">
-                <h2 class="section-title">Features</h2>
-                <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error perferendis itaque natus!
+                <h2 class="section-title">Notre site vous offre</h2>
+                <p class="lead">Organiser votre evenement en toute simplicité
                 </p>
             </div>
 
             <div class="specials">
+            {% for eventType in eventTypeList %}
                 <div class="card">
-                    <i class="icon2 fa-solid fa-image"></i>
+                    <h3 class="dashboard-tertiary">{{ eventType.name }}<h3>
                     <div class="card-content">
                         <p>
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis unde expedita porro
@@ -42,78 +43,9 @@
                             quae voluptate, accusamus placeat quos reiciendis tempora exercitationem ipsa perspiciatis.
                         </p>
                     </div>
-                    <a class="wedding-event-btn" href="eventProperties.html">Create your wedding</a>
+                    <a class="wedding-event-btn" href="{{ path('app_user_eventlist_form', {'slug': eventType.slug}) }}">Créer votre événement</a>
                 </div>
-                <div class="card">
-                    <i class="icon2 fa-solid fa-envelope"></i>
-                    <div class="card-content">
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis unde expedita porro
-                            nemo, explicabo
-                            id? Modi neque harum facilis similique, non enim quidem dolor, voluptas nam deserunt
-                            architecto est iure
-                            quae voluptate, accusamus placeat quos reiciendis tempora exercitationem ipsa perspiciatis.
-                        </p>
-                    </div>
-                    <a class="wedding-event-btn" href="eventProperties.html">Create your wedding</a>
-                </div>
-
-                <div class="card">
-                    <i class="icon2 fa-solid fa-calendar-days"></i>
-                    <div class="card-content">
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis unde expedita porro
-                            nemo, explicabo
-                            id? Modi neque harum facilis similique, non enim quidem dolor, voluptas nam deserunt
-                            architecto est iure
-                            quae voluptate, accusamus placeat quos reiciendis tempora exercitationem ipsa perspiciatis.
-                        </p>
-                    </div>
-                    <a class="wedding-event-btn" href="eventProperties.html">Create your wedding</a>
-                </div>
-
-                <div class="card">
-                    <i class="icon2 fa-solid fa-dollar-sign"></i>
-                    <div class="card-content">
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis unde expedita porro
-                            nemo, explicabo
-                            id? Modi neque harum facilis similique, non enim quidem dolor, voluptas nam deserunt
-                            architecto est iure
-                            quae voluptate, accusamus placeat quos reiciendis tempora exercitationem ipsa perspiciatis.
-                        </p>
-                    </div>
-                    <a class="wedding-event-btn" href="eventProperties.html">Create your wedding</a>
-                </div>
-
-                <div class="card">
-                    <i class="icon2 fa-solid fa-list-check"></i>
-                    <div class="card-content">
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis unde expedita porro
-                            nemo, explicabo
-                            id? Modi neque harum facilis similique, non enim quidem dolor, voluptas nam deserunt
-                            architecto est iure
-                            quae voluptate, accusamus placeat quos reiciendis tempora exercitationem ipsa perspiciatis.
-                        </p>
-                    </div>
-                    <a class="wedding-event-btn" href="eventProperties.html">Create your wedding</a>
-                </div>
-
-                <div class="card">
-                    <i class="icon2 fa-solid fa-people-group"></i>
-                    <div class="card-content">
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis unde expedita porro
-                            nemo, explicabo
-                            id? Modi neque harum facilis similique, non enim quidem dolor, voluptas nam deserunt
-                            architecto est iure
-                            quae voluptate, accusamus placeat quos reiciendis tempora exercitationem ipsa perspiciatis.
-                        </p>
-                    </div>
-                    <a class="wedding-event-btn" href="eventProperties.html">Create your wedding</a>
-                </div>
-
+            {% endfor %}
             </div>
         </div>
     </section>

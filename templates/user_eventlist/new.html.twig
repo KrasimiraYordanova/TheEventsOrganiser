@@ -1,11 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New EventList{% endblock %}
+{% block title %}New Event
+{% endblock %}
 
 {% block body %}
-    <h1>Create new EventList</h1>
 
-    {{ include('user_eventlist/_form.html.twig') }}
+	<div class="dashboard-center-container">
+		<h3 class="dashboard-tertiary dashboard-tertiary-center">Créer votre événement {{ eventType }}</h3>
+		<div class="bkgrnd-block-registerform">
+			{# <div class="icon-close">
+				<i class="close fa-solid fa-xmark"></i>
+			</div> #}
+			{{ form_start(form, {'attr': {'class': 'register-form'}}) }}
+			{{ form_row(form.eventName, {'attr': {'class': 'evname'}}) }}
+			{{ form_row(form.eventDate, {'attr': {'class': 'evdate'}}) }}
+			{{ form_row(form.eventBudget, {'attr': {'class': 'evbudget'}}) }}
+			{{ form_row(form.eventLocation, {'attr': {'class': 'evlocation'}}) }}
+			{{ form_row(form.image) }}
 
-    <a href="{{ path('app_user_eventlist_index') }}">back to list</a>
+			
+			<button class="btn">{{ button_label|default('Save') }}</button>
+			{{ form_end(form) }}
+		</div>
+	</div>
+	{# <a href="{{ path('app_user_eventlist_index') }}">back to list</a> #}
 {% endblock %}

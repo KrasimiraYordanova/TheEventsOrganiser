@@ -3,18 +3,30 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.firstname) }}
-        {{ form_row(registrationForm.lastname) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.client) }}
-        {{ form_row(registrationForm.plainPassword, {
+<div class="dashboard-center-container">
+        <h3 class="dashboard-tertiary dashboard-tertiary-center">Registration</h3>
+        <div class="bkgrnd-block-registerform">
+        {{ form_start(registrationForm, {'attr': {'class': 'register-form'}}) }}
+        {{ form_row(registrationForm.firstname, {'attr': {'class': 'rfirstname'}}) }}
+        {{ form_row(registrationForm.lastname, {'attr': {'class': 'rlastname'}}) }}
+        {{ form_row(registrationForm.email, {'attr': {'class': 'remaill'}}) }}
+        {# {{ form_row(registrationForm.client) }} #}
+        {{ form_row(registrationForm.client.phone, {'attr': {'class': 'rphone'}}) }}
+        {{ form_row(registrationForm.client.address, {'attr': {'class': 'raddress'}}) }}
+        {{ form_row(registrationForm.client.city, {'attr': {'class': 'rcity'}}) }}
+        {{ form_row(registrationForm.client.zipCode, {'attr': {'class': 'rzip'}}) }}
+        {{ form_row(registrationForm.client.country, {'attr': {'class': 'rcountry'}}) }}
+        
+        {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'rpassword'}}, {
             label: 'Password'
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
         <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
+    </div>
+    </div>
 {% endblock %}
+
+
+{# {{ form_row(form.name, {'attr': {'class': 'name-input'}}) }} #}

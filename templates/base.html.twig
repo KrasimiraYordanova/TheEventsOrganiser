@@ -27,13 +27,9 @@
                 <a href="contact.html" id="1" data-anchor="1"
                     class="nav__link nav__link--btn btn--show-modal">Contact</a>
             </li>
-            <li class="nav__item">
-                <a href="#" id="2" data-anchor="2" class="nav__link">Login</a>
-            </li>
-            <li class="nav__item">
-                <a href="#" id="3" data-anchor="3" class="nav__link">Registration</a>
-            </li>
+           
 
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="nav__item dropdown">
                 <a href="#" id="4" data-anchor="4" class="nav__link"><i class="fa-solid fa-user"></i></a>
                 <ul class="dropdown-menu hidden">
@@ -41,6 +37,14 @@
                     <li><a class="dropdown-menu__link" href="{{ path('app_logout') }}#">Logout</a></li>
                 </ul>
             </li>
+            {% else %}
+             <li class="nav__item">
+                <a href="{{ path('app_login') }}" id="2" data-anchor="2" class="nav__link">Login</a>
+            </li>
+            <li class="nav__item">
+                <a href="{{ path('app_register') }}" id="3" data-anchor="3" class="nav__link">Registration</a>
+            </li>
+            {% endif %}
 
         </ul>
     </nav>

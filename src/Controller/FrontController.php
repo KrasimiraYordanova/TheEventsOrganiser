@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-
+use App\Repository\EventTypeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,9 +12,11 @@ class FrontController extends AbstractController
 {
     // index page
     #[Route('/', name: 'front_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(EventTypeRepository $eventTypeRepo): Response
     {
-        return $this->render('front/index.html.twig');
+        return $this->render('front/index.html.twig', [
+            'eventTypeList' => $eventTypeRepo->findAll(),
+        ]);
     }
 
     // contact page

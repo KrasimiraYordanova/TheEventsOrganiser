@@ -28,9 +28,11 @@ class UserGuestController extends AbstractController
         $vegetarians = $repository->dietCount('vegetarian');
         $omnivores = $repository->dietCount('omnivore');
         // dd($vegans, $vegetarians, $omnivores);
+        $allGuestNumber = $repository->allGuestCount();
 
         return $this->render('user_guest/index.html.twig', [
             'guests' => $guestRepository->findAll(),
+            'guestNumber' => $allGuestNumber[0],
             'attendings' => $attendings[0],
             'declines' => $declines[0],
             'vegans' => $vegans[0],

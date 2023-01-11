@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Checklist{% endblock %}
+
+{% block body %}
+    <h1>Checklist</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ checklist.id }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ checklist.description }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ checklist.slug }}</td>
+            </tr>
+            <tr>
+                <th>IsChecked</th>
+                <td>{{ checklist.isChecked ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ checklist.createdAt ? checklist.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ checklist.updatedAt ? checklist.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_checklist_index') }}">back to list</a>
+
+    <a href="{{ path('app_user_checklist_edit', {'id': checklist.id}) }}">edit</a>
+
+    {{ include('user_checklist/_delete_form.html.twig') }}
+{% endblock %}

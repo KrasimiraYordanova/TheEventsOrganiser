@@ -59,15 +59,7 @@ class UserType extends AbstractType
             ->add('isVerified')
             // ->add('createdAt')
             // ->add('updatedAt')
-            ->add('client', CollectionType::class, [
-                'entry_type' => ClientType::class,
-                'entry_options' => [
-                    'label' => false,
-                ],
-                'by_reference' => false,
-                'allow_add' => true,
-                'allow_delete' => true
-            ])
+            ->add('client', ClientType::class)
         ;
     }
 
@@ -78,3 +70,15 @@ class UserType extends AbstractType
         ]);
     }
 }
+
+
+
+// ->add('client', CollectionType::class, [
+//     'entry_type' => ClientType::class,
+//     'entry_options' => [
+//         'label' => false,
+//     ],
+//     'by_reference' => false,
+//     'allow_add' => true,
+//     'allow_delete' => true
+// ])

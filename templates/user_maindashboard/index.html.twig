@@ -29,7 +29,7 @@
                     <h2 class="dashboard-secondary">Créez votre événement</h2>
                     <div class="eventtype-list list">
 					{% for eventType in eventTypes %}
-                        <h3 class="dashboard-tertiary"><a href="{{ path('app_maindashboard', {'id': eventType.id}) }}"> {{ eventType.name }} </a></h3>
+                        <h3 class="dashboard-tertiary"><a href="{{ path('app_user_eventlist_form', {'slug': eventType.slug}) }}"> {{ eventType.name }} </a></h3>
 					{% endfor %}
                     </div>
                 </div>

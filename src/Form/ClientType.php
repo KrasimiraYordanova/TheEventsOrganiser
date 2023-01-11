@@ -16,9 +16,7 @@ class ClientType extends AbstractType
             ->add('address')
             ->add('city')
             ->add('zipCode')
-            ->add('country')
-            ->add('user')
-        ;
+            ->add('country')        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

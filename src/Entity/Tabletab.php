@@ -25,6 +25,10 @@ class Tabletab
     #[ORM\OneToMany(mappedBy: 'tableTab', targetEntity: Guest::class)]
     private Collection $guests;
 
+    #[ORM\ManyToOne(inversedBy: 'tabletabs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?EventList $eventList = null;
+
     public function __construct()
     {
         $this->guests = new ArrayCollection();
@@ -75,6 +79,18 @@ class Tabletab
                 $guest->setTableTab(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEventList(): ?EventList
+    {
+        return $this->eventList;
+    }
+
+    public function setEventList(?EventList $eventList): self
+    {
+        $this->eventList = $eventList;
 
         return $this;
     }   

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Tabletab{% endblock %}
+
+{% block body %}
+    <h1>Create new Tabletab</h1>
+
+    {{ include('user_tabletab/_form.html.twig') }}
+
+    <a href="{{ path('app_user_tabletab_index') }}">back to list</a>
+{% endblock %}

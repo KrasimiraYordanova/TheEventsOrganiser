@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EventList{% endblock %}
+
+{% block body %}
+    <h1>EventList</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ event_list.id }}</td>
+            </tr>
+            <tr>
+                <th>EventName</th>
+                <td>{{ event_list.eventName }}</td>
+            </tr>
+            <tr>
+                <th>EventSlug</th>
+                <td>{{ event_list.eventSlug }}</td>
+            </tr>
+            <tr>
+                <th>EventDate</th>
+                <td>{{ event_list.eventDate ? event_list.eventDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EventBudget</th>
+                <td>{{ event_list.eventBudget }}</td>
+            </tr>
+            <tr>
+                <th>EventLocation</th>
+                <td>{{ event_list.eventLocation }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ event_list.image }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ event_list.createdAt ? event_list.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ event_list.updatedAt ? event_list.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_eventlist_index') }}">back to list</a>
+
+    <a href="{{ path('app_user_eventlist_edit', {'id': event_list.id}) }}">edit</a>
+
+    {{ include('user_eventlist/_delete_form.html.twig') }}
+{% endblock %}

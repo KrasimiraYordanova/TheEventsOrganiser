@@ -4,19 +4,19 @@
 <div class="eventType-menu">
         <div class="menu-button">
             <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="{{ path() }}" class="frontmenu-link">tableau de bord</a></p>
+            <p class="text-button"><a href="{{ path('app_user_eventdashboard')}}" class="frontmenu-link">tableau de bord</a></p>
         </div>
         <div class="menu-button">
             <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="{{ path('/user/checklist') }}" class="frontmenu-link">check-list</a></p>
+            <p class="text-button"><a href="{{ path('app_user_checklist_index') }}" class="frontmenu-link">check-list</a></p>
         </div>
         <div class="menu-button">
             <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="budget.html" class="frontmenu-link">budget</a></p>
+            <p class="text-button"><a href="{{path('app_user_expense_index')}}" class="frontmenu-link">budget</a></p>
         </div>
         <div class="menu-button">
             <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="guest.html" class="frontmenu-link">invités</a></p>
+            <p class="text-button"><a href="{{path('app_user_guest_index')}}" class="frontmenu-link">invités</a></p>
         </div>
         <div class="menu-button">
             <i class="icon-button fa-solid fa-calendar-days"></i>

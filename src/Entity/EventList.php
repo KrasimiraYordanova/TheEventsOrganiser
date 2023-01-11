@@ -64,6 +64,9 @@ class EventList
     #[ORM\OneToMany(mappedBy: 'eventList', targetEntity: Expense::class)]
     private Collection $expenses;
 
+    #[ORM\OneToMany(mappedBy: 'eventList', targetEntity: Tabletab::class)]
+    private Collection $tabletabs;
+
     public function __construct()
     {
         
@@ -73,6 +76,7 @@ class EventList
         $this->pictures = new ArrayCollection();
         $this->guests = new ArrayCollection();
         $this->expenses = new ArrayCollection();
+        $this->tabletabs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -350,6 +354,36 @@ class EventList
             // set the owning side to null (unless already changed)
             if ($expense->getEventList() === $this) {
                 $expense->setEventList(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tabletab>
+     */
+    public function getTabletabs(): Collection
+    {
+        return $this->tabletabs;
+    }
+
+    public function addTabletab(Tabletab $tabletab): self
+    {
+        if (!$this->tabletabs->contains($tabletab)) {
+            $this->tabletabs->add($tabletab);
+            $tabletab->setEventList($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTabletab(Tabletab $tabletab): self
+    {
+        if ($this->tabletabs->removeElement($tabletab)) {
+            // set the owning side to null (unless already changed)
+            if ($tabletab->getEventList() === $this) {
+                $tabletab->setEventList(null);
             }
         }
 

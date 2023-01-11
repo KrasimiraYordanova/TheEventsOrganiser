@@ -17,7 +17,6 @@ class EventListType extends AbstractType
     {
         $builder
             ->add('eventName', TextType::class)
-            // ->add('eventSlug')
             ->add('eventDate', DateType::class)
             ->add('eventBudget', TextType::class)
             ->add('eventLocation', TextType::class)
@@ -27,7 +26,7 @@ class EventListType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '20K',
+                        'maxSize' => '300K',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/gif',
@@ -41,7 +40,7 @@ class EventListType extends AbstractType
             // ->add('createdAt')
             // ->add('updatedAt')
             // ->add('eventType')
-            ->add('client')
+            // ->add('client')
         ;
     }
 

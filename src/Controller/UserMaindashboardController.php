@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\EventType;
 
 #[Route('/user/maindashboard')]
-class MaindashboardController extends AbstractController
+class UserMaindashboardController extends AbstractController
 {
     // main dashboard - event type to create the event (event form), last three current events, past three events
     #[Route('/', name: 'app_maindashboard')]

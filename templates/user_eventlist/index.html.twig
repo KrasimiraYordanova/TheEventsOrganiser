@@ -25,7 +25,9 @@
                              {% endfor %}
                         </div>
                     </div>
-                
+                {% for eventProperty in eventProperties %}
+                    {{ eventProperty.name}}
+                {% endfor %}
             </div>
         </div>
     </div>

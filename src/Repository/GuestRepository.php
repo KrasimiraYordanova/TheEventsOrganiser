@@ -50,6 +50,15 @@ class GuestRepository extends ServiceEntityRepository
        ;
    }
 
+    public function allGuestCount(): array
+   {
+       return $this->createQueryBuilder('g')
+           ->select("count(g) as guestNumber")
+           ->getQuery()
+           ->getScalarResult()
+       ;
+   }
+
    public function dietCount($diet): array
    {
        return $this->createQueryBuilder('g')
@@ -60,29 +69,4 @@ class GuestRepository extends ServiceEntityRepository
            ->getScalarResult()
        ;
    }
-
-//    /**
-//     * @return Guest[] Returns an array of Guest objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('g.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Guest
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

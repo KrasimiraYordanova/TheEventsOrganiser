@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
+        
 
 {% block body %}
-<form method="post">
+
+<div class="dashboard-center-container login">
+        <h3 class="dashboard-tertiary dashboard-tertiary-center">Login form</h3>
+        <div class="bkgrnd-block-registerform">
+<form method="post" class="register-form">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -39,4 +44,10 @@
         Sign in
     </button>
 </form>
+
+<a class="registerBtn" href="{{ path('app_register') }}">Enregistrez-vous si vous êtes pas enregistrer!</a>
+
+</div>
+    </div>
 {% endblock %}
+

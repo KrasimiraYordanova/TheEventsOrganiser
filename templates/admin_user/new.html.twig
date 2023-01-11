@@ -13,21 +13,13 @@
 		</div>
 
 		{{ form_start(form, {'attr': {'class': 'table-container'}}) }}
-		<div class="error-message">
-			{{ form_errors(form, {'attr': {'class': 'error-input'}}) }}
-		</div>
+			<div class="error-message">
+				{{ form_errors(form, {'attr': {'class': 'error-input'}}) }}
+			</div>
 
-		{{ form_row(form.firstname) }}
-		{{ form_row(form.lastname) }}
-		{{ form_row(form.plainPassword) }}
-		{{ form_row(form.roles) }}
-		{{ form_row(form.isValid) }}
-		{{ form_row(form.isValid) }}
-		{% for row in form.client %}
-			{{ form_row(row)}}
-		{% endfor %}
-		<button class="button">{{ button_label|default('Save') }}</button>
-		<a class="button" href="{{ path('app_admin_user_index') }}">Dismiss</a>
+			{{ form_widget(form)}}
+			<button class="button">{{ button_label|default('Save') }}</button>
+			<a class="button" href="{{ path('app_admin_user_index') }}">Dismiss</a>
 		{{ form_end(form) }}
 
 

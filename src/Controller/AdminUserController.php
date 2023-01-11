@@ -30,35 +30,35 @@ class AdminUserController extends AbstractController
     public function new(Request $request, User $user = null, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         if($user == null)
-        $user = new User();
+            $user = new User();
 
-    $form = $this->createForm(UserType::class, $user);
-    
-    if ($user->getId() !== null)
-        $form->remove('plainPassword');
+        $form = $this->createForm(UserType::class, $user);
+        
+        if ($user->getId() !== null)
+            $form->remove('plainPassword');
 
-    $form->handleRequest($request);
+        $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        if ($user->getId() == null) {
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            if ($user->getId() == null) {
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+            }
+
+            $userRepository->save($user, true);
+
+            return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $userRepository->save($user, true);
-
-        return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
-    }
-
-    return $this->renderForm('admin_user/new.html.twig', [
-        'user' => $user,
-        'form' => $form,
-    ]);
+        return $this->renderForm('admin_user/new.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
 
     }
 
