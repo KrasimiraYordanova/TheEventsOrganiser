@@ -23,16 +23,36 @@
 						<p class="item-parag">{{ checklist.description }}</p>
 						<div class="action-buttons">
 							<p>
-								<a href="{{ path('app_user_checklist_edit') }}"><i class="fa-solid fa-pen"></i></a>
+								<a href="{{ path('app_user_checklist_edit') }}">
+									<i class="fa-solid fa-pen"></i>
+								</a>
 							</p>
 							<p>{{ include('user_checklist/_delete_form.html.twig') }}</p>
 						</div>
-				    {% else %}
-					    <p>no records found</p>
-				    {% endfor %}
+					{% else %}
+						<p>no records found</p>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
 		<a href="#" class="modal btn btn-item">Add checklist</a>
+	</div>
+
+	<div class="overlay hidden">
+
+		<div class="dashboard-center-container">
+			<h3 class="dashboard-tertiary dashboard-tertiary-center">Check-list</h3>
+			<div class="bkgrnd-block-itemform">
+				<div class="icon-close">
+					<i class="close fa-solid fa-xmark"></i>
+				</div>
+				{{ form_start(form, {'attr': {'class': 'item-form'}}) }}
+
+				{{ form_row(form.description) }}
+				{{ form_row(form.isChecked) }}
+				<button class="btn">{{ button_label|default('Save') }}</button>
+				{{ form_end(form) }}
+			</div>
+		</div>
 	</div>
 {% endblock %}

@@ -1,39 +1,62 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}Tabletab index{% endblock %}
+{% block title %}Tabletab index
+{% endblock %}
 
 {% block body %}
-    <h1>Tabletab index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tabletab in tabletabs %}
-            <tr>
-                <td>{{ tabletab.id }}</td>
-                <td>{{ tabletab.name }}</td>
-                <td>{{ tabletab.createdAt ? tabletab.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ tabletab.updatedAt ? tabletab.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_user_tabletab_show', {'id': tabletab.id}) }}">show</a>
-                    <a href="{{ path('app_user_tabletab_edit', {'id': tabletab.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-<div>Number of tables {{tableCount['numberTables']}} </div>
-    <a href="{{ path('app_user_tabletab_new') }}">Create new</a>
+	<div class="dashboard-center-container">
+		<div class="item-border">
+			<h2 class="item-title">Table</h2>
+			<div class="item-summery">
+				<h3 class="item-count">Nombre de tables:
+					{{tableCount['numberTables']}}
+				</h3>
+			</div>
+		</div>
+
+		<div class="bkgrnd-block">
+			<div class="table-list">
+				{% for tabletab in tabletabs %}
+					<div class="item-list">
+						<div class="item-list-single">
+							<p class="item-parag underline">Table 1</p>
+							<div class="action-buttons marg">
+								<p>
+									<a href="{{ path('app_user_tabletab_edit') }}">
+										<i class="fa-solid fa-pen"></i>
+									</a>
+								</p>
+								<p>{{ include('user_tabletab/_delete_form.html.twig') }}</p>
+							</div>
+						</div>
+						<p class="item-parag table-item-parag">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+							                        Odit enim quas et,
+							                        laborum nemo sint voluptates cupiditate. Quisquam, veritatis tempore?</p>
+					</div>
+				{% else %}
+					<p>no records found</p>
+				{% endfor %}
+			</div>
+		</div>
+		<a href="{{ path('app_user_tabletab_new') }}" class="btn btn-item">Add table</a>
+	</div>
+
+	<div class="overlay ">
+
+		<div class="dashboard-center-container">
+			<h3 class="dashboard-tertiary dashboard-tertiary-center">Tables</h3>
+			<div class="bkgrnd-block-itemform">
+				<div class="icon-close">
+					<i class="close fa-solid fa-xmark"></i>
+				</div>
+				{{ form_start(form, {'attr': {'class': 'item-form'}}) }}
+				{{ form_start(form.name) }}
+
+				<button class="btn">{{ button_label|default('Save') }}</button>
+				{{ form_end(form) }}
+			</div>
+		</div>
+
+	</div>
 {% endblock %}

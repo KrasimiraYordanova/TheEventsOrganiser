@@ -13,11 +13,18 @@ class PictureType extends AbstractType
     {
         $builder
             ->add('namePath')
-            ->add('slug')
-            ->add('album')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('eventList')
+            // ->add('slug')
+            ->add('album', ChoiceType::class, [
+                'choices' => [
+                    'Pre Event Photos' => 'Pre Event Photos',
+                    'Event Photos' => 'Event Photos'
+                ],
+                'expanded' => false,
+                'multiple'=>false,
+            ])
+            // ->add('createdAt')
+            // ->add('updatedAt')
+            // ->add('eventList')
         ;
     }
 

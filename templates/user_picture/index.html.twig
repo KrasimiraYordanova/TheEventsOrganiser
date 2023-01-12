@@ -1,9 +1,8 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}Picture index{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-    <h1>Picture index</h1>
 
     <table class="table">
         <thead>
@@ -41,3 +40,24 @@
 
     <a href="{{ path('app_user_picture_new') }}">Create new</a>
 {% endblock %}
+
+<div class="dashboard-center-container">
+        <div class="item-border">
+            <h2 class="item-title">My pre-event photos</h2>
+        </div>
+
+        <div class="bkgrnd-block">
+            <div class="photo-list">
+                <div class="item-list-photo">
+                    <img class="wedding-img" src="images/heart.jpg" alt="wedding">
+                </div>
+                <div class="item-list-photo">
+                    <img class="wedding-img" src="images/heart.jpg" alt="wedding">
+                </div>
+            </div>
+        </div>
+        <form class="photo-form" action="/action_page.php">
+            <input type="file" id="myFile" name="filename">
+            <input class="btn formBtn-photo" id="myFileBtn" type="submit">
+        </form>
+    </div>

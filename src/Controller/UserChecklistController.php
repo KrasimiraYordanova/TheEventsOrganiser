@@ -14,11 +14,41 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/user/checklist')]
 class UserChecklistController extends AbstractController
 {
+    // #[Route('/', name: 'app_user_checklist_index', methods: ['GET'])]
+    // public function index(ChecklistRepository $checklistRepository): Response
+    // {
+    //     return $this->render('user_checklist/index.html.twig', [
+    //         'checklists' => $checklistRepository->findAll(),
+    //     ]);
+    // }
+
     #[Route('/', name: 'app_user_checklist_index', methods: ['GET'])]
-    public function index(ChecklistRepository $checklistRepository): Response
+    #[Route('/{id}/edit', name: 'app_user_checklist_edit', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_user_checklist_new', methods: ['GET', 'POST'])]
+    public function index(Request $request,Checklist $checklist = null,ChecklistRepository $checklistRepository, SluggerInterface $slugger): Response
     {
-        return $this->render('user_checklist/index.html.twig', [
+
+        if(!$checklist) {
+            $checklist = new Checklist();
+            }
+    
+            $form = $this->createForm(ChecklistType::class, $checklist);
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted() && $form->isValid()) {
+                $shortDescSlug = substr($checklist->getDescription(), 0, 30);
+                $checklist->setSlug($slugger->slug($shortDescSlug)->lower());
+                $checklistRepository->save($checklist, true);
+    
+                return $this->redirectToRoute('app_user_checklist_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            
+        return $this->renderForm('user_checklist/index.html.twig', [
             'checklists' => $checklistRepository->findAll(),
+            'checklist' => $checklist,
+            'edit' => $checklist->getId(),
+            'form' => $form,
         ]);
     }
 
@@ -32,9 +62,6 @@ class UserChecklistController extends AbstractController
         }
 
         $form = $this->createForm(ChecklistType::class, $checklist);
-        $form->remove('createdAt');
-        $form->remove('updatedAt');
-        $form->remove('eventName');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

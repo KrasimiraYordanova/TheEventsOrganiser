@@ -1,0 +1,56 @@
+{% extends 'userbase.html.twig' %}
+
+{% block title %}Dashboard principal
+{% endblock %}
+
+{% block body %}
+
+<div class="dashboard-center-container">
+
+        <div class="margin"></div>
+
+        <div class="bkgrnd-block">
+            <div class="website-image-div">
+                <img src="images/heart.jpg" alt="weddingPhoto" class="website-image">
+                <div class="currentWeddingInfo">
+                    <h1 class="dashboard-title web-info">Event name</h1>
+                    <h2 class="dashboard-secondary web-info">Event date</h2>
+                </div>
+            </div>
+
+            
+
+            <div class="form-content">
+                <h3 class="dashboard-tertiary">Rdsvp</h3>
+                <form class="form-info" action="/action_page.php">
+                    <input type="text" id="fname" name="fname" placeholder="prénom">
+                    <input type="text" id="lname" name="lname" placeholder="nom">
+                    <input type="tel" id="tel" name="tel" placeholder="phone">
+                    <input type="email" id="email" name="email" placeholder="email">
+                    <p>Marquez votre présence</p>
+                    <div class="radio">
+                        <div>
+                            <input type="radio" id="attending" name="diet" value="attending">
+                            <label for="diet">attending</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="declined" name="diet" value="declined">
+                            <label for="diet">declined</label>
+                        </div>
+                    </div>
+                    <label for="diet">Spécificité alimentaire</label>
+                    <select name="diet" id="diet">
+                        <option value="">Select diet</option>
+                        <option value="vegan">Végétalien/ne</option>
+                        <option value="vegetarian">Végétarien/ne</option>
+                        <option value="omnivore">Omnivore</option>
+                        <option value="pescatarian">Pescatarien</option>
+                    </select>
+                    <input class="btn btn-light formBtn" type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+        <div class="margin"></div>
+    </div>
+
+{% endblock %}

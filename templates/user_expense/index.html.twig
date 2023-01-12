@@ -1,41 +1,74 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}Expense{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-<div class="dashboard-center-container">
-        <div class="item-border">
-            <h2 class="item-title">Suivi budgétaire</h2>
-            <div class="item-summery">
-                <h3 class="item-count">Budget total: </h3>
-                <h3 class="item-count">Total payé: {{totalPaid['paidTotal'] |format_currency('EUR')}}</h3>
-                <h3 class="item-count">Total restant: </h3>
-            </div>
-        </div>
+	<div class="dashboard-center-container">
+		<div class="item-border">
+			<h2 class="item-title">Suivi budgétaire</h2>
+			<div class="item-summery">
+				<h3 class="item-count">Budget total:
+				</h3>
+				<h3 class="item-count">Total payé:
+					{{totalPaid['paidTotal'] |format_currency('EUR')}}</h3>
+				<h3 class="item-count">Total restant:
+				</h3>
+			</div>
+		</div>
 
-        <div class="bkgrnd-block">
-        {% for expense in expenses %}
-            <div class="item-list">
-                <p class="item-parag budget-item-parag">{{ expense.name }}</p>
-                <div class="item-summery">
-                    <p class="item-count">Coût total: {{ expense.totalCost }}</p>
-                    <p class="item-count">Total payé: {{ expense.totalPaid }}</p>
-                    <p class="item-count">Total restant: {{ expense.totalCost -  expense.totalPaid }}</p>
-                </div>
-                <div class="action-buttons">
-                    <p><a href="{{ path('app_user_expense_edit', {'id': expense.id}) }}"><i class="fa-solid fa-pen"></i></a>
-                    <p>{{ include('user_expense/_delete_form.html.twig') }}</p>
-                </div>
-            </div>
-        {% else %}
-            <tr>
-                <p>no records found</p>
-            </tr>
-        {% endfor %}
+		<div class="bkgrnd-block">
+			{% for expense in expenses %}
+				<div class="item-list">
+					<p class="item-parag budget-item-parag">{{ expense.name }}</p>
+					<div class="item-summery">
+						<p class="item-count">Coût total:
+							{{ expense.totalCost }}</p>
+						<p class="item-count">Total payé:
+							{{ expense.totalPaid }}</p>
+						<p class="item-count">Total restant:
+							{{ expense.totalCost -  expense.totalPaid }}</p>
+					</div>
+					<div class="action-buttons">
+						<p>
+							<a href="{{ path('app_user_expense_edit', {'id': expense.id}) }}">
+								<i class="fa-solid fa-pen"></i>
+							</a>
+						</p>
+						<p>{{ include('user_expense/_delete_form.html.twig') }}</p>
+					</div>
+				</div>
+			{% else %}
+				<tr>
+					<p>no records found</p>
+				</tr>
+			{% endfor %}
 
-            
-        </div>
-        <a href="#" class="btn btn-item">Add dépense</a>
-    </div>
-  
+
+		</div>
+		<a href="#" class="btn btn-item">Add dépense</a>
+	</div>
+
+<div class="overlay hidden">
+	<div class="dashboard-center-container">
+		<h3 class="dashboard-tertiary dashboard-tertiary-center">budget</h3>
+		<div class="bkgrnd-block-itemform">
+			<div class="icon-close">
+				<i class="close fa-solid fa-xmark"></i>
+			</div>
+			{{ form_start(expenseForm, {'attr': {'class': 'bkgrnd-block-itemform'}}) }}
+
+			{{ form_row(expenseForm.name) }}
+			{{ form_row(expenseForm.description) }}
+			{{ form_row(expenseForm.totalCost) }}
+			{{ form_row(expenseForm.totalPaid) }}
+
+
+			<div class="items-actions">
+				<button class="item-button-i btn-save">{{ button_label|default('Save') }}</button>
+				{# {{ include('user_expense/_delete_form.html.twig') }} #}
+			</div>
+			{{ form_end(expenseForm) }}
+		</div>
+	</div>
+</div>
 {% endblock %}

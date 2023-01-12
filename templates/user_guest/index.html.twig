@@ -41,7 +41,36 @@
         <a href="#" class="modal btn btn-item">Add guest</a>
 </div>
 
-    
+    {# <div class="overlay "> #}
+
+        <div class="dashboard-center-container">
+            <h3 class="dashboard-tertiary dashboard-tertiary-center">guest-list</h3>
+            <div class="bkgrnd-block-itemform">
+                <div class="icon-close">
+                    <i class="close fa-solid fa-xmark"></i>
+                </div>
+                <form action="/action_page.php" class="item-form">
+                {{ form_start(form, {'attr': {'class': 'item-form'}}) }}
+                
+                {{ form_row(form.name) }}
+                {{ form_row(form.rdsvp) }}
+                {{ form_row(form.address) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.phone) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.diet) }}
+                {{ form_row(form.tabletab) }}
+                {# <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ guest.id) }}"> #}
+
+        <div class="items-actions">
+            <button class="item-button-i btn-save">{{ button_label|default('Save') }}</button>
+        </div>
+{{ form_end(form) }}
+
+                  
+            </div>
+        </div>
+    {# </div> #}
 
     
 {% endblock %}
@@ -49,3 +78,5 @@
 {# <a href="{{ path('app_user_guest_new') }}">Create new</a> #}
 {# <a href="{{ path('app_user_guest_show', {'id': guest.id}) }}">show</a>
 <a href="{{ path('app_user_guest_edit', {'id': guest.id}) }}">edit</a> #}
+{# <input type="submit" class="item-button-i btn-effacer" value="Effacer"> #}
+

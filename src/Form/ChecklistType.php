@@ -13,11 +13,11 @@ class ChecklistType extends AbstractType
     {
         $builder
             ->add('description')
-            ->add('slug')
+            // ->add('slug')
             ->add('isChecked')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('eventList')
+            // ->add('createdAt')
+            // ->add('updatedAt')
+            // ->add('eventList')
         ;
     }
 

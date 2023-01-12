@@ -14,8 +14,37 @@ use Doctrine\Persistence\ManagerRegistry;
 #[Route('/user/guest')]
 class UserGuestController extends AbstractController
 {
+    // #[Route('/', name: 'app_user_guest_index', methods: ['GET'])]
+    // public function index(GuestRepository $guestRepository, ManagerRegistry $doctrine): Response
+    // {
+        
+    //     $repository = $doctrine->getRepository(Guest::class);
+    //     $attendings = $repository->guestsCount("attending");
+    //     $declines = $repository->guestsCount("declined");
+    //     // $awaitings = $repository->guestsCount();
+    //     // dd($attendings, $declines);
+
+    //     $vegans = $repository->dietCount('vegan');
+    //     $vegetarians = $repository->dietCount('vegetarian');
+    //     $omnivores = $repository->dietCount('omnivore');
+    //     // dd($vegans, $vegetarians, $omnivores);
+    //     $allGuestNumber = $repository->allGuestCount();
+
+    //     return $this->render('user_guest/index.html.twig', [
+    //         'guests' => $guestRepository->findAll(),
+    //         'guestNumber' => $allGuestNumber[0],
+    //         'attendings' => $attendings[0],
+    //         'declines' => $declines[0],
+    //         'vegans' => $vegans[0],
+    //         'vegetarians' => $vegetarians[0],
+    //         'omnivores' => $omnivores[0]
+    //     ]);
+    // }
+
     #[Route('/', name: 'app_user_guest_index', methods: ['GET'])]
-    public function index(GuestRepository $guestRepository, ManagerRegistry $doctrine): Response
+    #[Route('/{id}/edit', name: 'app_user_guest_edit', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_user_guest_new', methods: ['GET', 'POST'])]
+    public function index(Request $request, Guest $guest = null, GuestRepository $guestRepository, ManagerRegistry $doctrine): Response
     {
         
         $repository = $doctrine->getRepository(Guest::class);
@@ -30,21 +59,6 @@ class UserGuestController extends AbstractController
         // dd($vegans, $vegetarians, $omnivores);
         $allGuestNumber = $repository->allGuestCount();
 
-        return $this->render('user_guest/index.html.twig', [
-            'guests' => $guestRepository->findAll(),
-            'guestNumber' => $allGuestNumber[0],
-            'attendings' => $attendings[0],
-            'declines' => $declines[0],
-            'vegans' => $vegans[0],
-            'vegetarians' => $vegetarians[0],
-            'omnivores' => $omnivores[0]
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_user_guest_edit', methods: ['GET', 'POST'])]
-    #[Route('/new', name: 'app_user_guest_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Guest $guest = null, GuestRepository $guestRepository): Response
-    {
         if(!$guest) {
             $guest = new Guest();
         }
@@ -59,12 +73,45 @@ class UserGuestController extends AbstractController
             return $this->redirectToRoute('app_user_guest_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('user_guest/new.html.twig', [
+        return $this->renderForm('user_guest/index.html.twig', [
+            'guests' => $guestRepository->findAll(),
+            'guestNumber' => $allGuestNumber[0],
+            'attendings' => $attendings[0],
+            'declines' => $declines[0],
+            'vegans' => $vegans[0],
+            'vegetarians' => $vegetarians[0],
+            'omnivores' => $omnivores[0],
+
             'guest' => $guest,
             'edit' => $guest->getId(),
             'form' => $form,
         ]);
     }
+
+    // #[Route('/{id}/edit', name: 'app_user_guest_edit', methods: ['GET', 'POST'])]
+    // #[Route('/new', name: 'app_user_guest_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, Guest $guest = null, GuestRepository $guestRepository): Response
+    // {
+    //     if(!$guest) {
+    //         $guest = new Guest();
+    //     }
+        
+    //     $form = $this->createForm(GuestType::class, $guest);
+    //     $form->remove('token');
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $guestRepository->save($guest, true);
+
+    //         return $this->redirectToRoute('app_user_guest_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->renderForm('user_guest/new.html.twig', [
+    //         'guest' => $guest,
+    //         'edit' => $guest->getId(),
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{id}', name: 'app_user_guest_show', methods: ['GET'])]
     public function show(Guest $guest): Response

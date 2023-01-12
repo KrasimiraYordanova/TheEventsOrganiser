@@ -14,17 +14,51 @@ use Doctrine\Persistence\ManagerRegistry;
 #[Route('/user/tabletab')]
 class UserTabletabController extends AbstractController
 {
+    // #[Route('/', name: 'app_user_tabletab_index', methods: ['GET'])]
+    // public function index(TabletabRepository $tabletabRepository, ManagerRegistry $doctrine): Response
+    // {
+    //     $repository = $doctrine->getRepository(Tabletab::class);
+    //     $tableCount = $repository->tableCount();
+    //     // dd($tableCount[0]);
+    //     return $this->render('user_tabletab/index.html.twig', [
+    //         'tabletabs' => $tabletabRepository->findAll(),
+    //         'tableCount' => $tableCount[0]
+    //     ]);
+    // }
+
     #[Route('/', name: 'app_user_tabletab_index', methods: ['GET'])]
-    public function index(TabletabRepository $tabletabRepository, ManagerRegistry $doctrine): Response
+    #[Route('/{id}/edit', name: 'app_user_tabletab_edit', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_user_tabletab_new', methods: ['GET', 'POST'])]
+    public function index(Request $request, Tabletab $tabletab = null, TabletabRepository $tabletabRepository, ManagerRegistry $doctrine): Response
     {
         $repository = $doctrine->getRepository(Tabletab::class);
         $tableCount = $repository->tableCount();
         // dd($tableCount[0]);
-        return $this->render('user_tabletab/index.html.twig', [
+
+        if (!$tabletab) {
+            $tabletab = new Tabletab();
+        }
+
+
+        $form = $this->createForm(TabletabType::class, $tabletab);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $tabletabRepository->save($tabletab, true);
+
+            return $this->redirectToRoute('app_user_tabletab_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user_tabletab/index.html.twig', [
             'tabletabs' => $tabletabRepository->findAll(),
-            'tableCount' => $tableCount[0]
+            'tableCount' => $tableCount[0],
+
+            'tabletab' => $tabletab,
+            'edit' => $tabletab->getId(),
+            'form' => $form,
         ]);
     }
+
     #[Route('/{id}/edit', name: 'app_user_tabletab_edit', methods: ['GET', 'POST'])]
     #[Route('/new', name: 'app_user_tabletab_new', methods: ['GET', 'POST'])]
     public function new(Request $request, Tabletab $tabletab = null, TabletabRepository $tabletabRepository): Response

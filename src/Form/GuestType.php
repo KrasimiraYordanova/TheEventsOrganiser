@@ -39,7 +39,7 @@ class GuestType extends AbstractType
                 'multiple'=>false,
                 'required' => false
             ])
-            ->add('token')
+            // ->add('token')
             // ->add('createdAt')
             // ->add('updatedAt')
             // ->add('eventList')

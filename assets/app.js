@@ -12,3 +12,8 @@ import './styles/appF.scss';
 
 // start the Stimulus application
 import './bootstrap';
+
+import './js/script.js';
+import './js/modal.js';
+import './js/main.js';
+

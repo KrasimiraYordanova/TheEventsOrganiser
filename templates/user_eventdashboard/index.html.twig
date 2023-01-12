@@ -26,10 +26,10 @@
                         <div class="dash-item dash-item2">
                             <h3 class="dashboard-tertiary-smaller">Invitées</h3>
                             <div class="wedding-info2">
-                                <p class="dash-event">n of guests attensing the wedding</p>
+                                <p class="dash-event">n of guests attending the wedding</p>
                                 <p class="dash-event">n awaiting for a reply</p>
                             </div>
-                            <p class="wedding-go-to"><a class="wedding-go-to-link" href="#">voir tous les invitées
+                            <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_guest_index')}}">voir tous les invitées
                                     &rarr;</a>
                             </p>
                         </div>
@@ -39,7 +39,7 @@
                                 <p class="dash-event">Coût total: </p>
                                 <p class="dash-event">Total payé: </p>
                             </div>
-                            <p class="wedding-go-to"><a class="wedding-go-to-link" href="#">voir mon budget &rarr;</a>
+                            <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_expense_index')}}">voir mon budget &rarr;</a>
                             </p>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
 
                             </div>
                         </div>
-                        <p class="wedding-go-to"><a class="wedding-go-to-link" href="#">voir mon to dos list &rarr;</a>
+                        <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_checklist_index')}}">voir mon to dos list &rarr;</a>
                         </p>
                     </div>
                 </div>

@@ -16,8 +16,9 @@
 			<div class="error-message">
 				{{ form_errors(form, {'attr': {'class': 'error-input'}}) }}
 			</div>
-
+              
 			{{ form_widget(form)}}
+			{{ form_row(form.client) }}
 			<button class="button">{{ button_label|default('Save') }}</button>
 			<a class="button" href="{{ path('app_admin_user_index') }}">Dismiss</a>
 		{{ form_end(form) }}

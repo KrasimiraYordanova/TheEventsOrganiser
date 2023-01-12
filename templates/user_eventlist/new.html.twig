@@ -16,9 +16,14 @@
 			{{ form_row(form.eventDate, {'attr': {'class': 'evdate'}}) }}
 			{{ form_row(form.eventBudget, {'attr': {'class': 'evbudget'}}) }}
 			{{ form_row(form.eventLocation, {'attr': {'class': 'evlocation'}}) }}
-			{{ form_row(form.image) }}
-
 			
+
+			{% for eventProperty in eventProperties %}
+			    <label for="eventProperty">{{ eventProperty.name}}</label>
+                <input type="text" name="property_{{ eventProperty.id}}" id="eventProperty" class="eventProperty" required>
+			{% endfor %}
+			
+            {{ form_row(form.image) }}
 			<button class="btn">{{ button_label|default('Save') }}</button>
 			{{ form_end(form) }}
 		</div>

@@ -6,6 +6,7 @@ use App\Entity\Client;
 use App\Entity\EventList;
 use App\Entity\EventProperty;
 use App\Entity\EventType;
+use App\Entity\Property;
 use App\Form\EventListType;
 use App\Repository\ClientRepository;
 use App\Service\FileUploader;
@@ -68,7 +69,7 @@ class UserEventlistController extends AbstractController
     // }
 
     #[Route('/create/{slug}', name: 'app_user_eventlist_form', methods: ['GET', 'POST'])]
-    public function createEvent(EventType $eventType, Request $request, EventPropertyRepository $eventPropertyRepo, ClientRepository $clientRepo, PropertyRepository $property, EventListRepository $eventListRepo, FileUploader $fileUploader, SluggerInterface $slugger): Response
+    public function createEvent(EventType $eventType, Request $request, EventPropertyRepository $eventPropertyRepo, ClientRepository $clientRepo, PropertyRepository $propertyRepository, EventListRepository $eventListRepo, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
 
         $eventList = new EventList();
@@ -78,13 +79,17 @@ class UserEventlistController extends AbstractController
         $user = $this->getUser();
         $client = $clientRepo->findOneBy(['user' => $user]);
 
-        $eventProperties = $property->findBy(["eventType" => $eventType]);
-        // dd($eventProperties);
-
-
+        $properties = $propertyRepository->findBy(["eventType" => $eventType]);
+        // dd($properties);
+        
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('image')->getData();
 
+
+            $params = $request->request->all();
+            $eventDelete = array_shift($params);
+            
             if($imageFile) {
                 $imageFileName = $fileUploader->upload($imageFile, 'eventImage');
                 $eventList->setImage($imageFileName);
@@ -92,17 +97,22 @@ class UserEventlistController extends AbstractController
             $eventList->setEventSlug($slugger->slug($eventList->getEventName()));
             $eventList->setEventType($eventType);
             $eventList->setClient($client);
-            // $eventList->addEventProperty();
-            $eventListRepo->save($eventList, true);
-
-
-            //traitment donné spécifique
             
-            return $this->redirectToRoute('app_maindashboard', [], Response::HTTP_SEE_OTHER);
+        
+            $eventListRepo->save($eventList, true);
+            
+             foreach($params as $key=>$value){
+                $id = (int)explode('_', $key)[1];
+                $eventProp = new EventProperty();
+                $eventProp->setValue($value)->setProperty($propertyRepository->find($id))->setEventList($eventList);
+                $eventPropertyRepo->save($eventProp,true);
+            }
+
+            return $this->redirectToRoute('app_user_eventdashboard', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
         }
         
         return $this->renderForm('user_eventlist/new.html.twig', [
-            'eventProperties' => $eventProperties,
+            'eventProperties' => $properties,
             'eventType' => $eventType->getName(),
             'form' => $form,
         ]);

@@ -3,17 +3,32 @@
 namespace App\Controller;
 
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\EventList;
+use App\Repository\EventListRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 #[Route('/user/eventdashboard')]
 class UserEventdashboardController extends AbstractController
 {
     // main dashboard - event type to create the event (event form), last three current events, past three events
-    #[Route('/', name: 'app_user_eventdashboard')]
-    public function index(): Response
+    #[Route('/{id}', name: 'app_user_eventdashboard')]
+    public function index(EventList $eventList, EventListRepository $eventListRepo, Request $request): Response
     {
-        return $this->render('user_eventdashboard/index.html.twig', );
+        
+        dd($eventList);
+
+        return $this->render('user_eventdashboard/index.html.twig', [
+             'id' => $eventList,
+        ]);
+    }
+    
+    // main dashboard - event type to create the event (event form), last three current events, past three events
+    #[Route('/website', name: 'app_user_eventdashboard_website')]
+    public function website(): Response
+    {
+        return $this->render('user_eventdashboard/website.html.twig', );
     }
 }
