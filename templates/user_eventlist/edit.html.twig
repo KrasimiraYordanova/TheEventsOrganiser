@@ -3,11 +3,33 @@
 {% block title %}Edit EventList{% endblock %}
 
 {% block body %}
-    <h1>Edit EventList</h1>
 
-    {{ include('user_eventlist/_form.html.twig', {'button_label': 'Update'}) }}
+	<div class="dashboard-center-container">
+		<h3 class="dashboard-tertiary dashboard-tertiary-center">Créer votre événement {{ eventType }}</h3>
+		<div class="bkgrnd-block-registerform">
+			{# <div class="icon-close">
+				<i class="close fa-solid fa-xmark"></i>
+			</div> #}
+			{{ form_start(form, {'attr': {'class': 'register-form'}}) }}
+			{{ form_row(form.eventName, {'attr': {'class': 'evname'}}) }}
+			{{ form_row(form.eventDate, {'attr': {'class': 'evdate'}}) }}
+			{{ form_row(form.eventBudget, {'attr': {'class': 'evbudget'}}) }}
+			{{ form_row(form.eventLocation, {'attr': {'class': 'evlocation'}}) }}
+			
 
-    <a href="{{ path('app_user_eventlist_index') }}">back to list</a>
-
-    {{ include('user_eventlist/_delete_form.html.twig') }}
+			{% for eventProperty in eventProperties %}
+			    <label for="eventProperty">{{ eventProperty.name}}</label>
+                <input type="text" name="property_{{ eventProperty.id }}" value="{{ eventValues.id }}" id="eventProperty" class="eventProperty" required>
+			{% endfor %}
+			
+            {{ form_row(form.image) }}
+			<button class="btn">{{ button_label|default('Save') }}</button>
+			{{ form_end(form) }}
+		</div>
+	</div>
+	{# <a href="{{ path('app_user_eventlist_index') }}">back to list</a> #}
 {% endblock %}
+
+    {# {{ include('user_eventlist/_form.html.twig', {'button_label': 'Update'}) }}
+    <a href="{{ path('app_user_eventlist_index') }}">back to list</a>
+    {{ include('user_eventlist/_delete_form.html.twig') }} #}

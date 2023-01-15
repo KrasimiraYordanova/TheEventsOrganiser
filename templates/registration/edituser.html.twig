@@ -1,0 +1,30 @@
+{% extends 'userbase.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}New User
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<div class="marginTop">
+			<h1 class="primary">
+			{% if edit %} Editer l'{%else%} Créer un nouveau{% endif %} utilisateur</h1>
+			</h1>
+		</div>
+
+		{{ form_start(form, {'attr': {'class': 'table-container'}}) }}
+			<div class="error-message">
+				{{ form_errors(form, {'attr': {'class': 'error-input'}}) }}
+			</div>
+              
+			{{ form_widget(form)}}
+			{# {{ form_row(form.client) }} #}
+			<button class="button">{{ button_label|default('Save') }}</button>
+			<a class="button" href="{{ path('app_admin_user_index') }}">Dismiss</a>
+		{{ form_end(form) }}
+
+
+	</div>
+{% endblock %}

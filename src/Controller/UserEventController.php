@@ -424,10 +424,9 @@ class UserEventController extends AbstractController {
     }
 
     // EVENT PROPERTY
-    #[Route('/edit/{id}', name: 'app_user_eventlist_form', methods: ['GET', 'POST'])]
-    public function editEvent(EventType $eventType, Request $request, EventPropertyRepository $eventPropertyRepo, ClientRepository $clientRepo, PropertyRepository $propertyRepository, EventListRepository $eventListRepo, FileUploader $fileUploader, SluggerInterface $slugger): Response
+    #[Route('/edit', name: 'app_user_eventlist_edit', methods: ['GET', 'POST'])]
+    public function editEvent(EventList $eventList, EventType $eventType, Request $request, EventPropertyRepository $eventPropertyRepo, ClientRepository $clientRepo, PropertyRepository $propertyRepo, EventListRepository $eventListRepo, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
-
         
         $form = $this->createForm(EventListType::class, $eventList);
         $form->handleRequest($request);
@@ -435,18 +434,17 @@ class UserEventController extends AbstractController {
         $user = $this->getUser();
         $client = $clientRepo->findOneBy(['user' => $user]);
 
-        $properties = $propertyRepository->findBy(["eventType" => $eventType]);
-        $eventProp = $eventPropertyRepo->findOneBy(['']);
-        // dd($properties);
+        // taking the right eventType via eventList table to be able to...
+        $peventTypeNeeded = $$eventListRepo->findBy(["eventType" => $eventType]);
+        // ... find the right properties
+        $propsNeeded = $propertyRepo->findBy(['$eventType' => $peventTypeNeeded]);
+        // and get the values for that event - eventProperty table and get the values for eventListId
+        $valuesNeeded = $eventPropertyRepo->findBy(['eventList' => $eventList]);
         
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('image')->getData();
-
-
-            $params = $request->request->all();
-            $eventDelete = array_shift($params);
             $image = $eventList->getImage();
+            $imageFile = $form->get('image')->getData();
             
 
             if($imageFile) {
@@ -460,26 +458,17 @@ class UserEventController extends AbstractController {
             }
 
             $eventList->setEventSlug($slugger->slug($eventList->getEventName()));
-            $eventList->setEventType($eventType);
+            $eventList->setEventType($peventTypeNeeded);
             $eventList->setClient($client);
-            
-        
             $eventListRepo->save($eventList, true);
-            
-             foreach($params as $key=>$value){
-                $id = (int)explode('_', $key)[1];
-                $eventProp = new EventProperty();
-                $eventProp->setValue($value)->setProperty($propertyRepository->find($id))->setEventList($eventList);
-                $eventPropertyRepo->save($eventProp,true);
-            }
 
             return $this->redirectToRoute('app_user_eventdashboard', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
         }
         
-        return $this->renderForm('user_eventlist/new.html.twig', [
-            'eventProperties' => $properties,
-            'eventType' => $eventType->getName(),
+        return $this->renderForm('user_eventlist/edit.html.twig', [
             'form' => $form,
+            'eventProperties' => $propsNeeded,
+            'eventValues' => $valuesNeeded,
         ]);
     }
 }

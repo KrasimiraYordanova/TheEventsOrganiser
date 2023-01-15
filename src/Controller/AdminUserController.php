@@ -62,24 +62,24 @@ class AdminUserController extends AbstractController
 
     }
 
-    #[Route('/{id}', name: 'app_admin_user_show', methods: ['GET'])]
-    public function show(User $user): Response
-    {
-        return $this->render('admin_user/show.html.twig', [
-            'user' => $user,
-        ]);
-    }
-
     // #[Route('/{id}/edit', name: 'app_admin_user_edit', methods: ['GET', 'POST'])]
     // public function edit(Request $request, User $user, UserRepository $userRepository): Response
     // {
     //     $form = $this->createForm(UserType::class, $user);
+    // if ($user->getId() !== null)
+    //         $form->remove('plainPassword');
     //     $form->handleRequest($request);
 
     //     if ($form->isSubmitted() && $form->isValid()) {
+        // $user->setPassword(
+        //     $userPasswordHasher->hashPassword(
+        //         $user,
+        //         $form->get('plainPassword')->getData()
+        //     )
+        // );
     //         $userRepository->save($user, true);
 
-    //         return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
+    //         return $this->redirectToRoute('app_user_eventdashboard', [], Response::HTTP_SEE_OTHER);
     //     }
 
     //     return $this->renderForm('admin_user/edit.html.twig', [
@@ -87,6 +87,15 @@ class AdminUserController extends AbstractController
     //         'form' => $form,
     //     ]);
     // }
+
+
+    #[Route('/{id}', name: 'app_admin_user_show', methods: ['GET'])]
+    public function show(User $user): Response
+    {
+        return $this->render('admin_user/show.html.twig', [
+            'user' => $user,
+        ]);
+    }
 
     #[Route('/{id}', name: 'app_admin_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
