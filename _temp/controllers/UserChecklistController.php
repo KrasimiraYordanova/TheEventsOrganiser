@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Checklist;
+use App\Entity\EventList;
 use App\Form\ChecklistType;
 use App\Repository\ChecklistRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,48 +12,45 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/user/checklist')]
+#[Route('/user/event/{id}')]
 class UserChecklistController extends AbstractController
 {
-    #[Route('/', name: 'app_user_checklist_index', methods: ['GET'])]
-    public function index(ChecklistRepository $checklistRepository): Response
-    {
-        return $this->render('user_checklist/index.html.twig', [
-            'checklists' => $checklistRepository->findAll(),
-        ]);
-    }
+    
+    //public function __construct (private EventList $eventList) {}
 
-    #[Route('/{id}/edit', name: 'app_user_checklist_edit', methods: ['GET', 'POST'])]
-    #[Route('/new', name: 'app_user_checklist_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,Checklist $checklist = null, ChecklistRepository $checklistRepository, SluggerInterface $slugger): Response
+    #[Route('/checklist', name: 'app_user_checklist_index', methods: ['GET'])]
+    /*#[Route('/{checklist_id}/edit', name: 'app_user_checklist_edit', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_user_checklist_new', methods: ['GET', 'POST'])]*/
+    public function index(EventList $eventList, Request $request, Checklist $checklist = null, ChecklistRepository $checklistRepository, SluggerInterface $slugger): Response
     {
-        
+       
+        dd($eventList);
         if(!$checklist) {
-        $checklist = new Checklist();
-        }
+            $checklist = new Checklist();
+            }
+    
+            $form = $this->createForm(ChecklistType::class, $checklist);
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted() && $form->isValid()) {
+                $shortDescSlug = substr($checklist->getDescription(), 0, 30);
+                $checklist->setSlug($slugger->slug($shortDescSlug)->lower());
+                $checklistRepository->save($checklist, true);
+    
+                return $this->redirectToRoute('app_user_checklist_index', [], Response::HTTP_SEE_OTHER);
+            }
 
-        $form = $this->createForm(ChecklistType::class, $checklist);
-        $form->remove('createdAt');
-        $form->remove('updatedAt');
-        $form->remove('eventName');
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $shortDescSlug = substr($checklist->getDescription(), 0, 30);
-            $checklist->setSlug($slugger->slug($shortDescSlug)->lower());
-            $checklistRepository->save($checklist, true);
-
-            return $this->redirectToRoute('app_user_checklist_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('user_checklist/new.html.twig', [
+            
+        return $this->renderForm('user_checklist/index.html.twig', [
+            'checklists' => $checklistRepository->findAll(),
             'checklist' => $checklist,
             'edit' => $checklist->getId(),
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_user_checklist_show', methods: ['GET'])]
+    
+    #[Route('/{checklist_id}', name: 'app_user_checklist_show', methods: ['GET'])]
     public function show(Checklist $checklist): Response
     {
         return $this->render('user_checklist/show.html.twig', [
@@ -60,7 +58,58 @@ class UserChecklistController extends AbstractController
         ]);
     }
 
+
+    #[Route('/{checklist_id}', name: 'app_user_checklist_delete', methods: ['POST'])]
+    public function delete(Request $request, Checklist $checklist, ChecklistRepository $checklistRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$checklist->getId(), $request->request->get('_token'))) {
+            $checklistRepository->remove($checklist, true);
+        }
+
+        return $this->redirectToRoute('app_user_checklist_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+
+
+     // #[Route('/', name: 'app_user_checklist_index', methods: ['GET'])]
+    // public function index(ChecklistRepository $checklistRepository): Response
+    // {
+    //     return $this->render('user_checklist/index.html.twig', [
+    //         'checklists' => $checklistRepository->findAll(),
+    //     ]);
+    // }
+
+
     // #[Route('/{id}/edit', name: 'app_user_checklist_edit', methods: ['GET', 'POST'])]
+    // #[Route('/new', name: 'app_user_checklist_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request,Checklist $checklist = null, ChecklistRepository $checklistRepository, SluggerInterface $slugger): Response
+    // {
+        
+    //     if(!$checklist) {
+    //     $checklist = new Checklist();
+    //     }
+
+    //     $form = $this->createForm(ChecklistType::class, $checklist);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $shortDescSlug = substr($checklist->getDescription(), 0, 30);
+    //         $checklist->setSlug($slugger->slug($shortDescSlug)->lower());
+    //         $checklistRepository->save($checklist, true);
+
+    //         return $this->redirectToRoute('app_user_checklist_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->renderForm('user_checklist/new.html.twig', [
+    //         'checklist' => $checklist,
+    //         'edit' => $checklist->getId(),
+    //         'form' => $form,
+    //     ]);
+    // }
+
+      // #[Route('/{id}/edit', name: 'app_user_checklist_edit', methods: ['GET', 'POST'])]
     // public function edit(Request $request, Checklist $checklist, ChecklistRepository $checklistRepository): Response
     // {
     //     $form = $this->createForm(ChecklistType::class, $checklist);
@@ -77,16 +126,6 @@ class UserChecklistController extends AbstractController
     //         'form' => $form,
     //     ]);
     // }
-
-    #[Route('/{id}', name: 'app_user_checklist_delete', methods: ['POST'])]
-    public function delete(Request $request, Checklist $checklist, ChecklistRepository $checklistRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$checklist->getId(), $request->request->get('_token'))) {
-            $checklistRepository->remove($checklist, true);
-        }
-
-        return $this->redirectToRoute('app_user_checklist_index', [], Response::HTTP_SEE_OTHER);
-    }
 }
 
 

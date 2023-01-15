@@ -9,7 +9,9 @@
 <div class="container">
 
 		<div class="marginTop">
-			<h1 class="primary">Create new Property</h1>
+			<h1 class="primary">
+			{% if edit %} Editer le{%else%} Créer un nouveau{% endif %} propriété</h1>
+			</h1>
 		</div>
 
 		{{ form_start(form, {'attr': {'class': 'table-container'}}) }}

@@ -43,7 +43,7 @@ class ChecklistRepository extends ServiceEntityRepository
    {
        return $this->createQueryBuilder('c')
            ->select('count(c.isChecked)')
-           ->andWhere('c.isChecked = 1')
+           ->andWhere('c.isChecked = true')
            ->orderBy('c.id', 'ASC')
            ->getQuery()
            ->getSingleScalarResult()

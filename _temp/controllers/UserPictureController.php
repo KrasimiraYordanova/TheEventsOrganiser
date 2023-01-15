@@ -24,13 +24,23 @@ class UserPictureController extends AbstractController
     }
 
     #[Route('/new', name: 'app_user_picture_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PictureRepository $pictureRepository): Response
+    public function new(Request $request, PictureRepository $pictureRepository,  FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
         $picture = new Picture();
         $form = $this->createForm(PictureType::class, $picture);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            // dd($form);
+
+            if($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile, 'Pre-Event-Photos');
+                $picture->setNamePath($imageFileName);
+            }
+            $picture->setSlug($slugger->slug($picture->getNamePath()));
+            $picture->setAlbum('Pre-Event');
             $pictureRepository->save($picture, true);
 
             return $this->redirectToRoute('app_user_picture_index', [], Response::HTTP_SEE_OTHER);

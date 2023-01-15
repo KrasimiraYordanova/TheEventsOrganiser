@@ -9,7 +9,9 @@
 	<div class="container">
 
 		<div class="marginTop">
-			<h1 class="primary">Create new User</h1>
+			<h1 class="primary">
+			{% if edit %} Editer l'{%else%} Créer un nouveau{% endif %} utilisateur</h1>
+			</h1>
 		</div>
 
 		{{ form_start(form, {'attr': {'class': 'table-container'}}) }}
@@ -18,7 +20,7 @@
 			</div>
               
 			{{ form_widget(form)}}
-			{{ form_row(form.client) }}
+			{# {{ form_row(form.client) }} #}
 			<button class="button">{{ button_label|default('Save') }}</button>
 			<a class="button" href="{{ path('app_admin_user_index') }}">Dismiss</a>
 		{{ form_end(form) }}

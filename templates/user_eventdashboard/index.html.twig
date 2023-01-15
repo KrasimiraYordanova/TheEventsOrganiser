@@ -29,7 +29,7 @@
                                 <p class="dash-event">n of guests attending the wedding</p>
                                 <p class="dash-event">n awaiting for a reply</p>
                             </div>
-                            <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_guest_index')}}">voir tous les invitées
+                            <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_guest_index', {id: eventList.id}) }}">voir tous les invitées
                                     &rarr;</a>
                             </p>
                         </div>
@@ -39,14 +39,14 @@
                                 <p class="dash-event">Coût total: </p>
                                 <p class="dash-event">Total payé: </p>
                             </div>
-                            <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_expense_index')}}">voir mon budget &rarr;</a>
+                            <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_expense_index', {id: eventList.id})}}">voir mon budget &rarr;</a>
                             </p>
                         </div>
                     </div>
 
                     <div class="dash-item dash-item4">
                         <h3 class="dashboard-tertiary-smaller">Check-list</h3>
-                        <div class="item-list">
+                        <div class="item-list-check">
                             <div class="item-list-single">
                                 <p class="dash-event">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit
                                     enim
@@ -54,12 +54,13 @@
 
                             </div>
                         </div>
-                        <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_checklist_index')}}">voir mon to dos list &rarr;</a>
+                        <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_checklist_index', {id: eventList.id})}}">voir mon to dos list &rarr;</a>
                         </p>
                     </div>
                 </div>
                 <div class="dash-item dash-item5">
-                    <div class="item-list">
+                    <h3 class="dashboard-tertiary-smaller">Rdvs</h3>
+                    <div class="item-list-check">
                         <div class="item-list-single">
                             <p class="dash-event">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit enim
                                 quas et, laborum nemo sint voluptates cupiditate. Quisquam, veritatis tempore?</p>

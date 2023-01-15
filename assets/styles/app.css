@@ -9,6 +9,13 @@
     border: none;
 }
 
+/* a:link, a:hover {
+    color: rgb(151, 151, 151);
+}
+a:active, a:visited {
+    color: rgb(151, 151, 151);
+} */
+
 /* .btn:hover {
     background-position: right center; */
     /* change the direction of the change here */
@@ -35,9 +42,9 @@
 
 .wedding-event-btn {
     display: inline-block;
-    background-color: #3f3f3f;
+    background-color: #535353;
     border-radius: 0.3rem;
-    color: white;
+    color: #ffffff;
     padding: 8px 32px;
     text-align: center;
     text-decoration: none;
@@ -120,7 +127,7 @@ body {
     font-family: "Poppins", sans-serif;
     font-weight: 300;
     line-height: 1.7;
-    color: #444;
+    color: #333;
     background-color: #f3f3f3;
 }
 
@@ -178,6 +185,10 @@ body {
     height: 9rem;
     padding: 0 6rem;
     z-index: 100;
+}
+
+.nav {
+    border-bottom: 1px solid #313131;
 }
 
 .nav__logo {
@@ -839,7 +850,7 @@ ul {
 
 .bkgrnd-block {
     background-color: #d6a997;
-    border-radius: 0.5rem;
+    border-radius: 0.2rem;
     padding: 4rem;
 }
 
@@ -1069,6 +1080,10 @@ ul {
     gap: 2rem;
     align-items: center;
     flex: 1;
+    background-color: 1px solid #ffffff;
+    box-shadow: 0 0.5em 0.5em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02);
+    border-radius: 0.5rem;
+    padding: 1rem;
 }
 
 .icon-button {
@@ -1202,23 +1217,23 @@ ul {
 } */
 
 .dash-item1 {
-    background-color: #26442d;
+    background-color: #fff;
 }
 
 .dash-item2 {
-    background-color: #666666;
+    background-color: #fff;
 }
 
 .dash-item3 {
-    background-color: #6a1d1d;
+    background-color: #fff;
 }
 
 .dash-item4 {
-    background-color: #4b1515;
+    background-color: #fff;
 }
 
 .dash-item5 {
-    background-color: #b81010;
+    background-color: #fff;
 }
 
 .wedding-img {
@@ -1252,17 +1267,25 @@ ul {
     text-transform: uppercase;
     font-size: 1.4rem;
     margin-bottom: 1rem;
+    color: #1d1d1d;
 }
 
 .dash-event {
     font-size: 1.3rem;
+    color: #1d1d1d;
 }
 
 .action-btns2 {
     margin-left: 2rem;
 }
 
-
+.item-list-check {
+    background-color: #f1f1f1;
+    border-radius: 0.1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
 
 
 .hidden {

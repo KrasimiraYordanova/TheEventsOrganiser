@@ -3,40 +3,49 @@
 {% block nav %} 
 <div class="eventType-menu">
         <div class="menu-button">
-            <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="{# path('app_user_eventdashboard')#}" class="frontmenu-link">tableau de bord</a></p>
+        <a href="{{ path('app_user_eventdashboard', {'id': eventList.id}) }}" class="frontmenu-link">
+            <i class="icon-button fa-solid fa-compass"></i>
+            <p class="text-button">tableau de bord</a></p>
         </div>
         <div class="menu-button">
-            <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="{{ path('app_user_checklist_index') }}" class="frontmenu-link">check-list</a></p>
+        <a href="{{ path('app_user_checklist_index', {'id': eventList.id}) }}" class="frontmenu-link">
+            <i class="icon-button fa-solid fa-list-check"></i>
+            <p class="text-button">to-dos</a></p>
         </div>
         <div class="menu-button">
-            <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="{{path('app_user_expense_index')}}" class="frontmenu-link">budget</a></p>
+        <a href="{{path('app_user_expense_index', {'id': eventList.id})}}" class="frontmenu-link">
+            <i class="icon-button fa-solid fa-file-invoice-dollar"></i>
+            <p class="text-button">budget</a></p>
         </div>
         <div class="menu-button">
-            <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="{{path('app_user_guest_index')}}" class="frontmenu-link">invités</a></p>
+        <a href="{{path('app_user_guest_index', {'id': eventList.id}) }}" class="frontmenu-link">
+            <i class="icon-button fa-solid fa-users"></i>
+            <p class="text-button">invités</a></p>
         </div>
         <div class="menu-button">
-            <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="table.html" class="frontmenu-link">tables</a></p>
+        <a href="{{path('app_user_tabletab_index', {'id': eventList.id}) }}" class="frontmenu-link">
+            <i class="icon-button fa-solid fa-utensils"></i>
+            <p class="text-button">tables</a></p>
         </div>
         <div class="menu-button">
-            <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="{{ path('app_user_eventdashboard_website')}}" class="frontmenu-link">site internet</a></p>
+        <a href="{{ path('app_user_eventdashboard_website', {'id': eventList.id})}}" class="frontmenu-link">
+            <i class="icon-button fa-solid fa-globe"></i>
+            <p class="text-button">site internet</a></p>
         </div>
         <div class="menu-button">
-            <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="photos.html" class="frontmenu-link">galerie pré-évént</a></p>
+        <a href="{{ path('app_user_picture_index', {'id': eventList.id}) }}" class="frontmenu-link">
+            <i class="icon-button fa-solid fa-images"></i>
+            <p class="text-button">galerie pré-évént</a></p>
         </div>
         <div class="menu-button">
-            <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="photos.html" class="frontmenu-link">galerie mariage</a></p>
+        <a href="{{ path('app_user_wedding_picture_index', {'id': eventList.id}) }}" class="frontmenu-link">
+            <i class="icon-button fa-regular fa-images"></i>
+            <p class="text-button">galerie mariage</a></p>
         </div>
         <div class="menu-button">
-            <i class="icon-button fa-solid fa-calendar-days"></i>
-            <p class="text-button"><a href="eventProperties.html" class="frontmenu-link">propriétés d'évént</a></p>
+        <a href="eventProperties.html" class="frontmenu-link">
+            <i class="icon-button fa-solid fa-gear"></i>
+            <p class="text-button">propriétés d'évént</a></p>
         </div>
     </div>
     <button class="hamburger">

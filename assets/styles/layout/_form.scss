@@ -17,3 +17,13 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+a {
+    text-decoration: none;
+}
+a:link, a:hover {
+    color: #8a8a8a;
+}
+a:active, a:visited {
+    color: #8a8a8a;
+}

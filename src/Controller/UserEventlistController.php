@@ -23,51 +23,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserEventlistController extends AbstractController
 {
     #[Route('/', name: 'app_user_eventlist_index', methods: ['GET'])]
-    public function index(EventListRepository $eventListRepository): Response
+    public function index(EventListRepository $eventListRepository, ClientRepository $clientRepo): Response
     {
+        $user = $this->getUser();
+        $client = $clientRepo->findOneBy(['user' => $user]);
+        $event_lists = $eventListRepository->findBy(['client' => $client]);
+
         return $this->render('user_eventlist/index.html.twig', [
-            'event_lists' => $eventListRepository->findAll(),
+            'event_lists' => $event_lists,
         ]);
     }
-
-    // #[Route('/{id}/edit', name: 'app_user_eventlist_edit', methods: ['GET', 'POST'])]
-    // #[Route('/new', name: 'app_user_eventlist_new', methods: ['GET', 'POST'])]
-    // public function new(Request $request, EventList $eventList = null, EventListRepository $eventListRepository, SluggerInterface $slugger, FileUploader $fileUploader): Response
-    // {
-    //     if(!$eventList) {
-    //         $eventList = new EventList();
-    //     }
-       
-    //     $form = $this->createForm(EventListType::class, $eventList);
-    //     $form->remove('createdAt');
-    //     $form->remove('updatedAt');
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $image = $eventList->getImage();
-    //         $imageFile = $form->get('image')->getData();
-
-    //         if($imageFile) {
-    //             if($image) {
-    //                 $fileUploader->delete($image, 'eventImage');
-    //             }
-    //             $imageFileName = $fileUploader->upload($imageFile, 'eventImage');
-    //             $eventList->setImage($imageFileName);
-    //         } else {
-    //             $eventList->setImage($eventList->getImage());
-    //         }
-    //         $eventList->setEventSlug($slugger->slug($eventList->getEventName()));
-    //         $eventListRepository->save($eventList, true);
-            
-    //         return $this->redirectToRoute('app_user_eventlist_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->renderForm('user_eventlist/new.html.twig', [
-    //         'event_list' => $eventList,
-    //         'form' => $form,
-    //     ]);
-    // }
-
+    
     #[Route('/create/{slug}', name: 'app_user_eventlist_form', methods: ['GET', 'POST'])]
     public function createEvent(EventType $eventType, Request $request, EventPropertyRepository $eventPropertyRepo, ClientRepository $clientRepo, PropertyRepository $propertyRepository, EventListRepository $eventListRepo, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
@@ -117,9 +83,7 @@ class UserEventlistController extends AbstractController
             'form' => $form,
         ]);
     }
-
-
-
+    
     // #[Route('/{id}/edit', name: 'app_user_eventlist_edit', methods: ['GET', 'POST'])]
     // public function edit(Request $request, EventList $eventList, EventListRepository $eventListRepository): Response
     // {
@@ -138,13 +102,51 @@ class UserEventlistController extends AbstractController
     //     ]);
     // }
 
-    #[Route('/{id}', name: 'app_user_eventlist_delete', methods: ['POST'])]
-    public function delete(Request $request, EventList $eventList, EventListRepository $eventListRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$eventList->getId(), $request->request->get('_token'))) {
-            $eventListRepository->remove($eventList, true);
-        }
+    // #[Route('/{id}', name: 'app_user_eventlist_delete', methods: ['POST'])]
+    // public function delete(Request $request, EventList $eventList, EventListRepository $eventListRepository): Response
+    // {
+    //     if ($this->isCsrfTokenValid('delete'.$eventList->getId(), $request->request->get('_token'))) {
+    //         $eventListRepository->remove($eventList, true);
+    //     }
 
-        return $this->redirectToRoute('app_user_eventlist_index', [], Response::HTTP_SEE_OTHER);
-    }
+    //     return $this->redirectToRoute('app_user_eventlist_index', [], Response::HTTP_SEE_OTHER);
+    // }
+
+    // #[Route('/{id}/edit', name: 'app_user_eventlist_edit', methods: ['GET', 'POST'])]
+    // #[Route('/new', name: 'app_user_eventlist_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EventList $eventList = null, EventListRepository $eventListRepository, SluggerInterface $slugger, FileUploader $fileUploader): Response
+    // {
+    //     if(!$eventList) {
+    //         $eventList = new EventList();
+    //     }
+       
+    //     $form = $this->createForm(EventListType::class, $eventList);
+    //     $form->remove('createdAt');
+    //     $form->remove('updatedAt');
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $image = $eventList->getImage();
+    //         $imageFile = $form->get('image')->getData();
+
+    //         if($imageFile) {
+    //             if($image) {
+    //                 $fileUploader->delete($image, 'eventImage');
+    //             }
+    //             $imageFileName = $fileUploader->upload($imageFile, 'eventImage');
+    //             $eventList->setImage($imageFileName);
+    //         } else {
+    //             $eventList->setImage($eventList->getImage());
+    //         }
+    //         $eventList->setEventSlug($slugger->slug($eventList->getEventName()));
+    //         $eventListRepository->save($eventList, true);
+            
+    //         return $this->redirectToRoute('app_user_eventlist_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->renderForm('user_eventlist/new.html.twig', [
+    //         'event_list' => $eventList,
+    //         'form' => $form,
+    //     ]);
+    // }
 }

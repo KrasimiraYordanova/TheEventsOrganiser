@@ -24,7 +24,7 @@
                 <a href="{{ path('front_index') }}" id="0" data-anchor="0" class="nav__link">Accueil</a>
             </li>
             <li class="nav__item">
-                <a href="contact.html" id="1" data-anchor="1"
+                <a href="{{ path('front_contact') }}" id="1" data-anchor="1"
                     class="nav__link nav__link--btn btn--show-modal">Contact</a>
             </li>
            
@@ -34,7 +34,7 @@
                 <a href="#" id="4" data-anchor="4" class="nav__link"><i class="fa-solid fa-user"></i></a>
                 <ul class="dropdown-menu hidden">
                     <li><a class="dropdown-menu__link" href="#">Account</a></li>
-                    <li><a class="dropdown-menu__link" href="{{ path('app_logout') }}#">Logout</a></li>
+                    <li><a class="dropdown-menu__link" href="{{ path('app_logout') }}">Logout</a></li>
                 </ul>
             </li>
             {% else %}

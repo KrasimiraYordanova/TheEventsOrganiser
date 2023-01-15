@@ -1,0 +1,45 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    
+
+   <div class="dashboard-center-container">
+        <h1 class="dashboard-title">Mon Event Planner Admin Dashboard</h1>
+        <div class="bkgrnd-block">
+            <div class="flex-block">
+                <div class="left">
+
+                    <h2 class="dashboard-secondary-back">cinq derniers types d'événements</h2>
+                    <div class="list">
+                    {% for eventType in eventTypes %}
+                        <h3 class="dashboard-tertiary"><a href="{{ path('app_admin_eventtype_show', {'id': eventType.id}) }}">{{ eventType.name }}</a></h3>
+                    {% endfor %}
+                        <p class="ev event-typelist"><a class="event-typelist-link" href="{{ path('app_admin_eventtype_index') }}">types d'événements &rarr;</a></p>
+                    </div>
+
+                    <h2 class="dashboard-secondary-back">cinq dernières propriétés</h2>
+                    <div class="list">
+                    {% for property in properties %}
+                        <h3 class="dashboard-tertiary"><a href="{{ path('app_admin_property_show', {'id': property.id}) }}">{{ property.name }}</a></h3>
+                    {% endfor %}
+                        <p class="ev event-property"><a class="event-typelist-link" href="{{ path('app_admin_property_index') }}">tous les propriétés &rarr;</a></p>
+                    </div>
+
+                    <h2 class="dashboard-secondary-back">cinq derniers utilisateurs</h2>
+                    <div class="list">
+                    {% for user in users %}
+                        <h3 class="dashboard-tertiary">
+                        <a href="{{ path('app_admin_user_show', {'id': user.id}) }}">
+                        {{ user.firstname}} {{ user.lastname}}</h3>
+                        </a>
+                    {% endfor %}
+                        <p class="ev event-user"><a class="event-typelist-link" href="{{ path('app_admin_user_index') }}">tous les utilisateurs &rarr;</a></p>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+{% endblock %}

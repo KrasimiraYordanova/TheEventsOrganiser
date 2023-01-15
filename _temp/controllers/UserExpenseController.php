@@ -15,45 +15,74 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/user/expense')]
 class UserExpenseController extends AbstractController
 {
+    // #[Route('/', name: 'app_user_expense_index', methods: ['GET'])]
+    // public function index(ExpenseRepository $expenseRepository, ManagerRegistry $doctrine): Response
+    // {
+    //     $repository = $doctrine->getRepository(Expense::class);
+    //     $expenses = $repository->expensesRemaining();
+    //     $totalPaid = $repository->sumPaidExpenses();
+    //     return $this->render('user_expense/index.html.twig', [
+    //         'expenses' => $expenses,
+    //         'totalPaid' =>$totalPaid[0]
+    //     ]);
+    // }
+
     #[Route('/', name: 'app_user_expense_index', methods: ['GET'])]
-    public function index(ExpenseRepository $expenseRepository, ManagerRegistry $doctrine): Response
+    #[Route('/{id}/edit', name: 'app_user_expense_edit', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_user_expense_new', methods: ['GET', 'POST'])]
+    public function index(Request $request, Expense $expense = null, ExpenseRepository $expenseRepository, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
     {
         $repository = $doctrine->getRepository(Expense::class);
         $expenses = $repository->expensesRemaining();
         $totalPaid = $repository->sumPaidExpenses();
-        return $this->render('user_expense/index.html.twig', [
-            'expenses' => $expenses,
-            'totalPaid' =>$totalPaid[0]
-        ]);
-    }
 
-    #[Route('/{id}/edit', name: 'app_user_expense_edit', methods: ['GET', 'POST'])]
-    #[Route('/new', name: 'app_user_expense_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Expense $expense = null, ExpenseRepository $expenseRepository, SluggerInterface $slugger): Response
-    {
         if(!$expense){
-        $expense = new Expense();
-        }
-
-        $form = $this->createForm(ExpenseType::class, $expense);
-        $form->remove('createdAt');
-        $form->remove('updatedAt');
-        $form->remove('eventName');
-        $form->handleRequest($request);
-
+            $expense = new Expense();
+            }
+    
+            $form = $this->createForm(ExpenseType::class, $expense);
+            $form->handleRequest($request);
+    
         if ($form->isSubmitted() && $form->isValid()) {
-            $expense->setSlug($slugger->slug($expense->getName())->lower());
-            $expenseRepository->save($expense, true);
-
-            return $this->redirectToRoute('app_user_expense_index', [], Response::HTTP_SEE_OTHER);
+                $expense->setSlug($slugger->slug($expense->getName())->lower());
+                $expenseRepository->save($expense, true);
+    
+                return $this->redirectToRoute('app_user_expense_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('user_expense/new.html.twig', [
+        return $this->renderForm('user_expense/index.html.twig', [
+            'expenses' => $expenses,
+            'totalPaid' =>$totalPaid[0],
             'expense' => $expense,
             'edit' => $expense->getId(),
-            'form' => $form,
+            'expenseForm' => $form,
         ]);
     }
+
+    // #[Route('/{id}/edit', name: 'app_user_expense_edit', methods: ['GET', 'POST'])]
+    // #[Route('/new', name: 'app_user_expense_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, Expense $expense = null, ExpenseRepository $expenseRepository, SluggerInterface $slugger): Response
+    // {
+    //     if(!$expense){
+    //     $expense = new Expense();
+    //     }
+
+    //     $form = $this->createForm(ExpenseType::class, $expense);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $expense->setSlug($slugger->slug($expense->getName())->lower());
+    //         $expenseRepository->save($expense, true);
+
+    //         return $this->redirectToRoute('app_user_expense_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->renderForm('user_expense/new.html.twig', [
+    //         'expense' => $expense,
+    //         'edit' => $expense->getId(),
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{id}', name: 'app_user_expense_show', methods: ['GET'])]
     public function show(Expense $expense): Response
