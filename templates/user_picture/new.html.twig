@@ -7,5 +7,11 @@
 
     {{ include('user_picture/_form.html.twig') }}
 
-    <a href="{{ path('app_user_picture_index') }}">back to list</a>
+    <a href="{{ path('app_user_picture_index', {'id': eventList.id}) }}">back to list</a>
 {% endblock %}
+
+
+{# <form class="photo-form" action="/action_page.php">
+            <input type="file" id="myFile" name="filename">
+            <input class="btn formBtn-photo" id="myFileBtn" type="submit">
+        </form> #}

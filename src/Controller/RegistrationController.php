@@ -50,4 +50,11 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+
+    // #[Route('/{id}/edit/user', name: 'app_user_edit', methods: ['GET', 'POST'])]
+    // public function editUser(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    // {
+    // }
+
 }

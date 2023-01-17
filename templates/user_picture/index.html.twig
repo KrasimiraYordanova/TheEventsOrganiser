@@ -4,44 +4,8 @@
 
 {% block body %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>NamePath</th>
-                <th>Slug</th>
-                <th>Album</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for picture in pictures %}
-            <tr>
-                <td>{{ picture.id }}</td>
-                <td>{{ picture.namePath }}</td>
-                <td>{{ picture.slug }}</td>
-                <td>{{ picture.album }}</td>
-                <td>{{ picture.createdAt ? picture.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ picture.updatedAt ? picture.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_user_picture_show', {'id': picture.id}) }}">show</a>
-                    <a href="{{ path('app_user_picture_edit', {'id': picture.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_user_picture_new') }}">Create new</a>
-{% endblock %}
-
-<div class="dashboard-center-container">
+    <div class="dashboard-center-container">
         <div class="item-border">
             <h2 class="item-title">My pre-event photos</h2>
         </div>
@@ -49,15 +13,11 @@
         <div class="bkgrnd-block">
             <div class="photo-list">
                 <div class="item-list-photo">
-                    <img class="wedding-img" src="images/heart.jpg" alt="wedding">
-                </div>
-                <div class="item-list-photo">
-                    <img class="wedding-img" src="images/heart.jpg" alt="wedding">
+                    <img class="wedding-img" src="{{ asset('uploads/Pre-Event-Photos/'~ pictures.namePath )}}" alt="wedding">
                 </div>
             </div>
         </div>
-        <form class="photo-form" action="/action_page.php">
-            <input type="file" id="myFile" name="filename">
-            <input class="btn formBtn-photo" id="myFileBtn" type="submit">
-        </form>
+        <a href="{{ path('app_user_picture_new', {'id': eventList.id}) }}" class="btn btn-item">Ajouter image</a>
     </div>
+
+{% endblock %}

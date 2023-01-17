@@ -39,18 +39,30 @@ class ChecklistRepository extends ServiceEntityRepository
         }
     }
 
-//     public function isCheckedCount($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->select('count(c.isChecked)')
-//            ->where('c.eventList = :val')
-//            ->andWhere('c.isChecked = true')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->getQuery()
-//            ->getSingleScalarResult()
-//        ;
-//    }
+    public function isCheckedCount($value): array
+   {
+       return $this->createQueryBuilder('c')
+           ->select('count(c.isChecked) as check')
+           ->where('c.eventList = :val')
+           ->andWhere('c.isChecked = true')
+           ->setParameter('val', $value)
+           ->orderBy('c.id', 'ASC')
+           ->getQuery()
+           ->getScalarResult()
+       ;
+   }
+    public function isUncheckedCount($value): array
+   {
+       return $this->createQueryBuilder('c')
+           ->select('count(c.isChecked) as uncheck')
+           ->where('c.eventList = :val')
+           ->andWhere('c.isChecked = false')
+           ->setParameter('val', $value)
+           ->orderBy('c.id', 'ASC')
+           ->getQuery()
+           ->getScalarResult()
+       ;
+   }
 
 //    /**
 //     * @return Checklist[] Returns an array of Checklist objects

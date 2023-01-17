@@ -1,4 +1,38 @@
 @import '~@fortawesome/fontawesome-free/css/all.css';
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,800;1,400;1,800&display=swap');
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    /*font-size: 62.5%;*/
+    font-size:85%;
+}
+
+body {
+    font-family: 'Raleway', 'Poppins', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #333;
+    background-color: #f3f3f3;
+}
+
+.container {
+    max-width: 100rem;
+    margin: 7rem auto 15rem auto;
+    display: flex;
+    /* align-items: flex-start; */
+}
+
+.section-container {
+    max-width: 130rem;
+    margin: 0 auto;
+}
 
 .btn {
     padding: 10px 90px;
@@ -111,37 +145,7 @@ a:active, a:visited {
     color: #333;
 }
 
-*,
-*::after,
-*::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-html {
-    font-size: 62.5%;
-}
-
-body {
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-    line-height: 1.7;
-    color: #333;
-    background-color: #f3f3f3;
-}
-
-.container {
-    max-width: 100rem;
-    margin: 7rem auto 15rem auto;
-    display: flex;
-    /* align-items: flex-start; */
-}
-
-.section-container {
-    max-width: 130rem;
-    margin: 0 auto;
-}
 
 /* HERO SECTION HOME */
 .header {
@@ -902,7 +906,7 @@ ul {
 .item-summery {
     display: flex;
     flex-direction: row;
-    gap: 15rem;
+    gap: 8rem;
 
 }
 
@@ -1031,7 +1035,7 @@ ul {
 }
 
 .website-image-div {
-    width: 70%;
+    width: 40%;
     margin: 0 auto;
 }
 
@@ -1103,9 +1107,11 @@ ul {
 }
 
 .text-button {
-    text-transform: uppercase;
-    font-size: 0.8rem;
+    /*text-transform: uppercase;*/
+    font-size: 1rem;
+    font-weight: 800;
     align-self: center;
+    text-align: center;
 }
 
 .frontmenu-link {
@@ -1450,11 +1456,13 @@ ul {
 .currentWeddingInfo {
     position: absolute;
     top: 25%;
-    left: 40%;
+    left: 31%;
     display: flex;
     flex-direction: column;
     gap: 4rem;
-    align-items: center ;
+    align-items: center;
+    background-color: #FFF5;
+    padding: 1rem;
 }
 
 /*MEDIA QUERY PAGE  */

@@ -11,6 +11,7 @@ use App\Entity\Checklist;
 use App\Entity\EventList;
 use App\Entity\EventType;
 use App\Form\ExpenseType;
+use App\Form\PictureType;
 use App\Form\TabletabType;
 use App\Form\ChecklistType;
 use App\Form\EventListType;
@@ -24,9 +25,9 @@ use App\Repository\PropertyRepository;
 use App\Repository\TabletabRepository;
 use App\Repository\ChecklistRepository;
 use App\Repository\EventListRepository;
+use App\Repository\EventTypeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\EventPropertyRepository;
-use App\Repository\EventTypeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,11 +56,17 @@ class UserEventController extends AbstractController
 
     public function indexChecklist(EventList $eventList, Request $request, ChecklistRepository $checklistRepository): Response
     {
-        $eventListId = $eventList->getId();
+        $allChecklists = $checklistRepository->findBy(['eventList' => $eventList->getId()]);
+        // dd($allChecklists);
+        $checked = $checklistRepository->isCheckedCount($eventList->getId());
+        $unchecked = $checklistRepository->isUncheckedCount($eventList->getId());
+        // dd($unchecked[0]);
 
         return $this->render('user_checklist/index.html.twig', [
-            'checklists' => $checklistRepository->findBy(['eventList' => $eventList]),
-            // 'checked' => $checklistRepository->isCheckedCount($eventListId),
+            'checklists' => $allChecklists,
+            'checked' => $checked[0],
+            'unchecked' => $unchecked[0],
+
             'eventList' => $eventList,
         ]);
     }
@@ -143,13 +150,12 @@ class UserEventController extends AbstractController
     public function indexExpense(EventList $eventList, ExpenseRepository $expenseRepository, ManagerRegistry $doctrine): Response
     {
         
-        $repository = $doctrine->getRepository(Expense::class);
-        $expenses = $repository->expensesRemaining();
-        $totalPaid = $repository->sumPaidExpenses();
+        //$repository = $doctrine->getRepository(Expense::class);
+        //$expenses = $expenseRepository->expensesRemaining();
+        $totalPaid = $expenseRepository->sumPaidExpenses($eventList->getId());
 
         return $this->render('user_expense/index.html.twig', [
-            'allExpenses' => $expenseRepository->findBy(['eventList' => $eventList]),
-            'expenses' => $expenses,
+            'expenses' => $eventList->getExpenses(),
             'totalPaid' => $totalPaid[0],
             // 'expense' => $expense,
             'eventList' => $eventList,
@@ -232,18 +238,18 @@ class UserEventController extends AbstractController
     {
 
         $repository = $doctrine->getRepository(Guest::class);
-        $attendings = $repository->guestsCount("attending");
-        $declines = $repository->guestsCount("declined");
-        // $awaitings = $repository->guestsCount();
+        $allGuestNumber = $repository->allGuestCount($eventList->getId());
 
-        $vegans = $repository->dietCount('vegan');
-        $vegetarians = $repository->dietCount('vegetarian');
-        $omnivores = $repository->dietCount('omnivore');
-        $allGuestNumber = $repository->allGuestCount();
+        $attendings = $repository->guestsCount($eventList->getId(),"attending");
+        $declines = $repository->guestsCount($eventList->getId(), "declined");
+
+        $vegans = $repository->dietCount($eventList->getId(),'vegan');
+        $vegetarians = $repository->dietCount($eventList->getId(),'vegetarian');
+        $omnivores = $repository->dietCount($eventList->getId(),'omnivore');
 
 
         return $this->render('user_guest/index.html.twig', [
-            'guests' => $guestRepository->findAll(),
+            'guests' => $guestRepository->findBy(['eventList' => $eventList->getId()]),
             'guestNumber' => $allGuestNumber[0],
             'attendings' => $attendings[0],
             'declines' => $declines[0],
@@ -423,13 +429,18 @@ class UserEventController extends AbstractController
     }
 
     // WEBSITE
-    #[Route('/website', name: 'app_user_eventdashboard_website')]
-    public function website(EventList $eventList): Response
-    {
-        return $this->render('user_eventdashboard/website.html.twig', [
-            'eventList' => $eventList,
-        ]);
-    }
+    // #[Route('/website', name: 'app_user_eventdashboard_website')]
+    // public function website(EventList $eventList): Response
+    // {
+    //     return $this->render('user_eventdashboard/website.html.twig', [
+    //         'eventList' => $eventList,
+    //     ]);
+    // }
+
+
+
+
+
 
     // PRE EVENT PHOTOS
 
@@ -437,8 +448,10 @@ class UserEventController extends AbstractController
     #[Route('/pre_event_photos', name: 'app_user_picture_index', methods: ['GET'])]
     public function indexPreevent(EventList $eventList, PictureRepository $pictureRepository): Response
     {
+        $pictures = $pictureRepository->findBy(['eventList' => $eventList->getId(), 'album' => 'Pre Event Photos']);
+        // dd($pictures);
         return $this->render('user_picture/index.html.twig', [
-            'pictures' => $pictureRepository->findBy(['album' => 'Pre Event Photos']),
+            'pictures' => $pictures,
             'eventList' => $eventList,
         ]);
     }
@@ -462,9 +475,10 @@ class UserEventController extends AbstractController
             }
             $picture->setSlug($slugger->slug($picture->getNamePath()));
             $picture->setAlbum('Pre-Event');
+            $picture->setEventList($eventList);
             $pictureRepository->save($picture, true);
 
-            return $this->redirectToRoute('app_user_picture_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_picture_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_picture/new.html.twig', [
@@ -476,8 +490,8 @@ class UserEventController extends AbstractController
 
 
     // PRE-EVENT PHOTOS SHOW
-    #[Route('/pre_event_photos/preEventPhoto_id}', name: 'app_user_wedding_picture_show', methods: ['GET'])]
-    public function showPreevent(Picture $picture): Response
+    #[Route('/pre_event_photos/{preEventPhoto_id}', name: 'app_user_wedding_picture_show', methods: ['GET'])]
+    public function showPreevent(EventList $eventList, Picture $picture, Request $request, PictureRepository $pictureRepository,  FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
         return $this->render('user_picture/show.html.twig', [
             'picture' => $picture,
@@ -504,14 +518,14 @@ class UserEventController extends AbstractController
     public function indexWedding(EventList $eventList, PictureRepository $pictureRepository): Response
     {
         return $this->render('user_picture/index.html.twig', [
-            'pictures' => $pictureRepository->findBy(['album' => 'Event Photos']),
+            'pictures' => $pictureRepository->findBy(['eventList' => $eventList->getId(), 'album' => 'Event Photos']),
             'eventList' => $eventList,
         ]);
     }
 
     // WEDDING PHOTOS CREATE
     #[Route('/wedding_photos/new', name: 'app_user_wedding_picture_new', methods: ['GET', 'POST'])]
-    public function newWedding(Request $request, PictureRepository $pictureRepository,  FileUploader $fileUploader, SluggerInterface $slugger): Response
+    public function newWedding(EventList $eventList, Request $request, PictureRepository $pictureRepository,  FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
         $picture = new Picture();
         $form = $this->createForm(PictureType::class, $picture);
@@ -575,13 +589,13 @@ class UserEventController extends AbstractController
         $client = $clientRepo->findOneBy(['user' => $user]);
 
         $eventType = $eventList->getEventType();
+        // dd($eventType);
         //$eventType = $eventTypeRepo->findOneBy(['id' => $eventTypeNeeded->getId()]);
         // taking the right eventType via eventList table to be able to...
         // ... find the right properties
         //$propsNeeded = $propertyRepo->findBy(['eventType' => $eventType->getId()]);
         // and get the values for that event - eventProperty table and get the values for eventListId
         $valuesNeeded = $eventPropertyRepo->findBy(['eventList' => $eventList->getId()]);
-        // dd($eventList);
 
     
         if ($form->isSubmitted() && $form->isValid()) {
@@ -607,13 +621,12 @@ class UserEventController extends AbstractController
             $eventList->setClient($client);
             $eventListRepo->save($eventList, true);
 
+
             foreach($params as $key=>$value){
                 $id = (int)explode('_', $key)[1];
                 // dd($value);
-                dd($id);
-                $eventList->addEventProperty($value);
-
-                $valuesNeeded->setValue($value)->setProperty($propertyRepository->find($id))->setEventList($eventList);
+                // dd($id);
+ 
                 $eventPropertyRepo->save($value,true);
             }
 
