@@ -20,43 +20,27 @@
 				{% for tabletab in tabletabs %}
 					<div class="item-list">
 						<div class="item-list-single">
-							<p class="item-parag underline">Table 1</p>
+							<p class="item-parag underline">{{ tabletab.name}}</p>
 							<div class="action-buttons marg">
 								<p>
-									<a href="{{ path('app_user_tabletab_edit') }}">
-										<i class="fa-solid fa-pen"></i>
+									<a href="{{ path('app_user_tabletab_edit', {'id': eventList.id, 'tabletab_id': tabletab.id}) }}">
+										<i class="icon fa-solid fa-pen"></i>
 									</a>
 								</p>
 								<p>{{ include('user_tabletab/_delete_form.html.twig') }}</p>
 							</div>
 						</div>
-						<p class="item-parag table-item-parag">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							                        Odit enim quas et,
-							                        laborum nemo sint voluptates cupiditate. Quisquam, veritatis tempore?</p>
+						{% for guest in guests %}
+						<p class="item-parag table-item-parag">{{ guest.name }}</p>
+						{% else %}
+					    <p>aucun invité ajouté</p>
+				        {% endfor %}
 					</div>
 				{% else %}
-					<p>no records found</p>
+					<p>aucun table ajoutée</p>
 				{% endfor %}
 			</div>
 		</div>
-		<a href="{{ path('app_user_tabletab_new') }}" class="modal btn btn-item">ajouter table</a>
-	</div>
-
-	<div class="overlay ">
-
-		<div class="dashboard-center-container">
-			<h3 class="dashboard-tertiary dashboard-tertiary-center">Tables</h3>
-			<div class="bkgrnd-block-itemform">
-				<div class="icon-close">
-					<i class="close fa-solid fa-xmark"></i>
-				</div>
-				{{ form_start(form, {'attr': {'class': 'item-form'}}) }}
-				{{ form_start(form.name) }}
-
-				<button class="btn">{{ button_label|default('Save') }}</button>
-				{{ form_end(form) }}
-			</div>
-		</div>
-
+		<a href="{{ path('app_user_tabletab_new', {'id': eventList.id}) }}" class="btn btn-item">ajouter table</a>
 	</div>
 {% endblock %}

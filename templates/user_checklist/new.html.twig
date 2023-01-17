@@ -1,11 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'userbase.html.twig' %}
 
 {% block title %}{% endblock %}
 
 {% block body %}
-    <h1>Create new Checklist</h1>
 
-    {{ include('user_checklist/_form.html.twig') }}
+        <div class="dashboard-center-container">
+			<h3 class="dashboard-tertiary dashboard-tertiary-center">Check-list</h3>
+			<div class="bkgrnd-block-itemform">
+				{{ form_start(form, {'attr': {'class': 'item-form'}}) }}
 
-    <a href="{{ path('app_user_checklist_index') }}">back to list</a>
+				{{ form_row(form.description) }}
+				{{ form_row(form.isChecked) }}
+				<button class="btn">{{ button_label|default('Save') }}</button>
+                <a href="{{ path('app_user_checklist_index', {'id': eventList.id}) }}" class="btn btn-item">retour</a>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	
 {% endblock %}

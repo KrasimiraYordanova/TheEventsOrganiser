@@ -5,7 +5,7 @@
 {% block body %}
 
 	<div class="dashboard-center-container">
-		<h3 class="dashboard-tertiary dashboard-tertiary-center">Créer votre événement {{ eventType }}</h3>
+		<h3 class="dashboard-tertiary dashboard-tertiary-center">Editez votre événement {{ eventType.name }}</h3>
 		<div class="bkgrnd-block-registerform">
 			{# <div class="icon-close">
 				<i class="close fa-solid fa-xmark"></i>
@@ -17,9 +17,9 @@
 			{{ form_row(form.eventLocation, {'attr': {'class': 'evlocation'}}) }}
 			
 
-			{% for eventProperty in eventProperties %}
-			    <label for="eventProperty">{{ eventProperty.name}}</label>
-                <input type="text" name="property_{{ eventProperty.id }}" value="{{ eventValues.id }}" id="eventProperty" class="eventProperty" required>
+			{% for value in eventValues %}
+			    <label for="eventProperty">{{ value.property.name}}</label>
+                <input type="text" name="property_{{ value.id }}" value="{{ value.value }}" id="eventProperty" class="eventProperty" required>
 			{% endfor %}
 			
             {{ form_row(form.image) }}

@@ -1,11 +1,42 @@
-{% extends 'base.html.twig' %}
+{% extends 'userbase.html.twig' %}
 
-{% block title %}New Guest{% endblock %}
+{% block title %}Guest
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Guest</h1>
 
-    {{ include('user_guest/_form.html.twig') }}
+	<div class="dashboard-center-container">
+		<h3 class="dashboard-tertiary dashboard-tertiary-center">guest-list</h3>
+		<div class="bkgrnd-block-itemform">
+				{{ form_start(form, {'attr': {'class': 'item-form'}}) }}
 
-    <a href="{{ path('app_user_guest_index') }}">back to list</a>
-{% endblock %}
+				{{ form_row(form.name, {'attr': {'class': 'item-form'}} ) }}
+                <div class="form-guest-container">
+
+                <div class="form-guest">
+				{{ form_row(form.rdsvp) }}
+                </div>
+
+                <div class="form-guest">
+				{{ form_row(form.diet) }}
+                </div>
+
+                <div class="form-guest">
+				{{ form_row(form.tabletab) }}
+                </div>
+                </div>
+
+				{{ form_row(form.address) }}
+				{{ form_row(form.email) }}
+				{{ form_row(form.phone) }}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <div class="items-actions">
+					<button class="item-button-i btn-save">{{ button_label|default('Save') }}</button>
+                    <a href="{{ path('app_user_guest_index', {'id': eventList.id}) }}" class="btn btn-item">retour</a>
+				</div>
+				{{ form_end(form) }}
+        </div>
+	</div>
+
+		
+	{% endblock %}

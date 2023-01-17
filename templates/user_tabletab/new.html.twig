@@ -1,11 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'userbase.html.twig' %}
 
-{% block title %}New Tabletab{% endblock %}
+{% block title %}Tables{% endblock %}
 
 {% block body %}
-    <h1>Create new Tabletab</h1>
 
-    {{ include('user_tabletab/_form.html.twig') }}
+        <div class="dashboard-center-container">
+			<h3 class="dashboard-tertiary dashboard-tertiary-center">Tables</h3>
+			<div class="bkgrnd-block-itemform">
 
-    <a href="{{ path('app_user_tabletab_index') }}">back to list</a>
+				{{ form_start(form, {'attr': {'class': 'item-form'}}) }}
+				{{ form_start(form.name) }}
+
+                <div class="items-actions">
+				<button class="btn item-button-i btn-save">{{ button_label|default('Save') }}</button>
+                <a href="{{ path('app_user_tabletab_index', {'id': eventList.id}) }}" class="btn btn-item">retour</a>
+                </div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+
 {% endblock %}

@@ -1,17 +1,17 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Expenses{% endblock %}
 
 {% block body %}
 	<div class="dashboard-center-container">
 		<div class="item-border">
 			<h2 class="item-title">Suivi budgétaire</h2>
 			<div class="item-summery">
-				<h3 class="item-count">Budget total:
+				<h3 class="item-count">Budget total: {{ eventList.eventBudget | format_currency('EUR') }}
 				</h3>
 				<h3 class="item-count">Total payé:
 					{{totalPaid['paidTotal'] |format_currency('EUR')}}</h3>
-				<h3 class="item-count">Total restant:
+				<h3 class="item-count">Total restant: {{ (eventList.eventBudget - totalPaid['paidTotal']) |format_currency('EUR')}}
 				</h3>
 			</div>
 		</div>
@@ -22,16 +22,16 @@
 					<p class="item-parag budget-item-parag">{{ expense.name }}</p>
 					<div class="item-summery">
 						<p class="item-count">Coût total:
-							{{ expense.totalCost }}</p>
+							{{ expense.totalCost |format_currency('EUR') }}</p>
 						<p class="item-count">Total payé:
-							{{ expense.totalPaid }}</p>
+							{{ expense.totalPaid |format_currency('EUR') }}</p>
 						<p class="item-count">Total restant:
-							{{ expense.totalCost -  expense.totalPaid }}</p>
+							{{ (expense.totalCost -  expense.totalPaid) | format_currency('EUR') }}</p>
 					</div>
 					<div class="action-buttons">
 						<p>
-							<a href="{{ path('app_user_expense_edit', {'id': expense.id}) }}">
-								<i class="fa-solid fa-pen"></i>
+							<a href="{{ path('app_user_expense_edit', {'id': eventList.id, 'expense_id': expense.id}) }}">
+								<i class="icon fa-solid fa-pen"></i>
 							</a>
 						</p>
 						<p>{{ include('user_expense/_delete_form.html.twig') }}</p>
@@ -45,30 +45,7 @@
 
 
 		</div>
-		<a href="#" class="modal btn btn-item">Ajouter dépense</a>
+		<a href="{{ path('app_user_expense_new', {'id': eventList.id}) }}" class="btn btn-item">Ajouter dépense</a>
 	</div>
 
-<div class="overlay hidden">
-	<div class="dashboard-center-container">
-		<h3 class="dashboard-tertiary dashboard-tertiary-center">budget</h3>
-		<div class="bkgrnd-block-itemform">
-			<div class="icon-close">
-				<i class="close fa-solid fa-xmark"></i>
-			</div>
-			{{ form_start(expenseForm, {'attr': {'class': 'bkgrnd-block-itemform'}}) }}
-
-			{{ form_row(expenseForm.name) }}
-			{{ form_row(expenseForm.description) }}
-			{{ form_row(expenseForm.totalCost) }}
-			{{ form_row(expenseForm.totalPaid) }}
-
-
-			<div class="items-actions">
-				<button class="item-button-i btn-save">{{ button_label|default('Save') }}</button>
-				{# {{ include('user_expense/_delete_form.html.twig') }} #}
-			</div>
-			{{ form_end(expenseForm) }}
-		</div>
-	</div>
-</div>
 {% endblock %}

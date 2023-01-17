@@ -30,11 +30,11 @@ class FrontController extends AbstractController
         return $this->render('front/contact.html.twig');
     }
 
-    #[Route('/{id}/edit', name: 'app_registration_user_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_front_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = $this->getUser();
-        // dd($user);
+        dd($user);
 
         $form = $this->createForm(UserType::class, $user);
         // if ($user->getId() !== null)
@@ -53,9 +53,9 @@ class FrontController extends AbstractController
             return $this->redirectToRoute('app_user_eventdashboard', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('registration/edituser.html.twig', [
-            'registrationForm' => $form->createView(),
+        return $this->renderForm('front/edituser.html.twig', [
             'user' => $user,
+            'form' => $form,
         ]);
     }
 }
