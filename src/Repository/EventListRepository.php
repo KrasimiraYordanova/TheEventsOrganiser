@@ -39,14 +39,23 @@ class EventListRepository extends ServiceEntityRepository
         }
     }
 
-    // public function lastThreeEvents(): array
-    // {
-    //     return $this->createQueryBuilder('e')
-    //     ->andWhere('e.eventDate > \DateTime()')
-    //     ->setMaxResults(3)
-    //     ->getQuery()
-    //     ->getResult();
-    // }
+    public function lastThreeEvents(): array
+    {
+        return $this->createQueryBuilder('e')
+        ->andWhere('e.eventDate > \DateTime()')
+        ->setMaxResults(3)
+        ->getQuery()
+        ->getResult();
+    }
+    
+    public function pastThreeEvents(): array
+    {
+        return $this->createQueryBuilder('e')
+        ->andWhere('e.eventDate > \DateTime()')
+        ->setMaxResults(3)
+        ->getQuery()
+        ->getResult();
+    }
 
 
 //    /**

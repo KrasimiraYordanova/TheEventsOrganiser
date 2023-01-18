@@ -42,10 +42,13 @@ class UserEventController extends AbstractController
     // DASHBOARD ROUT WITH EVENT ID
     // NEED CHECKLIST REPOSITORY, EVENTLIST RESPOSITORY (DATE), EVENTLIST VALUES(NAMES), BUDGET REPOSITORY, GUEST REPOSITORY
     #[Route('/', name: 'app_user_eventdashboard')]
-    public function index(EventList $eventList, EventPropertyRepository $eventPropertyRepository, GuestRepository $guestRepository, ChecklistRepository $checklistRepository, ExpenseRepository $expenseRepository): Response
+    public function index(EventList $eventList, EventPropertyRepository $eventPropertyRepository, ClientRepository $clientRepository, EventListRepository $eventListRepository, GuestRepository $guestRepository, ChecklistRepository $checklistRepository, ExpenseRepository $expenseRepository): Response
     {
 
-        
+        $user = $this->getUser();
+        $client = $clientRepository->findOneBy(['user' => $user]);
+        $eventList = $eventListRepository->findOneBy(['client' => $client]);
+
         // budget calculation
         $totalCost = $expenseRepository->sumTotalCost($eventList->getId());
         $totalPaid = $expenseRepository->sumPaidExpenses($eventList->getId());
@@ -85,8 +88,12 @@ class UserEventController extends AbstractController
     // CHECKLIST ROUT WITH EVENT ID - DISPLAY, EDIT, CREATE
     #[Route('/checklist', name: 'app_user_checklist_index', methods: ['GET', 'POST'])]
 
-    public function indexChecklist(EventList $eventList, Request $request, ChecklistRepository $checklistRepository): Response
+    public function indexChecklist(EventList $eventList, Request $request, ChecklistRepository $checklistRepository, ClientRepository $clientRepository, EventListRepository $eventListRepository): Response
     {
+        $user = $this->getUser();
+        $client = $clientRepository->findOneBy(['user' => $user]);
+        $eventList = $eventListRepository->findOneBy(['client' => $client]);
+
         $allChecklists = $checklistRepository->findBy(['eventList' => $eventList->getId()]);
         // dd($allChecklists);
         $checked = $checklistRepository->isCheckedCount($eventList->getId());
@@ -301,6 +308,7 @@ class UserEventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $token = $request->request->all();
             $token = array_pop($token);
 
