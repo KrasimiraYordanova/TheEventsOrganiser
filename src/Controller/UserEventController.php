@@ -44,6 +44,8 @@ class UserEventController extends AbstractController
     #[Route('/', name: 'app_user_eventdashboard')]
     public function index(EventList $eventList, EventPropertyRepository $eventPropertyRepository, GuestRepository $guestRepository, ChecklistRepository $checklistRepository, ExpenseRepository $expenseRepository): Response
     {
+
+        
         // budget calculation
         $totalCost = $expenseRepository->sumTotalCost($eventList->getId());
         $totalPaid = $expenseRepository->sumPaidExpenses($eventList->getId());
@@ -462,12 +464,9 @@ class UserEventController extends AbstractController
             'eventList' => $eventList
         ]);
     }
-
-
-
-
-
-
+    
+    
+    
     // PRE EVENT PHOTOS
 
     // PRE-EVENT PHOTOS DISPLAY
@@ -501,7 +500,7 @@ class UserEventController extends AbstractController
             'form' => $form,
             'eventList' => $eventList,
         ]);
-    }
+    } 
 
     // PRE-EVENT PHOTOS CREATE
     #[Route('/pre_event_photos/new', name: 'app_user_picture_new', methods: ['GET', 'POST'])]
@@ -558,20 +557,46 @@ class UserEventController extends AbstractController
 
         return $this->redirectToRoute('app_user_picture_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
     }
-    
+
+
+
 
     // WEDDING PHOTOS DISPLAY
-    #[Route('/wedding_photos', name: 'app_user_wedding_picture_index', methods: ['GET'])]
-    public function indexWedding(EventList $eventList, PictureRepository $pictureRepository): Response
+    #[Route('/wedding_photos', name: 'app_user_wedding_index', methods: ['GET', 'POST'])]
+    public function indexWedding(EventList $eventList, Request $request, PictureRepository $pictureRepository, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
-        return $this->render('user_picture/index.html.twig', [
-            'pictures' => $pictureRepository->findBy(['eventList' => $eventList->getId(), 'album' => 'Event Photos']),
+        $pictures = $pictureRepository->findBy(['eventList' => $eventList->getId(), 'album' => 'wedding']);
+
+        $picture = new Picture();
+        $form = $this->createForm(PictureType::class, $picture);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile, 'Wedding-Photos');
+                $picture->setNamePath($imageFileName);
+            }
+            $picture->setSlug($slugger->slug($picture->getNamePath()));
+            $picture->setAlbum('wedding');
+            $picture->setEventList($eventList);
+            $pictureRepository->save($picture, true);
+
+            return $this->redirectToRoute('app_user_wedding_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+        }
+       
+        
+        return $this->renderForm('user_wedding/index.html.twig', [
+            'pictures' => $pictures,
+            'form' => $form,
             'eventList' => $eventList,
         ]);
     }
 
-    // WEDDING PHOTOS CREATE
-    #[Route('/wedding_photos/new', name: 'app_user_wedding_picture_new', methods: ['GET', 'POST'])]
+
+    // PRE-EVENT PHOTOS CREATE
+    #[Route('/wedding_photos/new', name: 'app_user_wedding_new', methods: ['GET', 'POST'])]
     public function newWedding(EventList $eventList, Request $request, PictureRepository $pictureRepository,  FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
         $picture = new Picture();
@@ -581,20 +606,19 @@ class UserEventController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('image')->getData();
 
-            // dd($form);
-
             if ($imageFile) {
-                $imageFileName = $fileUploader->upload($imageFile, 'Event Photos');
+                $imageFileName = $fileUploader->upload($imageFile, 'Wedding-Photos');
                 $picture->setNamePath($imageFileName);
             }
             $picture->setSlug($slugger->slug($picture->getNamePath()));
-            $picture->setAlbum('Event Photos');
+            $picture->setAlbum('wedding');
+            $picture->setEventList($eventList);
             $pictureRepository->save($picture, true);
 
-            return $this->redirectToRoute('app_user_picture_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_wedding_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('user_picture/new.html.twig', [
+        return $this->renderForm('user_wedding/new.html.twig', [
             'picture' => $picture,
             'form' => $form,
             'eventList' => $eventList,
@@ -602,28 +626,24 @@ class UserEventController extends AbstractController
     }
 
 
-    // WEDDING PHOTOS SHOW
-    #[Route('/wedding_photos/{wedding_id}', name: 'app_user_wedding_picture_show', methods: ['GET'])]
-    public function showWedding(Picture $picture): Response
-    {
-        return $this->render('user_picture/show.html.twig', [
-            'picture' => $picture,
-            'eventList' => $eventList,
-        ]);
-    }
-
-    // WEDDING PHOTOS DELETE
-    #[Route('/wedding_photos/{wedding_id}', name: 'app_user_wedding_picture_delete', methods: ['POST'])]
-    public function deleteWedding(Request $request, Picture $picture, PictureRepository $pictureRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $picture->getId(), $request->request->get('_token'))) {
-            $pictureRepository->remove($picture, true);
-        }
-
-        return $this->redirectToRoute('app_user_picture_index', [], Response::HTTP_SEE_OTHER);
-    }
-
-    // EVENT PROPERTY
+     // WEDDING PHOTOS DELETE
+     #[Route('/wedding_photos/{picture_id}', name: 'app_user_wedding_delete', methods: ['POST'])]
+     #[Entity('picture', expr: 'repository.find(picture_id)')]
+     public function deleteWedding(EventList $eventList, Picture $picture, Request $request, PictureRepository $pictureRepository, FileUploader $fileUploader): Response
+     {
+         if ($this->isCsrfTokenValid('delete' . $picture->getId(), $request->request->get('_token'))) {
+             $fileUploader->delete($picture->getNamePath(), 'Wedding-Photos');
+             $pictureRepository->remove($picture, true);
+         }
+ 
+         return $this->redirectToRoute('app_user_wedding_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+     }
+     
+     
+     
+     
+     
+     // EVENT PROPERTY
     #[Route('/edit', name: 'app_user_eventlist_edit', methods: ['GET', 'POST'])]
     // #[Entity('eventtype', expr: 'repository.find(tabletab_id)')]
     public function editEvent(EventList $eventList, Request $request, EventTypeRepository $eventTypeRepo, EventPropertyRepository $eventPropertyRepo, ClientRepository $clientRepo, PropertyRepository $propertyRepository, EventListRepository $eventListRepo, FileUploader $fileUploader, SluggerInterface $slugger): Response

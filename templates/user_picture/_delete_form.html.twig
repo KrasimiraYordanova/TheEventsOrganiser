@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('app_user_picture_delete', {'id': eventList.id, 'picture_id': picture.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form style="display:inline-block" method="post" action="{{ path('app_user_picture_delete', {'id': eventList.id, 'picture_id': picture.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ picture.id) }}">
     <button><i class="abs fa-solid fa-xmark"></i></button>
 </form>
