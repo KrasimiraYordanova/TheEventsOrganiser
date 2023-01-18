@@ -85,4 +85,15 @@ public function expensesRemaining(): array
            ->getScalarResult()
        ;
    }
+   public function sumTotalCost($listEventId): array
+   {
+       return $this->createQueryBuilder('e')
+           ->select('SUM(e.totalCost) as totalCost')
+           ->andWhere('e.eventList = :id')
+           ->setParameter('id', $listEventId)
+           ->orderBy('e.id', 'ASC')
+           ->getQuery()
+           ->getScalarResult()
+       ;
+   }
 }

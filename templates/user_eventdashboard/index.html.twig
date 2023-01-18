@@ -5,78 +5,112 @@
 
 {% block body %}
 
-	 <div class="dashboard-center-container">
-        <h3 class="dashboard-tertiary dashboard-tertiary-center">Event Dashboard</h3>
-        <div class="bkgrnd-block">
+	<div class="dashboard-center-container">
+	<a href="{{ path('app_user_eventlist_index') }}" class="back-dashboard">Mes événements</a>
+		<h3 class="dashboard-tertiary dashboard-tertiary-center">Event Dashboard</h3>
+		<div class="bkgrnd-block">
 
-            <div class="main">
-                <div class="main-event-dashboard">
-                    <div class="dash-item dash-item1">
-                        <div class="dash-wedding-img">
-                            <img class="wedding-img" src="{{ asset('uploads/eventImage/'~ eventList.image )}}" alt="wedding">
-                        </div>
-                        <div class="wedding-info">
-                            <p class="dash-event">Bride's name & groom's name</p>
-                            <p class="dash-event">Wedding date</p>
-                            <p class="dash-event">N days till wedding</p>
-                        </div>
-                    </div>
+			<div class="main">
+				<div class="main-event-dashboard">
+					<div class="dash-item dash-item1">
+						<div class="dash-wedding-img">
+							<img class="wedding-img" src="{{ asset('uploads/eventImage/'~ eventList.image )}}" alt="wedding">
+						</div>
+						<div class="wedding-info">
+							<p class="dash-event">
+								{{ bride.value }}
+								and
+								{{ groom.value }}
+							</p>
+							<p class="dash-event">{{ eventList.eventDate | date('Y-m-d') }}</p>
+							<p class="dash-event">N days till wedding</p>
+						</div>
+					</div>
 
-                    <div class="two-items">
-                        <div class="dash-item dash-item2">
-                            <h3 class="dashboard-tertiary-smaller">Invitées</h3>
-                            <div class="wedding-info2">
-                                <p class="dash-event">n of guests attending the wedding</p>
-                                <p class="dash-event">n awaiting for a reply</p>
+					<div class="two-items">
+						<div class="dash-item dash-item2">
+							<h3 class="dashboard-tertiary-smaller">Invitées</h3>
+							<div class="wedding-info2">
+								<p class="dash-event">{{ attend.attending }}
+									guests attending the wedding</p>
+								{# <p class="dash-event">{{ awaiting }} awaiting for a reply</p> #}
+							</div>
+							<p class="wedding-go-to">
+								<a class="wedding-go-to-link" href="{{ path('app_user_guest_index', {id: eventList.id}) }}">voir tous les invitées
+									                                    &rarr;</a>
+							</p>
+						</div>
+						<div class="dash-item dash-item3">
+							<h3 class="dashboard-tertiary-smaller">Budget</h3>
+							<div class="wedding-info2">
+								<p class="dash-event">Coût total: {{ totalCost.totalCost | format_currency('EUR') }}
+								</p>
+								<p class="dash-event">Total payé: {{ totalPaid.paidTotal | format_currency('EUR') }}
+								</p>
+								<p class="dash-event">A payé: {{ (totalCost.totalCost - totalPaid.paidTotal) | format_currency('EUR') }}
+								</p>
+							</div>
+							<p class="wedding-go-to">
+								<a class="wedding-go-to-link" href="{{ path('app_user_expense_index', {id: eventList.id})}}">voir mon budget &rarr;</a>
+							</p>
+						</div>
+					</div>
+
+					<div class="dash-item dash-item4">
+						<h3 class="dashboard-tertiary-smaller">Check-list</h3>
+							{% for uncheck in unchecked %}
+						    <div class="item-list-check">
+								<div
+									class="item-list-single"><p class="dash-event">{{ uncheck.description }}</p>
+
+								</div>
                             </div>
-                            <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_guest_index', {id: eventList.id}) }}">voir tous les invitées
-                                    &rarr;</a>
-                            </p>
-                        </div>
-                        <div class="dash-item dash-item3">
-                            <h3 class="dashboard-tertiary-smaller">Budget</h3>
-                            <div class="wedding-info2">
-                                <p class="dash-event">Coût total: </p>
-                                <p class="dash-event">Total payé: </p>
-                            </div>
-                            <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_expense_index', {id: eventList.id})}}">voir mon budget &rarr;</a>
-                            </p>
-                        </div>
-                    </div>
+							{% else %}
+								<p class="dash-event">tout mes tâches sont faites</p>
+							{% endfor %}
+						
+						<p class="wedding-go-to">
+							<a class="wedding-go-to-link" href="{{ path('app_user_checklist_index', {id: eventList.id})}}">voir mes taches &rarr;</a>
+						</p>
+					</div>
+				</div>
+				<div class="dash-item dash-item5">
+					<h3 class="dashboard-tertiary-smaller">Mes rendez-vous</h3>
+					<div class="item-list-check">
+						<div class="item-list-single">
+							<p class="dash-event">8am - Workout</p>
+							<div class="action-buttons action-btns2">
+								<p>
+									<a class="rdv" href="#">edit</a>
+								</p>
+								<p>
+									<a class="rdv" href="#">delete</a>
+								</p>
+							</div>
+						</div>
 
-                    <div class="dash-item dash-item4">
-                        <h3 class="dashboard-tertiary-smaller">Check-list</h3>
-                        <div class="item-list-check">
-                            <div class="item-list-single">
-                                <p class="dash-event">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit
-                                    enim
-                                    quas et, laborum nemo sint voluptates cupiditate. Quisquam, veritatis tempore?</p>
+					</div>
+					<div class="item-list-check">
+						<div class="item-list-single">
+							<p class="dash-event">10am - GP</p>
+							<div class="action-buttons action-btns2">
+								<p>
+									<a class="rdv" href="#">edit</a>
+								</p>
+								<p>
+									<a class="rdv" href="#">delete</a>
+								</p>
+							</div>
+						</div>
+					</div>
+					<p class="wedding-go-to">
+						<a class="wedding-go-to-link" href="#">voir mon to dos list &rarr;</a>
+					</p>
+				</div>
+			</div>
 
-                            </div>
-                        </div>
-                        <p class="wedding-go-to"><a class="wedding-go-to-link" href="{{ path('app_user_checklist_index', {id: eventList.id})}}">voir mes taches &rarr;</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="dash-item dash-item5">
-                    <h3 class="dashboard-tertiary-smaller">Rdvs</h3>
-                    <div class="item-list-check">
-                        <div class="item-list-single">
-                            <p class="dash-event">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit enim
-                                quas et, laborum nemo sint voluptates cupiditate. Quisquam, veritatis tempore?</p>
-                            <!-- <div class="action-buttons action-btns2">
-                                <p><a href="#">edit</a></p>
-                                <p><a href="#">delete</a></p>
-                            </div> -->
-                        </div>
-                    </div>
-                    <p class="wedding-go-to"><a class="wedding-go-to-link" href="#">voir mon to dos list &rarr;</a></p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
+		</div>
+	</div>
 
 
 {% endblock %}

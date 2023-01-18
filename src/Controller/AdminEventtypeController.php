@@ -22,7 +22,7 @@ class AdminEventtypeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_admin_eventtype_edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}/edit', name: 'app_admin_eventtype_edit', methods: ['GET', 'POST'])]
     #[Route('/new', name: 'app_admin_eventtype_new', methods: ['GET', 'POST'])]
     public function new(EventType $eventType = null, Request $request, EventTypeRepository $eventTypeRepository, SluggerInterface $slugger): Response
     {
@@ -58,7 +58,7 @@ class AdminEventtypeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_admin_eventtype_show', methods: ['GET'])]
+    #[Route('/{slug}', name: 'app_admin_eventtype_show', methods: ['GET'])]
     public function show(EventType $eventType): Response
     {
         return $this->render('admin_eventtype/show.html.twig', [
@@ -84,7 +84,7 @@ class AdminEventtypeController extends AbstractController
     //     ]);
     // }
 
-    #[Route('/{id}', name: 'app_admin_eventtype_delete', methods: ['POST'])]
+    #[Route('/{slug}', name: 'app_admin_eventtype_delete', methods: ['POST'])]
     public function delete(Request $request, EventType $eventType, EventTypeRepository $eventTypeRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$eventType->getId(), $request->request->get('_token'))) {

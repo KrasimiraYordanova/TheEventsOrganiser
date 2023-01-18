@@ -21,7 +21,7 @@ class GuestType extends AbstractType
                     'attending' => 'Attending',
                     'declined' => 'Declined',
                 ],
-                'expanded' => false,
+                'expanded' => true,
                 'multiple'=>false,
                 'required' => false
             ])

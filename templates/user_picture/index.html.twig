@@ -12,12 +12,19 @@
 
         <div class="bkgrnd-block">
             <div class="photo-list">
+            {% for picture in pictures %}
                 <div class="item-list-photo">
-                    <img class="wedding-img" src="{{ asset('uploads/Pre-Event-Photos/'~ pictures.namePath )}}" alt="wedding">
+                    <img class="wedding-img" src="{{ asset('uploads/Pre-Event-Photos/'~ picture.namePath )}}" alt="wedding">
                 </div>
+            {% endfor %}
             </div>
         </div>
-        <a href="{{ path('app_user_picture_new', {'id': eventList.id}) }}" class="btn btn-item">Ajouter image</a>
+        {# <a href="{{ path('app_user_picture_new', {'id': eventList.id}) }}" class="btn btn-item">Ajouter image</a> #}
+        {{ form_start(form, {'attr': {'class': 'photo-form'}}) }}
+        {{ form_row(form.image) }}
+        <button class="file-btn">{{ button_label|default('Save') }}</button>
+        {{ form_end(form) }}
     </div>
+    
 
 {% endblock %}

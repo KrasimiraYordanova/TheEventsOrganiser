@@ -39,10 +39,12 @@ class TabletabRepository extends ServiceEntityRepository
         }
     }
 
-    public function tableCount(): array
+    public function tableCount($value): array
    {
        return $this->createQueryBuilder('t')
            ->select('count(t.name) as numberTables')
+           ->andWhere('t.eventList = :val')
+           ->setParameter('val', $value)
            ->getQuery()
            ->getScalarResult()
        ;

@@ -17,6 +17,7 @@
 			{{ form_errors(form, {'attr': {'class': 'error-input'}}) }}
 		</div>
 		{{ form_row(form.name) }}
+		{{ form_row(form.description) }}
 		<button class="button">{{ button_label|default('Save') }}</button>
 		<a class="button" href="{{ path('app_admin_eventtype_index') }}">dismiss</a>
 		{{ form_end(form) }}

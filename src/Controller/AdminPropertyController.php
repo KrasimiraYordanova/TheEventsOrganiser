@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\Property;
 use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/property')]
 class AdminPropertyController extends AbstractController
@@ -21,9 +22,9 @@ class AdminPropertyController extends AbstractController
             'properties' => $propertyRepository->findAll(),
         ]);
     }
-    #[Route('/{id}/edit', name: 'app_admin_property_edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}/edit', name: 'app_admin_property_edit', methods: ['GET', 'POST'])]
     #[Route('/new', name: 'app_admin_property_new', methods: ['GET', 'POST'])]
-    public function new(Property $property = null, Request $request, PropertyRepository $propertyRepository): Response
+    public function new(Property $property = null, Request $request, PropertyRepository $propertyRepository,SluggerInterface $slugger): Response
     {
         if(!$property) {
         $property = new Property();
@@ -34,6 +35,7 @@ class AdminPropertyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $property->setSlug($slugger->slug($property->getName())->lower());
             $propertyRepository->save($property, true);
 
             return $this->redirectToRoute('app_admin_property_index', [], Response::HTTP_SEE_OTHER);
@@ -46,7 +48,7 @@ class AdminPropertyController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_admin_property_show', methods: ['GET'])]
+    #[Route('/{slug}', name: 'app_admin_property_show', methods: ['GET'])]
     public function show(Property $property): Response
     {
         
@@ -73,7 +75,7 @@ class AdminPropertyController extends AbstractController
     //     ]);
     // }
 
-    #[Route('/{id}', name: 'app_admin_property_delete', methods: ['POST'])]
+    #[Route('/{slug}', name: 'app_admin_property_delete', methods: ['POST'])]
     public function delete(Request $request, Property $property, PropertyRepository $propertyRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$property->getId(), $request->request->get('_token'))) {

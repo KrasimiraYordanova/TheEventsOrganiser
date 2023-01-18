@@ -19,6 +19,7 @@
 			{{ form_errors(form, {'attr': {'class': 'error-input'}}) }}
 		</div>
 		{{ form_row(form.name) }}
+		{{ form_row(form.slug) }}
 		{{ form_row(form.dataType) }}
 		{{ form_row(form.eventType) }}
 		<button class="button">{{ button_label|default('Save') }}</button>

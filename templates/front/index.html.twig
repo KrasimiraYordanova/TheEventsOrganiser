@@ -33,14 +33,10 @@
             <div class="specials">
             {% for eventType in eventTypeList %}
                 <div class="card">
-                    <h3 class="dashboard-tertiary">{{ eventType.name }}<h3>
+                    <h3 class="dashboard-tertiary">{{ eventType.name }}</p>
                     <div class="card-content">
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis unde expedita porro
-                            nemo, explicabo
-                            id? Modi neque harum facilis similique, non enim quidem dolor, voluptas nam deserunt
-                            architecto est iure
-                            quae voluptate, accusamus placeat quos reiciendis tempora exercitationem ipsa perspiciatis.
+                        <p class="eventType-desc">
+                        {{ eventType.description }}
                         </p>
                     </div>
                     <a class="wedding-event-btn" href="{{ path('app_user_eventlist_form', {'slug': eventType.slug}) }}">Créer votre événement</a>

@@ -42,12 +42,39 @@ class UserEventController extends AbstractController
     // DASHBOARD ROUT WITH EVENT ID
     // NEED CHECKLIST REPOSITORY, EVENTLIST RESPOSITORY (DATE), EVENTLIST VALUES(NAMES), BUDGET REPOSITORY, GUEST REPOSITORY
     #[Route('/', name: 'app_user_eventdashboard')]
-    public function index(EventList $eventList): Response
+    public function index(EventList $eventList, EventPropertyRepository $eventPropertyRepository, GuestRepository $guestRepository, ChecklistRepository $checklistRepository, ExpenseRepository $expenseRepository): Response
     {
-        // dd($eventList);
+        // budget calculation
+        $totalCost = $expenseRepository->sumTotalCost($eventList->getId());
+        $totalPaid = $expenseRepository->sumPaidExpenses($eventList->getId());
+        // calculating guests
+        $allGuestNumber = $guestRepository->allGuestCount($eventList->getId());
+        $attendings = $guestRepository->guestsCount($eventList->getId(),"attending");
+        $declines = $guestRepository->guestsCount($eventList->getId(), "declined");
+        // $awating = abs($allGuestNumber - ($attendings + $declines));
+
+        // last three unchecked tasks
+        $checklistUnchecked = $checklistRepository->findBy(['eventList' => $eventList->getId(), 'isChecked' => false], ['createdAt' => 'DESC'], 5);
+
+        // taking the values of the event
+        $valuesNeeded = $eventPropertyRepository->findBy(['eventList' => $eventList->getId()]); 
+
+        $bride = $valuesNeeded[0];
+        $groom = $valuesNeeded[2];
 
         return $this->render('user_eventdashboard/index.html.twig', [
             'eventList' => $eventList,
+
+            'bride' => $bride,
+            'groom' => $groom,
+
+            'attend' => $attendings[0],
+            // 'awaiting' => $awating[0]
+
+            'unchecked' => $checklistUnchecked,
+
+            'totalCost' => $totalCost[0],
+            'totalPaid' => $totalPaid[0]
         ]);
     }
 
@@ -339,11 +366,10 @@ class UserEventController extends AbstractController
     
     // TABLE ROUT WITH EVENT ID - DISPLAY, EDIT, CREATE
     #[Route('/table', name: 'app_user_tabletab_index', methods: ['GET'])]
-    public function indexTable(EventList $eventList, GuestRepository $guestRepo , TabletabRepository $tabletabRepository, ManagerRegistry $doctrine): Response
+    public function indexTable(EventList $eventList, GuestRepository $guestRepo , TabletabRepository $tabletabRepository): Response
     {
-        $repository = $doctrine->getRepository(Tabletab::class);
-        $tableCount = $repository->tableCount();
-        // dd($tableCount[0]);
+        
+        $tableCount = $tabletabRepository->tableCount($eventList->getId());
 
         $tabletabs = $tabletabRepository->findBy(['eventList' => $eventList]);
         $guests = $guestRepo->findBy(['eventList' => $eventList]);
@@ -445,13 +471,34 @@ class UserEventController extends AbstractController
     // PRE EVENT PHOTOS
 
     // PRE-EVENT PHOTOS DISPLAY
-    #[Route('/pre_event_photos', name: 'app_user_picture_index', methods: ['GET'])]
-    public function indexPreevent(EventList $eventList, PictureRepository $pictureRepository): Response
+    #[Route('/pre_event_photos', name: 'app_user_picture_index', methods: ['GET', 'POST'])]
+    public function indexPreevent(EventList $eventList, Request $request, PictureRepository $pictureRepository, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
         $pictures = $pictureRepository->findBy(['eventList' => $eventList->getId(), 'album' => 'Pre Event Photos']);
-        // dd($pictures);
-        return $this->render('user_picture/index.html.twig', [
+
+        $picture = new Picture();
+        $form = $this->createForm(PictureType::class, $picture);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile, 'Pre-Event-Photos');
+                $picture->setNamePath($imageFileName);
+            }
+            $picture->setSlug($slugger->slug($picture->getNamePath()));
+            $picture->setAlbum('Pre-Event');
+            $picture->setEventList($eventList);
+            $pictureRepository->save($picture, true);
+
+            return $this->redirectToRoute('app_user_picture_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+        }
+       
+        
+        return $this->renderForm('user_picture/index.html.twig', [
             'pictures' => $pictures,
+            'form' => $form,
             'eventList' => $eventList,
         ]);
     }
@@ -588,6 +635,7 @@ class UserEventController extends AbstractController
         $user = $this->getUser();
         $client = $clientRepo->findOneBy(['user' => $user]);
 
+        // dd($eventList);
         $eventType = $eventList->getEventType();
         // dd($eventType);
         //$eventType = $eventTypeRepo->findOneBy(['id' => $eventTypeNeeded->getId()]);
@@ -634,6 +682,7 @@ class UserEventController extends AbstractController
         }
 
         return $this->renderForm('user_eventlist/edit.html.twig', [
+            'eventList' => $eventList,
             'eventType' => $eventType,
             'form' => $form,
             'eventValues' => $valuesNeeded

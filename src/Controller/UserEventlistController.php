@@ -149,4 +149,14 @@ class UserEventlistController extends AbstractController
     //         'form' => $form,
     //     ]);
     // }
+
+    #[Route('/{id}', name: 'app_user_eventlist_delete', methods: ['POST'])]
+    public function delete(Request $request, EventList $eventList, EventListRepository $eventListRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$eventList->getId(), $request->request->get('_token'))) {
+            $eventListRepository->remove($eventList, true);
+        }
+
+        return $this->redirectToRoute('app_user_eventlist_index', [], Response::HTTP_SEE_OTHER);
+    }
 }

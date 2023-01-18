@@ -34,6 +34,7 @@ body {
     margin: 0 auto;
 }
 
+
 .btn {
     padding: 10px 90px;
     text-transform: uppercase;
@@ -42,19 +43,6 @@ body {
     border-radius: 5px;
     border: none;
 }
-
-/* a:link, a:hover {
-    color: rgb(151, 151, 151);
-}
-a:active, a:visited {
-    color: rgb(151, 151, 151);
-} */
-
-/* .btn:hover {
-    background-position: right center; */
-    /* change the direction of the change here */
-    /* text-decoration: none;
-} */
 
 .btn__light {
     background-image: linear-gradient(to right, #982b2b, #333);
@@ -72,19 +60,6 @@ a:active, a:visited {
     padding-bottom: 2px;
     cursor: pointer;
     transition: all 0.3s;
-}
-
-.wedding-event-btn {
-    display: inline-block;
-    background-color: #535353;
-    border-radius: 0.3rem;
-    color: #ffffff;
-    padding: 8px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin-bottom: 1rem;
 }
 
 .registerBtn {
@@ -145,6 +120,13 @@ a:active, a:visited {
     color: #333;
 }
 
+.dashboard-tertiary a:link, .dashboard-tertiary a:visited, .dashboard-tertiary a:hover, .dashboard-tertiary a:active {
+    color: #1d1d1d;
+}
+
+.dashboard-secondary a:link,.dashboard-secondary a:visited, .dashboard-secondary a:hover, .dashboard-secondary a:active {
+    color: #1d1d1d;
+}
 
 
 /* HERO SECTION HOME */
@@ -176,11 +158,6 @@ a:active, a:visited {
 .hero-btn {
     margin-top: 5rem;
 }
-
-/* .header {
-    padding: 0 3rem;
-    height: 100vh; 
-   }  */
 
 .nav__header {
     display: flex;
@@ -248,17 +225,7 @@ a:active, a:visited {
     /* overflow: hidden; */
     max-height: 200px;
     transition: 1s;
-    /* padding: 0;
-    opacity: 0; */
 }
-
-/* .dropdown-menu { */
-/* overflow: visible; */
-/* opacity: 1; */
-/* max-height: 200px; */
-/* width: 15rem; */
-/* z-index: 10; */
-/* } */
 
 .dropdown-menu__link {
     display: inline-block;
@@ -266,6 +233,7 @@ a:active, a:visited {
     padding: 0.5rem 1rem;
     color: #666666;
 }
+
 
 .dropdown-menu__link:hover {
     background-color: #333;
@@ -409,9 +377,6 @@ a:active, a:visited {
 }
 
 /* CARD SECTION - 1st section in the home page */
-/* #section-one {
-    padding: 3rem 0 5rem 0;
-} */
 
 .container-home {
     margin: 0 auto;
@@ -493,10 +458,6 @@ a {
     border: none;
 }
 
-/* .hero-block-btn:hover {
-      background-color: #a1a1a1;
-      color: rgb(41, 41, 41);
-    } */
 .hero-title {
     margin-top: 4rem;
     font-size: 5.5rem;
@@ -586,6 +547,10 @@ h4 {
     text-align: center;
 }
 
+.rdv:link,  .rdv:visited, .rdv:active,.rdv:hover{
+    color: #1d1d1d;
+}
+
 #contact-a div {
     text-align: center;
 }
@@ -599,6 +564,20 @@ h4 {
     flex: 2;
     padding-right: 5rem;
     border-right: 0.5px solid #c5c5c5;
+}
+
+.file-btn{
+    width: 10%;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(77, 77, 77);
+    color: white;
+    border-radius: 0.1rem;
+    padding: 1rem 0;
+}
+
+.eitem-parag-link:link, .eitem-parag-link:visited, .eitem-parag-link:hover, .eitem-parag:active {
+    color: #1d1d1d;
 }
 
 .address {
@@ -860,7 +839,7 @@ ul {
     text-align: center;
     font-size: 3rem;
     text-transform: uppercase;
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem; */
 }
 
 .bkgrnd-block {
@@ -1037,6 +1016,7 @@ ul {
 .website-image-div {
     width: 40%;
     margin: 0 auto;
+    position: relative;
 }
 
 .website-image {
@@ -1051,6 +1031,12 @@ ul {
     flex-direction: column;
     gap: 0.5rem;
     width: 40%;
+}
+
+.eventType-desc {
+    font-size: 1.1rem;
+    font-weight: 200;
+    text-transform: lowercase;
 }
 
 .radio {
@@ -1077,6 +1063,13 @@ ul {
     align-items: center;
 }
 
+.guest-info {
+    display: flex;
+    flex-direction: column;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    text-align: center;
+}
 
 
 /* EVENT MAIN MENU */
@@ -1195,7 +1188,6 @@ ul {
 }
 
 .formBtn {
-    margin-top: 4rem;
     background-color: #333;
     color: #d6a997;
     border: none;
@@ -1434,6 +1426,22 @@ ul {
     background-color: rgba(104, 104, 104, 0.63);
 }
 
+.wedding-event-btn {
+    display: inline-block;
+    background-color: #757575;
+    border-radius: 0.3rem;
+    color: #ffffff !important;
+    padding: 8px 32px;
+    text-transform: lowercase;
+    font-weight: 200;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 1rem;
+}
+
+
 
 /* .close-modal_icon {
     position: relative;
@@ -1459,7 +1467,7 @@ ul {
     left: 31%;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 1rem;
     align-items: center;
     background-color: #FFF5;
     padding: 1rem;
@@ -1635,6 +1643,9 @@ ul {
         flex: 1 0 auto;
         max-width: 49%;
     }
+    .header__title {
+        margin-top: 7rem;
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -1659,13 +1670,13 @@ ul {
     }
 
     .hero-title {
-        font-size: 4.5rem;
+        font-size: 3.5rem;
         line-height: 1.35;
     }
 
     .para-prime {
         text-transform: uppercase;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 
     .nav__header {
@@ -1823,7 +1834,8 @@ ul {
         display: block;
         width: 35px;
         cursor: pointer;
-        margin-left: 15rem;
+        margin-left: 10rem;
+        margin-top: 1rem;
 
         appearance: none;
         background: none;
@@ -1858,7 +1870,7 @@ ul {
     }
 
     .eventType-menu-burger {
-        background-color: #a5a5a5;
+        background-color: #d6a997;
         border-radius: 0.2rem;
         padding: 2rem 0;
         width: 80%;
@@ -1918,7 +1930,7 @@ ul {
     }
 
     .web-info {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 }
 @media screen and (max-width: 670px) {
@@ -1965,4 +1977,19 @@ ul {
     .web-info {
         font-size: 1.4rem;
     }
+    .hero-title {
+        font-size: 1.5rem;
+      }
+    .header {
+        height: 56vh;
+      }
+    .hero-title {
+        font-size: 1.9rem;
+      }
+}
+
+@media screen and (max-width: 482px) {
+    .hero-title {
+        font-size: 2.5rem;
+      }
 }

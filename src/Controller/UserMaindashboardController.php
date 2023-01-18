@@ -21,13 +21,4 @@ class UserMaindashboardController extends AbstractController
             // 'pastThreeEvents' => $eventListRepo->findBy(['createdAt' => 'createdAt'], ['createdAt' => 'DESC'], 3)
         ]);
     }
-    
-    // event form page after clicking on event type name - take the event type id and mix eventList table with property table
-    #[Route('/{id}', name: 'eventtype_form', methods: ['GET'])]
-    public function show(EventType $eventType, EventListRepository $eventList, ): Response
-    {
-        return $this->render('admin_eventtype/show.html.twig', [
-            'eventType' => $eventType,
-        ]);
-    }
 }

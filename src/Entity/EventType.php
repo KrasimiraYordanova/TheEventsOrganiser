@@ -32,6 +32,9 @@ class EventType
     #[ORM\OneToMany(mappedBy: 'eventType', targetEntity: EventList::class)]
     private Collection $eventList;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
     public function __construct()
     {
         $this->property = new ArrayCollection();
@@ -123,6 +126,18 @@ class EventType
                 $eventList->setEventType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
