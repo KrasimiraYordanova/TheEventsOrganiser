@@ -30,7 +30,7 @@
 								<p>{{ include('user_tabletab/_delete_form.html.twig') }}</p>
 							</div>
 						</div>
-						{% for guest in guests %}
+						{% for guest in tabletab.guests %}
 						<p class="item-parag table-item-parag">{{ guest.name }}</p>
 						{% else %}
 					    <p>aucun invité ajouté</p>

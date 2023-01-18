@@ -8,12 +8,12 @@
         <div class="item-border">
             <h2 class="item-title">Guest</h2>
             <div class="item-summery">
-                <h3 class="item-count">Participe: {{attendings['attending'] }}</h3>
-                <h3 class="item-count">Décliné: {{declines['declined'] }} </h3>
-                <h3 class="item-count">En attente de réponse: {{ guestNumber.guestNumber - (attendings['attending'] + declines['declined']) }} </h3>
-                <h3 class="item-count">Guests vegans: {{vegans['vegan'] }}</h3>
-                <h3 class="item-count">Guests vegeratians: {{vegetarians['vegetarian'] }} </h3>
-                <h3 class="item-count">Guests omnivores: {{omnivores['omnivore'] }} </h3>
+                <h3 class="item-count">Participe: {{attendings}}</h3>
+                <h3 class="item-count">Décliné: {{declines }} </h3>
+                <h3 class="item-count">En attente de réponse: {{ guestNumber - (attendings + declines) }} </h3>
+                <h3 class="item-count">Guests vegans: {{vegans }}</h3>
+                <h3 class="item-count">Guests vegeratians: {{vegetarians }} </h3>
+                <h3 class="item-count">Guests omnivores: {{omnivores }} </h3>
             </div>
         </div>
 

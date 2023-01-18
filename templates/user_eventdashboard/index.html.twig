@@ -31,9 +31,9 @@
 						<div class="dash-item dash-item2">
 							<h3 class="dashboard-tertiary-smaller">Invitées</h3>
 							<div class="wedding-info2">
-								<p class="dash-event">{{ attend.attending }}
+								<p class="dash-event">{{ attend }}
 									guests attending the wedding</p>
-								{# <p class="dash-event">{{ awaiting }} awaiting for a reply</p> #}
+								<p class="dash-event">{{ awaiting }} awaiting for a reply</p>
 							</div>
 							<p class="wedding-go-to">
 								<a class="wedding-go-to-link" href="{{ path('app_user_guest_index', {id: eventList.id}) }}">voir tous les invitées

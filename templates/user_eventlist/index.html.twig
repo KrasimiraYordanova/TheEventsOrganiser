@@ -16,10 +16,11 @@
                             <p class="eitem-parag">{{ event_list.eventDate ? event_list.eventDate|date('Y-m-d') : '' }}</p>
                             <p class="eitem-parag">{{ event_list.eventBudget |format_currency('EUR') }}</p>
                             <p class="eitem-parag">{{ event_list.eventLocation }}</p>
-                            
+                            {% if event_list.image %}
                             <div class="eitem-parag eimage-box">
                             <img class="event-image" src="{{ asset('uploads/eventImage/'~ event_list.image )}}">
                             </div>
+                            {% endif %}
                             <div class="action-buttons">
                                 {# <p><a href="{{ path('app_user_eventlist_edit', {'id': event_list.id}) }}">
 									<i class="icon fa-solid fa-pen"></i></a></p> #}

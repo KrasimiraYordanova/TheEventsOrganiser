@@ -14,6 +14,7 @@
             <div class="photo-list">
             {% for picture in pictures %}
                 <div class="item-list-photo">
+                    <p>{{ include('user_picture/_delete_form.html.twig') }}</p>
                     <img class="wedding-img" src="{{ asset('uploads/Pre-Event-Photos/'~ picture.namePath )}}" alt="wedding">
                 </div>
             {% endfor %}

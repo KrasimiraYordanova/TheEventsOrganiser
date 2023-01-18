@@ -895,7 +895,6 @@ ul {
 
 .item-border {
     padding: 2rem 0;
-    margin: 3rem;
 }
 
 .btn-item {
@@ -980,7 +979,7 @@ ul {
 .photo-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 1rem;
+    
 }
 
 .photo-form {
@@ -992,8 +991,16 @@ ul {
 
 .item-list-photo {
     border-radius: 0.1rem;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: 0.2rem;
+    position: relative;
+}
+
+.abs {
+    position: absolute;
+    top: 2rem;
+    right: 0.4rem;
+    background-color: rgba(255, 255, 255, 0.664);
+    padding: 0.1rem;
 }
 
 .figure-img {
@@ -1625,7 +1632,7 @@ ul {
         display: flex;
         flex-direction: column;
         flex-flow: wrap;
-        gap: 1rem;
+        gap: 0.5rem;
     }
 
     .item-list-photo {
@@ -1704,6 +1711,7 @@ ul {
         flex: 1 0 auto;
         max-width: 100%;
     }
+    
 
     .event-list {
         display: flex;

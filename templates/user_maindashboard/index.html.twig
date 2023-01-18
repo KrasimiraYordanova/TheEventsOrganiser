@@ -14,9 +14,9 @@
                     <h2 class="dashboard-secondary"><a href="{{ path('app_user_eventlist_index') }}">Tous mes événements</a></h2>
                     <h2 class="dashboard-secondary">Mes événements actuels</h2>
                     <div class="list">
-                        <h3 class="dashboard-tertiary">Wedding</h3>
-                        <h3 class="dashboard-tertiary">Babyshower</h3>
-                        <h3 class="dashboard-tertiary">Hen's party</h3>
+                    {% for eventList in eventLists %}
+                        <h3 class="dashboard-tertiary"><a href="{{ path('app_user_eventdashboard', {'id': eventList.id}) }}">{{ eventList.eventName }}</a></h3>
+                    {% endfor %}
                     </div>
                     <h2 class="dashboard-secondary">Mes trois derniers événements passés</h2>
                     <div class="list">

@@ -51,7 +51,9 @@ class UserEventController extends AbstractController
         $allGuestNumber = $guestRepository->allGuestCount($eventList->getId());
         $attendings = $guestRepository->guestsCount($eventList->getId(),"attending");
         $declines = $guestRepository->guestsCount($eventList->getId(), "declined");
-        // $awating = abs($allGuestNumber - ($attendings + $declines));
+        $awating = abs($allGuestNumber - ($attendings + $declines));
+
+        
 
         // last three unchecked tasks
         $checklistUnchecked = $checklistRepository->findBy(['eventList' => $eventList->getId(), 'isChecked' => false], ['createdAt' => 'DESC'], 5);
@@ -68,8 +70,8 @@ class UserEventController extends AbstractController
             'bride' => $bride,
             'groom' => $groom,
 
-            'attend' => $attendings[0],
-            // 'awaiting' => $awating[0]
+            'attend' => $attendings,
+            'awaiting' => $awating,
 
             'unchecked' => $checklistUnchecked,
 
@@ -277,12 +279,12 @@ class UserEventController extends AbstractController
 
         return $this->render('user_guest/index.html.twig', [
             'guests' => $guestRepository->findBy(['eventList' => $eventList->getId()]),
-            'guestNumber' => $allGuestNumber[0],
-            'attendings' => $attendings[0],
-            'declines' => $declines[0],
-            'vegans' => $vegans[0],
-            'vegetarians' => $vegetarians[0],
-            'omnivores' => $omnivores[0],
+            'guestNumber' => $allGuestNumber,
+            'attendings' => $attendings,
+            'declines' => $declines,
+            'vegans' => $vegans,
+            'vegetarians' => $vegetarians,
+            'omnivores' => $omnivores,
 
             'eventList' => $eventList,
         ]);
@@ -366,16 +368,13 @@ class UserEventController extends AbstractController
     
     // TABLE ROUT WITH EVENT ID - DISPLAY, EDIT, CREATE
     #[Route('/table', name: 'app_user_tabletab_index', methods: ['GET'])]
-    public function indexTable(EventList $eventList, GuestRepository $guestRepo , TabletabRepository $tabletabRepository): Response
+    public function indexTable(EventList $eventList, TabletabRepository $tabletabRepository): Response
     {
         
         $tableCount = $tabletabRepository->tableCount($eventList->getId());
-
         $tabletabs = $tabletabRepository->findBy(['eventList' => $eventList]);
-        $guests = $guestRepo->findBy(['eventList' => $eventList]);
 
         return $this->render('user_tabletab/index.html.twig', [
-            'guests' => $guests,
             'tabletabs' => $tabletabs,
             'tableCount' => $tableCount[0],
             'eventList' => $eventList,
@@ -455,13 +454,14 @@ class UserEventController extends AbstractController
     }
 
     // WEBSITE
-    // #[Route('/website', name: 'app_user_eventdashboard_website')]
-    // public function website(EventList $eventList): Response
-    // {
-    //     return $this->render('user_eventdashboard/website.html.twig', [
-    //         'eventList' => $eventList,
-    //     ]);
-    // }
+    #[Route('/website', name: 'app_user_website_theme')]
+    public function website(EventList $eventList): Response
+    {
+        
+        return $this->render('user_website/theme.html.twig', [
+            'eventList' => $eventList
+        ]);
+    }
 
 
 
@@ -474,7 +474,7 @@ class UserEventController extends AbstractController
     #[Route('/pre_event_photos', name: 'app_user_picture_index', methods: ['GET', 'POST'])]
     public function indexPreevent(EventList $eventList, Request $request, PictureRepository $pictureRepository, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
-        $pictures = $pictureRepository->findBy(['eventList' => $eventList->getId(), 'album' => 'Pre Event Photos']);
+        $pictures = $pictureRepository->findBy(['eventList' => $eventList->getId(), 'album' => 'Pre-Event']);
 
         $picture = new Picture();
         $form = $this->createForm(PictureType::class, $picture);
@@ -537,7 +537,7 @@ class UserEventController extends AbstractController
 
 
     // PRE-EVENT PHOTOS SHOW
-    #[Route('/pre_event_photos/{preEventPhoto_id}', name: 'app_user_wedding_picture_show', methods: ['GET'])]
+    #[Route('/pre_event_photos/{picture_id}', name: 'app_user_picture_show', methods: ['GET'])]
     public function showPreevent(EventList $eventList, Picture $picture, Request $request, PictureRepository $pictureRepository,  FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
         return $this->render('user_picture/show.html.twig', [
@@ -547,18 +547,18 @@ class UserEventController extends AbstractController
     }
 
     // PRE-EVENT PHOTOS DELETE
-    #[Route('/pre_event_photos/{preEventPhoto_id}', name: 'app_user_wedding_picture_delete', methods: ['POST'])]
-    public function deletePreevent(Request $request, Picture $picture, PictureRepository $pictureRepository): Response
+    #[Route('/pre_event_photos/{picture_id}', name: 'app_user_picture_delete', methods: ['POST'])]
+    #[Entity('picture', expr: 'repository.find(picture_id)')]
+    public function deletePreevent(EventList $eventList, Picture $picture, Request $request, PictureRepository $pictureRepository, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
         if ($this->isCsrfTokenValid('delete' . $picture->getId(), $request->request->get('_token'))) {
+            $fileUploader->delete($picture->getNamePath(), 'Pre-Event-Photos');
             $pictureRepository->remove($picture, true);
         }
 
-        return $this->redirectToRoute('app_user_picture_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_picture_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
     }
-
-
-
+    
 
     // WEDDING PHOTOS DISPLAY
     #[Route('/wedding_photos', name: 'app_user_wedding_picture_index', methods: ['GET'])]
@@ -664,7 +664,7 @@ class UserEventController extends AbstractController
                 $eventList->setImage($eventList->getImage());
             }
 
-            $eventList->setEventSlug($slugger->slug($eventList->getEventName()));
+            $eventList->setEventSlug($slugger->slug($eventList->getEventName())->lower());
             $eventList->setEventType($eventType);
             $eventList->setClient($client);
             $eventListRepo->save($eventList, true);

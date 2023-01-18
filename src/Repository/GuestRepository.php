@@ -41,19 +41,19 @@ class GuestRepository extends ServiceEntityRepository
 
 
     // counting all guests for this event
-    public function allGuestCount($listEventId): array
+    public function allGuestCount($listEventId): int
     {
         return $this->createQueryBuilder('g')
             ->select("count(g) as guestNumber")
             ->andWhere('g.eventList = :id')
             ->setParameter('id', $listEventId)
             ->getQuery()
-            ->getScalarResult()
+            ->getSingleScalarResult()
         ;
     }
 
     // counting guests for a specific event by attendance
-    public function guestsCount($listEventId, $rdsvp = null): array
+    public function guestsCount($listEventId, $rdsvp = null): int
    {
        return $this->createQueryBuilder('g')
            ->select("count(g.rdsvp) as {$rdsvp}")
@@ -62,12 +62,12 @@ class GuestRepository extends ServiceEntityRepository
            ->setParameter('id', $listEventId)
            ->setParameter('val', $rdsvp)
            ->getQuery()
-           ->getScalarResult()
+           ->getSingleScalarResult()
        ;
    }
 
    // counting guests for a specific event by diet
-   public function dietCount($listEventId, $diet = null): array
+   public function dietCount($listEventId, $diet = null): int
    {
        return $this->createQueryBuilder('g')
            ->select("count(g.diet) as {$diet}")
@@ -76,7 +76,7 @@ class GuestRepository extends ServiceEntityRepository
            ->setParameter('id', $listEventId)
            ->setParameter('val', $diet)
            ->getQuery()
-           ->getScalarResult()
+           ->getSingleScalarResult()
        ;
    }
 }
