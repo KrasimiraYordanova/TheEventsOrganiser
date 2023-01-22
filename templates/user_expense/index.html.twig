@@ -20,15 +20,17 @@
 			{% for expense in expenses %}
 				<div class="item-list">
 					<p class="item-parag budget-item-parag">{{ expense.name }}</p>
-					<div class="item-summery">
+
+                  <div class="expense-group">
+					<div class="item-summery item-summery-budget">
 						<p class="item-count">Coût total:
-							{{ expense.totalCost |format_currency('EUR') }}</p>
+							{{ expense.totalCost | format_currency('EUR') }}</p>
 						<p class="item-count">Total payé:
-							{{ expense.totalPaid |format_currency('EUR') }}</p>
+							{{ expense.totalPaid | format_currency('EUR') }}</p>
 						<p class="item-count">Total restant:
 							{{ (expense.totalCost -  expense.totalPaid) | format_currency('EUR') }}</p>
 					</div>
-					<div class="action-buttons">
+					<div class="action-buttons action-buttons-budget">
 						<p>
 							<a href="{{ path('app_user_expense_edit', {'id': eventList.id, 'expense_id': expense.id}) }}">
 								<i class="icon fa-solid fa-pen"></i>
@@ -36,10 +38,11 @@
 						</p>
 						<p>{{ include('user_expense/_delete_form.html.twig') }}</p>
 					</div>
+                </div>
 				</div>
 			{% else %}
 				<tr>
-					<p>no records found</p>
+					<p>aucun dépense ajouté</p>
 				</tr>
 			{% endfor %}
 

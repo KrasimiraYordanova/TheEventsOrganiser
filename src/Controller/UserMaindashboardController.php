@@ -26,7 +26,7 @@ class UserMaindashboardController extends AbstractController
         // $eventLists = $eventListRepository->lastThreeEvents();
         return $this->render('user_maindashboard/index.html.twig', [
             'eventTypes' => $eventTypeRepo->findAll(),
-            'eventLists' => $eventLists
+            'eventLists' => $eventListRepository->lastThreeEvents($client->getId())
         ]);
     }
 }

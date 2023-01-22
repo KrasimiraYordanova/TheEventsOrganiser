@@ -5,7 +5,9 @@
 {% block body %}
 
         <div class="dashboard-center-container">
-			<h3 class="dashboard-tertiary dashboard-tertiary-center">Check-list</h3>
+			<h3 class="dashboard-tertiary dashboard-tertiary-center">
+			{# {% if edit %}Editez{% else %}Créez{% endif %} la tâche #}
+			</h3>
 			<div class="bkgrnd-block-itemform">
 				{{ form_start(form, {'attr': {'class': 'item-form'}}) }}
 

@@ -7,7 +7,7 @@
 
 	<div class="dashboard-center-container">
 	<a href="{{ path('app_user_eventlist_index') }}" class="back-dashboard">Mes événements</a>
-		<h3 class="dashboard-tertiary dashboard-tertiary-center">Event Dashboard</h3>
+		<h3 class="dashboard-tertiary dashboard-tertiary-center">{{ eventList.eventName }} Dashboard</h3>
 		<div class="bkgrnd-block">
 
 			<div class="main">
@@ -57,7 +57,7 @@
 					</div>
 
 					<div class="dash-item dash-item4">
-						<h3 class="dashboard-tertiary-smaller">Check-list</h3>
+						<h3 class="dashboard-tertiary-smaller">Tâches à faire</h3>
 							{% for uncheck in unchecked %}
 						    <div class="item-list-check">
 								<div

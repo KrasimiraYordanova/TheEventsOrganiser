@@ -55,15 +55,15 @@
 
     <div class="mobile-nav hidden">
         <div class="eventType-menu-burger hidden">
-            <p class="text-button-burger"><a href="eventDashboard.html" class="frontmenu-link-burger">tableau de bord</a></p>
-            <p class="text-button-burger"><a href="checklist.html" class="frontmenu-link-burger">check-list</a></p>
-            <p class="text-button-burger"><a href="budget.html" class="frontmenu-link-burger">budget</a></p>
-            <p class="text-button-burger"><a href="guest.html" class="frontmenu-link-burger">invités</a></p>
-            <p class="text-button-burger"><a href="table.html" class="frontmenu-link-burger">tables</a></p>
-            <p class="text-button-burger"><a href="website.html" class="frontmenu-link-burger">site internet</a></p>
-            <p class="text-button-burger"><a href="photos.html" class="frontmenu-link-burger">galerie pré-évént</a></p>
-            <p class="text-button-burger"><a href="photos.html" class="frontmenu-link-burger">galerie mariage</a></p>
-            <p class="text-button-burger"><a href="eventProperties.html" class="frontmenu-link-burger">propriétés d'évént</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_eventdashboard', {'id': eventList.id}) }}" class="frontmenu-link-burger">tableau de bord</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_checklist_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">tâches</a></p>
+            <p class="text-button-burger"><a href="{{path('app_user_expense_index', {'id': eventList.id})}}" class="frontmenu-link-burger">budget</a></p>
+            <p class="text-button-burger"><a href="{{path('app_user_guest_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">invités</a></p>
+            <p class="text-button-burger"><a href="{{path('app_user_tabletab_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">tables</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_website_theme', {'id': eventList.id})}}" class="frontmenu-link-burger">site internet</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_picture_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">galerie pré-évént</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_wedding_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">galerie mariage</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_eventlist_edit', {'id': eventList.id}) }}" class="frontmenu-link-burger">propriétés d'évént</a></p>
         </div>
     </div>
     {% endblock %}

@@ -33,10 +33,11 @@
                 </div>
                 {% else %}
             
-                <p>no records found</p>
+                <p>aucun resultat trouvé</p>
             
         {% endfor %}
             </div>
+            <p>* Ajouter d'abord une table avant d'insérer l'invitée, si vous voulez choisir sa table tout de suite
         </div>
         <a href="{{ path('app_user_guest_new', {'id': eventList.id}) }}" class="btn btn-item">Ajouter guest</a>
 </div>    

@@ -3,11 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Guest;
+use App\Entity\Tabletab;
+use Doctrine\ORM\EntityRepository;
+use App\Repository\TabletabRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Tabletab;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class GuestType extends AbstractType
@@ -44,6 +46,15 @@ class GuestType extends AbstractType
             // ->add('updatedAt')
             // ->add('eventList')
             ->add('tabletab', EntityType::class, [
+                'query_builder' => function(EntityRepository $repo) use ($options) {
+                    $qr = $repo->createQueryBuilder('t');
+                    
+                    if(!empty($options['eventListId'])) {
+                        $qr->where('t.eventList = :eventListId')
+                         ->setParameter('eventListId', $options['eventListId']);
+                    }
+                    return $qr;
+                },
                 'class' => Tabletab::class,
                 'choice_label' => function ($table) {
                     return $table->getName();
@@ -59,6 +70,7 @@ class GuestType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Guest::class,
+            'eventListId' => null
         ]);
     }
 }

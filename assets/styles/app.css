@@ -128,6 +128,20 @@ body {
     color: #1d1d1d;
 }
 
+.underline {
+    font-weight: bold;
+}
+
+.container-website {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    align-content: center;
+  }
+  .image-box-websiteTheme {
+      margin: 0 auto;
+      margin-top: 5rem;
+  }
 
 /* HERO SECTION HOME */
 .header {
@@ -142,7 +156,7 @@ body {
 }
 
 .header__title {
-    margin-top: 20rem;
+    margin-top: 12rem;
     text-align: center;
 }
 
@@ -837,7 +851,7 @@ ul {
 
 .dashboard-title {
     text-align: center;
-    font-size: 3rem;
+    font-size: 1.5rem;
     text-transform: uppercase;
     /* margin-bottom: 3rem; */
 }
@@ -899,7 +913,7 @@ ul {
 
 .btn-item {
     display: inline-block;
-    margin-top: 3rem;
+    /* margin-top: 3rem; */
     background-color: #777;
     color: rgb(219, 219, 219);
     text-align: center;
@@ -926,11 +940,26 @@ ul {
 .action-buttons {
     display: flex;
     flex-direction: row;
-    gap: 2rem;
+    gap: 1rem;
+    align-items: center;
+}
+
+.action-buttons-budget {
+
+}
+
+.item-summery-budget {
+    flex: 2;
+}
+
+.expense-group {
+    display: flex;
+    align-items: center;
 }
 
 .budget-item-parag {
     margin-bottom: 2rem;
+    font-weight: 700;
 }
 
 .table-item-parag {
@@ -1021,7 +1050,7 @@ ul {
 }
 
 .website-image-div {
-    width: 40%;
+    width: 70%;
     margin: 0 auto;
     position: relative;
 }
@@ -1470,14 +1499,14 @@ ul {
 
 .currentWeddingInfo {
     position: absolute;
-    top: 25%;
-    left: 31%;
+    top: 82%;
+    left: 0%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     align-items: center;
     background-color: #FFF5;
-    padding: 1rem;
+    padding: 0.3rem;
+    width: 100%;
 }
 
 /*MEDIA QUERY PAGE  */
@@ -1651,7 +1680,7 @@ ul {
         max-width: 49%;
     }
     .header__title {
-        margin-top: 7rem;
+        margin-top: -7rem;
     }
 }
 
@@ -1672,9 +1701,9 @@ ul {
         height: 60vh;
     }
 
-    .header__title {
+    /* .header__title {
         margin-top: 7rem;
-    }
+    } */
 
     .hero-title {
         font-size: 3.5rem;
@@ -1842,7 +1871,7 @@ ul {
         display: block;
         width: 35px;
         cursor: pointer;
-        margin-left: 10rem;
+        margin-left: 8rem;
         margin-top: 1rem;
 
         appearance: none;
@@ -1908,7 +1937,7 @@ ul {
     }
 
     .hamburger {
-        margin-left: 5rem;
+        margin-left: 2rem;
     }
 }
 
@@ -1929,8 +1958,8 @@ ul {
 @media screen and (max-width: 1316px) {
     .currentWeddingInfo {
         position: absolute;
-        top: 25%;
-        left: 40%;
+        top: 71%;
+        left: 0%;
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -1941,21 +1970,35 @@ ul {
         font-size: 1.5rem;
     }
 }
+@media screen and (max-width: 1023px) {
+    .currentWeddingInfo {
+        position: absolute;
+        top: 71%;
+        left: 0%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center ;
+    }
+
+    .web-info {
+        font-size: 1.2rem;
+    }
+}
+
 @media screen and (max-width: 670px) {
     .currentWeddingInfo {
         position: absolute;
-        top: 28%;
-        left: 37%;
+        top: 67%;
+        left: 0%;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
         align-items: center ;
     }
-
-    .web-info {
-        font-size: 1.7rem;
-    }
 }
+
+
 @media screen and (max-width: 554px) {
     .currentWeddingInfo {
         position: absolute;
@@ -2000,4 +2043,18 @@ ul {
     .hero-title {
         font-size: 2.5rem;
       }
+}
+
+@media screen and (max-width: 1635px) {
+    .currentWeddingInfo {
+        position: absolute;
+        top: 74%;
+        left: 0%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #FFF5;
+        padding: 0.3rem;
+        width: 100%;
+    }
 }
