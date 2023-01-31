@@ -2,22 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\Client;
 use App\Entity\User;
+use App\Entity\Client;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Security\LoginAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/register')]
 class RegistrationController extends AbstractController
 {
-    #[Route('/register', name: 'app_register')]
+    #[Route('/', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -52,9 +53,30 @@ class RegistrationController extends AbstractController
     }
 
 
-    // #[Route('/{id}/edit/user', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    // public function editUser(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
-    // {
-    // }
+    #[Route('/{id}/edit/', name: 'app_edit_user', methods: ['GET', 'POST'])]
+    public function editUser(User $user, Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $user = $this->getUser();
 
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->remove('agreeTerms');
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+            $userRepository->save($user, true);
+            return $this->redirectToRoute('app_maindashboard', [], Response::HTTP_SEE_OTHER);
+        }
+
+
+        return $this->render('registration/edituser.html.twig', [
+            'registrationForm' => $form->createView(),
+            'user' => $user
+        ]);
+    }
 }

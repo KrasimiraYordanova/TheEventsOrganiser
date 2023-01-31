@@ -75,6 +75,10 @@ body {
     margin: 1rem 0;
 }
 
+/* .anchor-color {
+    font-size: small;
+} */
+
 .register-form .rfirstname,
 .rlastname,
 .remaill,
@@ -121,6 +125,9 @@ body {
 }
 
 .dashboard-tertiary a:link, .dashboard-tertiary a:visited, .dashboard-tertiary a:hover, .dashboard-tertiary a:active {
+    color: #1d1d1d;
+}
+.dashboard-tertiary-two a:link, .dashboard-tertiary-two a:visited, .dashboard-tertiary-two a:hover, .dashboard-tertiary-two a:active {
     color: #1d1d1d;
 }
 
@@ -868,13 +875,17 @@ ul {
 }
 
 .dashboard-secondary {
-    font-size: 2.3rem;
+    font-size: 2.1rem;
     text-transform: uppercase;
 }
 
 .dashboard-tertiary {
     font-size: 1.7rem;
     text-transform: uppercase;
+}
+
+.dashboard-tertiary-two {
+    font-size: 2rem;
 }
 
 .left {
@@ -935,6 +946,8 @@ ul {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    text-align: center;
 }
 
 .action-buttons {
@@ -1138,7 +1151,7 @@ ul {
 .text-button {
     /*text-transform: uppercase;*/
     font-size: 1rem;
-    font-weight: 800;
+    font-weight: 700;
     align-self: center;
     text-align: center;
 }

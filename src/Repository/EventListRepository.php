@@ -46,15 +46,21 @@ class EventListRepository extends ServiceEntityRepository
         ->andWhere('e.eventDate > :now')
         ->setParameter('val', $value)
         ->setParameter('now', new \DateTime('now'))
+        ->orderBy('e.eventDate', 'ASC')
         ->setMaxResults(3)
         ->getQuery()
         ->getResult();
     }
+
     
-    public function pastThreeEvents(): array
+    public function pastThreeEvents($value): array
     {
         return $this->createQueryBuilder('e')
-        ->andWhere('e.eventDate > \DateTime()')
+        ->andWhere('e.client = :val')
+        ->andWhere('e.eventDate < :now')
+        ->setParameter('val', $value)
+        ->setParameter('now', new \DateTime('now'))
+        ->orderBy('e.eventDate', 'ASC')
         ->setMaxResults(3)
         ->getQuery()
         ->getResult();

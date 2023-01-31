@@ -8,11 +8,16 @@ use App\Entity\EventProperty;
 use App\Entity\EventType;
 use App\Entity\Property;
 use App\Form\EventListType;
+use App\Repository\ChecklistRepository;
 use App\Repository\ClientRepository;
 use App\Service\FileUploader;
 use App\Repository\EventListRepository;
 use App\Repository\EventPropertyRepository;
+use App\Repository\ExpenseRepository;
+use App\Repository\GuestRepository;
+use App\Repository\PictureRepository;
 use App\Repository\PropertyRepository;
+use App\Repository\TabletabRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,6 +35,7 @@ class UserEventlistController extends AbstractController
         $event_lists = $eventListRepository->findBy(['client' => $client]);
 
         return $this->render('user_eventlist/index.html.twig', [
+            'user' => $user,
             'event_lists' => $event_lists,
         ]);
     }
@@ -38,6 +44,7 @@ class UserEventlistController extends AbstractController
     public function createEvent(EventType $eventType, Request $request, EventPropertyRepository $eventPropertyRepo, ClientRepository $clientRepo, PropertyRepository $propertyRepository, EventListRepository $eventListRepo, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
 
+        $user = $this->getUser();
         $eventList = new EventList();
         $form = $this->createForm(EventListType::class, $eventList);
         $form->handleRequest($request);
@@ -68,6 +75,7 @@ class UserEventlistController extends AbstractController
             $eventListRepo->save($eventList, true);
             
              foreach($params as $key=>$value){
+                dd($params);
                 $id = (int)explode('_', $key)[1];
                 $eventProp = new EventProperty();
                 $eventProp->setValue($value)->setProperty($propertyRepository->find($id))->setEventList($eventList);
@@ -78,82 +86,45 @@ class UserEventlistController extends AbstractController
         }
         
         return $this->renderForm('user_eventlist/new.html.twig', [
+            'user' => $user,
             'eventProperties' => $properties,
             'eventType' => $eventType->getName(),
             'form' => $form,
         ]);
     }
-    
-    // #[Route('/{id}/edit', name: 'app_user_eventlist_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, EventList $eventList, EventListRepository $eventListRepository): Response
-    // {
-    //     $form = $this->createForm(EventListType::class, $eventList);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $eventListRepository->save($eventList, true);
-
-    //         return $this->redirectToRoute('app_user_eventlist_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->renderForm('user_eventlist/edit.html.twig', [
-    //         'event_list' => $eventList,
-    //         'form' => $form,
-    //     ]);
-    // }
-
-    // #[Route('/{id}', name: 'app_user_eventlist_delete', methods: ['POST'])]
-    // public function delete(Request $request, EventList $eventList, EventListRepository $eventListRepository): Response
-    // {
-    //     if ($this->isCsrfTokenValid('delete'.$eventList->getId(), $request->request->get('_token'))) {
-    //         $eventListRepository->remove($eventList, true);
-    //     }
-
-    //     return $this->redirectToRoute('app_user_eventlist_index', [], Response::HTTP_SEE_OTHER);
-    // }
-
-    // #[Route('/{id}/edit', name: 'app_user_eventlist_edit', methods: ['GET', 'POST'])]
-    // #[Route('/new', name: 'app_user_eventlist_new', methods: ['GET', 'POST'])]
-    // public function new(Request $request, EventList $eventList = null, EventListRepository $eventListRepository, SluggerInterface $slugger, FileUploader $fileUploader): Response
-    // {
-    //     if(!$eventList) {
-    //         $eventList = new EventList();
-    //     }
-       
-    //     $form = $this->createForm(EventListType::class, $eventList);
-    //     $form->remove('createdAt');
-    //     $form->remove('updatedAt');
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $image = $eventList->getImage();
-    //         $imageFile = $form->get('image')->getData();
-
-    //         if($imageFile) {
-    //             if($image) {
-    //                 $fileUploader->delete($image, 'eventImage');
-    //             }
-    //             $imageFileName = $fileUploader->upload($imageFile, 'eventImage');
-    //             $eventList->setImage($imageFileName);
-    //         } else {
-    //             $eventList->setImage($eventList->getImage());
-    //         }
-    //         $eventList->setEventSlug($slugger->slug($eventList->getEventName()));
-    //         $eventListRepository->save($eventList, true);
-            
-    //         return $this->redirectToRoute('app_user_eventlist_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->renderForm('user_eventlist/new.html.twig', [
-    //         'event_list' => $eventList,
-    //         'form' => $form,
-    //     ]);
-    // }
 
     #[Route('/{id}', name: 'app_user_eventlist_delete', methods: ['POST'])]
-    public function delete(Request $request, EventList $eventList, EventListRepository $eventListRepository): Response
+    public function delete(Request $request, EventList $eventList, EventListRepository $eventListRepository, ExpenseRepository $expenseRepository, ChecklistRepository $checklistRepository, GuestRepository $guestRepository, EventPropertyRepository $eventPropertyRepository, TabletabRepository $tabletabRepository, PictureRepository $pictureRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$eventList->getId(), $request->request->get('_token'))) {
+            // $expenses = $eventList->getExpenses();
+            // dd($expenses);
+            $expensesToDelete = $expenseRepository->findBy(['eventList' => $eventList->getId()]);
+            $checklistsToDelete = $checklistRepository->findBy(['eventList' => $eventList->getId()]);
+            $guestsToDelete = $guestRepository->findBy(['eventList' => $eventList->getId()]);
+            $eventPropertiesToDelete = $eventPropertyRepository->findBy(['eventList' => $eventList->getId()]);
+            $tabletabsToDelete = $tabletabRepository->findBy(['eventList' => $eventList->getId()]);
+            $picturesToDelete = $pictureRepository->findBy(['eventList' => $eventList->getId()]);
+
+            foreach($expensesToDelete as $expense) {
+                $expenseRepository->remove($expense, true);
+            }
+            foreach($checklistsToDelete as $checklist) {
+                $checklistRepository->remove($checklist, true);
+            }
+            foreach($guestsToDelete as $guest) {
+                $guestRepository->remove($guest, true);
+            }
+            foreach($eventPropertiesToDelete as $eventProperty) {
+                $eventPropertyRepository->remove($eventProperty, true);
+            }
+            foreach($tabletabsToDelete as $tabletab) {
+                $tabletabRepository->remove($tabletab, true);
+            }
+            foreach($picturesToDelete as $picture) {
+                $pictureRepository->remove($picture, true);
+            }
+
             $eventListRepository->remove($eventList, true);
         }
 

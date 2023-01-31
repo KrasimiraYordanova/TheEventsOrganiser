@@ -28,6 +28,7 @@ use App\Repository\EventListRepository;
 use App\Repository\EventTypeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\EventPropertyRepository;
+use Doctrine\Common\Collections\Expr\Value;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,12 +57,14 @@ class UserEventController extends AbstractController
     public function index(EventList $eventList, EventPropertyRepository $eventPropertyRepository, ClientRepository $clientRepository, EventListRepository $eventListRepository, GuestRepository $guestRepository, ChecklistRepository $checklistRepository, ExpenseRepository $expenseRepository): Response
     {
 
-       
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         // budget calculation
         $totalCost = $expenseRepository->sumTotalCost($eventList->getId());
         $totalPaid = $expenseRepository->sumPaidExpenses($eventList->getId());
+        $diff = date_diff(new \DateTime(), $eventList->getEventDate());
+        // dd($diff);
         // calculating guests
         $allGuestNumber = $guestRepository->allGuestCount($eventList->getId());
         $attendings = $guestRepository->guestsCount($eventList->getId(),"attending");
@@ -80,6 +83,7 @@ class UserEventController extends AbstractController
         $groom = $valuesNeeded[2];
 
         return $this->render('user_eventdashboard/index.html.twig', [
+            'user' => $user,
             'eventList' => $eventList,
 
             'bride' => $bride,
@@ -91,7 +95,9 @@ class UserEventController extends AbstractController
             'unchecked' => $checklistUnchecked,
 
             'totalCost' => $totalCost[0],
-            'totalPaid' => $totalPaid[0]
+            'totalPaid' => $totalPaid[0],
+
+            'diff' => $diff
         ]);
     }
 
@@ -707,6 +713,7 @@ class UserEventController extends AbstractController
     public function editEvent(EventList $eventList, Request $request, EventTypeRepository $eventTypeRepo, EventPropertyRepository $eventPropertyRepo, ClientRepository $clientRepo, PropertyRepository $propertyRepository, EventListRepository $eventListRepo, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
         $this->verifyOwner($eventList);
+        $user = $this->getUser();
 
         $form = $this->createForm(EventListType::class, $eventList);
         $form->handleRequest($request);
@@ -723,6 +730,7 @@ class UserEventController extends AbstractController
         //$propsNeeded = $propertyRepo->findBy(['eventType' => $eventType->getId()]);
         // and get the values for that event - eventProperty table and get the values for eventListId
         $valuesNeeded = $eventPropertyRepo->findBy(['eventList' => $eventList->getId()]);
+        // dump($valuesNeeded);
 
     
         if ($form->isSubmitted() && $form->isValid()) {
@@ -731,12 +739,14 @@ class UserEventController extends AbstractController
 
             $params = $request->request->all();
             $eventDelete = array_shift($params);
+            // dump($params);
+            
 
 
             if ($imageFile) {
-                if ($image) {
+                if ($image) { 
                     $fileUploader->delete($image, 'eventImages');
-                }
+                }   
                 $imageFileName = $fileUploader->upload($imageFile, 'eventImage');
                 $eventList->setImage($imageFileName);
             } else {
@@ -749,18 +759,30 @@ class UserEventController extends AbstractController
             $eventListRepo->save($eventList, true);
 
 
+            $entityValues = [];
             foreach($params as $key=>$value){
-                $id = (int)explode('_', $key)[1];
-                // dd($value);
-                // dd($id);
- 
-                $eventPropertyRepo->save($value,true);
+                $entityValues [] = $value;
+                
+                // dump($value);
+                // dump($key);
+                // $id = (int)explode('_', $key)[1];
+                // $updatedEventProperties = $valuesNeeded->setValue($value);
+                // dump($valuesNeeded);
+                // dd($key);
+                // $eventPropertyRepo->save($updatedEventProperties,true);
             }
 
+            for($i = 0; $i < count($valuesNeeded); $i++) {
+                    $valuesNeeded[$i]->setValue($entityValues[$i]);
+                    dump($valuesNeeded[$i]);
+                    $eventPropertyRepo->save($valuesNeeded[$i],true);
+                }
+                
             return $this->redirectToRoute('app_user_eventdashboard', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_eventlist/edit.html.twig', [
+            'user' => $user,
             'eventList' => $eventList,
             'eventType' => $eventType,
             'form' => $form,

@@ -7,7 +7,7 @@
 
 	<div class="dashboard-center-container">
 	<a href="{{ path('app_user_eventlist_index') }}" class="back-dashboard">Mes événements</a>
-		<h3 class="dashboard-tertiary dashboard-tertiary-center">{{ eventList.eventName }} Dashboard</h3>
+		<h3 class="dashboard-tertiary dashboard-tertiary-center">{{ eventList.eventName }}</h3>
 		<div class="bkgrnd-block">
 
 			<div class="main">
@@ -23,7 +23,7 @@
 								{{ groom.value }}
 							</p>
 							<p class="dash-event">{{ eventList.eventDate | date('Y-m-d') }}</p>
-							<p class="dash-event">N days till wedding</p>
+							<p class="dash-event">{{ diff.days }} days untill our big day</p>
 						</div>
 					</div>
 

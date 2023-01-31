@@ -10,6 +10,9 @@
         {{ form_row(registrationForm.firstname, {'attr': {'class': 'rfirstname'}}) }}
         {{ form_row(registrationForm.lastname, {'attr': {'class': 'rlastname'}}) }}
         {{ form_row(registrationForm.email, {'attr': {'class': 'remaill'}}) }}
+        {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'rpassword'}}, {
+            label: 'Password'
+        }) }}
         {# {{ form_row(registrationForm.client) }} #}
         {{ form_row(registrationForm.client.phone, {'attr': {'class': 'rphone'}}) }}
         {{ form_row(registrationForm.client.address, {'attr': {'class': 'raddress'}}) }}
@@ -17,9 +20,7 @@
         {{ form_row(registrationForm.client.zipCode, {'attr': {'class': 'rzip'}}) }}
         {{ form_row(registrationForm.client.country, {'attr': {'class': 'rcountry'}}) }}
         
-        {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'rpassword'}}, {
-            label: 'Password'
-        }) }}
+        
         {{ form_row(registrationForm.agreeTerms) }}
 
         <button type="submit" class="btn">Register</button>

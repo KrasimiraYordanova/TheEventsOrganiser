@@ -39,7 +39,7 @@
                         {{ eventType.description }}
                         </p>
                     </div>
-                    <a class="wedding-event-btn" href="{{ path('app_user_eventlist_form', {'slug': eventType.slug}) }}">Créer votre événement</a>
+                    <a class="wedding-event-btn" href="{{ path('app_user_eventlist_form', {'slug': eventType.slug}) }}">Créer votre {{ eventType.name }}</a>
                 </div>
             {% endfor %}
             </div>

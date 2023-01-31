@@ -17,7 +17,9 @@ class EventListType extends AbstractType
     {
         $builder
             ->add('eventName', TextType::class)
-            ->add('eventDate', DateType::class)
+            ->add('eventDate', DateType::class, [
+                'widget' => 'single_text'
+            ])
             ->add('eventBudget', TextType::class)
             ->add('eventLocation', TextType::class)
             ->add('image', FileType::class, [
