@@ -75,7 +75,7 @@ class UserEventlistController extends AbstractController
             $eventListRepo->save($eventList, true);
             
              foreach($params as $key=>$value){
-                dd($params);
+                // dd($params);
                 $id = (int)explode('_', $key)[1];
                 $eventProp = new EventProperty();
                 $eventProp->setValue($value)->setProperty($propertyRepository->find($id))->setEventList($eventList);

@@ -106,6 +106,7 @@ class UserEventController extends AbstractController
 
     public function indexChecklist(EventList $eventList, Request $request, ChecklistRepository $checklistRepository, ClientRepository $clientRepository, EventListRepository $eventListRepository): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $allChecklists = $checklistRepository->findBy(['eventList' => $eventList->getId()]);
@@ -120,13 +121,15 @@ class UserEventController extends AbstractController
             'unchecked' => $unchecked[0],
 
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
     #[Route('/checklist/new', name: 'app_user_checklist_new', methods: ['GET', 'POST'])]
     public function newChecklist(EventList $eventList, Request $request, ChecklistRepository $checklistRepository, SluggerInterface $slugger): Response
     {
-
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $checklist = new Checklist();
@@ -146,6 +149,8 @@ class UserEventController extends AbstractController
             'checklist' => $checklist,
             'form' => $form,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
@@ -153,6 +158,7 @@ class UserEventController extends AbstractController
     #[Entity('checklist', expr: 'repository.find(checklist_id)')]
     public function editChecklist(EventList $eventList, Checklist $checklist, Request $request, ChecklistRepository $checklistRepository, SluggerInterface $slugger): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $form = $this->createForm(ChecklistType::class, $checklist);
@@ -172,6 +178,8 @@ class UserEventController extends AbstractController
             'edit' => $checklist->getId(),
             'form' => $form,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
@@ -190,6 +198,7 @@ class UserEventController extends AbstractController
     #[Entity('checklist', expr: 'repository.find(checklist_id)')]
     public function deleteChecklist(EventList $eventList, Checklist $checklist, Request $request, ChecklistRepository $checklistRepository): Response
     {
+        
         $this->verifyOwner($eventList);
 
         if ($this->isCsrfTokenValid('delete' . $checklist->getId(), $request->request->get('_token'))) {
@@ -205,6 +214,7 @@ class UserEventController extends AbstractController
     #[Route('/budget', name: 'app_user_expense_index', methods: ['GET'])]
     public function indexExpense(EventList $eventList, ExpenseRepository $expenseRepository, ManagerRegistry $doctrine): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
         //$repository = $doctrine->getRepository(Expense::class);
         //$expenses = $expenseRepository->expensesRemaining();
@@ -215,6 +225,8 @@ class UserEventController extends AbstractController
             'totalPaid' => $totalPaid[0],
             // 'expense' => $expense,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
@@ -222,6 +234,7 @@ class UserEventController extends AbstractController
     #[Route('/budget/new', name: 'app_user_expense_new', methods: ['GET', 'POST'])]
     public function newExpense(EventList $eventList, Request $request, ExpenseRepository $expenseRepository, SluggerInterface $slugger): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $expense = new Expense();
@@ -241,6 +254,8 @@ class UserEventController extends AbstractController
             // 'edit' => $expense->getId(),
             'expenseForm' => $form,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
@@ -248,6 +263,7 @@ class UserEventController extends AbstractController
     #[Entity('expense', expr: 'repository.find(expense_id)')]
     public function editExpense(EventList $eventList, Expense $expense, Request $request, ExpenseRepository $expenseRepository, SluggerInterface $slugger): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $form = $this->createForm(ExpenseType::class, $expense);
@@ -266,6 +282,8 @@ class UserEventController extends AbstractController
             'edit' => $expense->getId(),
             'expenseForm' => $form,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
@@ -298,6 +316,7 @@ class UserEventController extends AbstractController
     #[Route('/guest', name: 'app_user_guest_index', methods: ['GET'])]
     public function indexGuest(EventList $eventList, GuestRepository $guestRepository, ManagerRegistry $doctrine): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $repository = $doctrine->getRepository(Guest::class);
@@ -321,12 +340,15 @@ class UserEventController extends AbstractController
             'omnivores' => $omnivores,
 
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
     #[Route('/guest/new', name: 'app_user_guest_new', methods: ['GET', 'POST'])]
     public function newGuest(EventList $eventList, Request $request, GuestRepository $guestRepository): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $guest = new Guest();
@@ -351,6 +373,8 @@ class UserEventController extends AbstractController
             'edit' => $guest->getId(),
             'form' => $form,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
@@ -359,6 +383,7 @@ class UserEventController extends AbstractController
     #[Entity('guest', expr: 'repository.find(guest_id)')]
     public function editGuest(EventList $eventList, Guest $guest, Request $request, GuestRepository $guestRepository): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $form = $this->createForm(GuestType::class, $guest, ['eventListId'=> $eventList->getId()]);
@@ -376,6 +401,8 @@ class UserEventController extends AbstractController
             'edit' => $guest->getId(),
             'form' => $form,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
@@ -385,11 +412,14 @@ class UserEventController extends AbstractController
     #[Entity('guest', expr: 'repository.find(guest_id)')]
     public function showGuest(EventList $eventList, Guest $guest): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         return $this->render('user_guest/show.html.twig', [
             'guest' => $guest,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
@@ -413,6 +443,7 @@ class UserEventController extends AbstractController
     #[Route('/table', name: 'app_user_tabletab_index', methods: ['GET'])]
     public function indexTable(EventList $eventList, TabletabRepository $tabletabRepository): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $tableCount = $tabletabRepository->tableCount($eventList->getId());
@@ -422,6 +453,8 @@ class UserEventController extends AbstractController
             'tabletabs' => $tabletabs,
             'tableCount' => $tableCount[0],
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
@@ -429,6 +462,7 @@ class UserEventController extends AbstractController
     #[Route('/table/new', name: 'app_user_tabletab_new', methods: ['GET', 'POST'])]
     public function newTable(EventList $eventList, Request $request, TabletabRepository $tabletabRepository): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $tabletab = new Tabletab();
@@ -447,6 +481,8 @@ class UserEventController extends AbstractController
             'tabletab' => $tabletab,
             'form' => $form,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
 
     }
@@ -455,7 +491,7 @@ class UserEventController extends AbstractController
     #[Entity('tabletab', expr: 'repository.find(tabletab_id)')]
     public function editTable(EventList $eventList, Tabletab $tabletab, Request $request, TabletabRepository $tabletabRepository): Response
     {
-
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $form = $this->createForm(TabletabType::class, $tabletab);
@@ -473,6 +509,8 @@ class UserEventController extends AbstractController
             'edit' => $tabletab->getId(),
             'form' => $form,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
 
     }
@@ -506,12 +544,15 @@ class UserEventController extends AbstractController
     #[Route('/website', name: 'app_user_website_theme')]
     public function website(EventList $eventList, GuestRepository $guestRepository): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
         $guests = $guestRepository->findBy(['eventList' => $eventList->getId()]);
         
         return $this->render('user_website/theme.html.twig', [
             'eventList' => $eventList,
-            'guests' => $guests
+            'guests' => $guests,
+
+            'user' => $user,
         ]);
     }
     
@@ -523,6 +564,7 @@ class UserEventController extends AbstractController
     #[Route('/pre_event_photos', name: 'app_user_picture_index', methods: ['GET', 'POST'])]
     public function indexPreevent(EventList $eventList, Request $request, PictureRepository $pictureRepository, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $pictures = $pictureRepository->findBy(['eventList' => $eventList->getId(), 'album' => 'Pre-Event']);
@@ -551,6 +593,8 @@ class UserEventController extends AbstractController
             'pictures' => $pictures,
             'form' => $form,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     } 
 
@@ -558,6 +602,7 @@ class UserEventController extends AbstractController
     #[Route('/pre_event_photos/new', name: 'app_user_picture_new', methods: ['GET', 'POST'])]
     public function newPreevent(EventList $eventList, Request $request, PictureRepository $pictureRepository,  FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $picture = new Picture();
@@ -585,6 +630,8 @@ class UserEventController extends AbstractController
             'picture' => $picture,
             'form' => $form,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
@@ -593,11 +640,14 @@ class UserEventController extends AbstractController
     #[Route('/pre_event_photos/{picture_id}', name: 'app_user_picture_show', methods: ['GET'])]
     public function showPreevent(EventList $eventList, Picture $picture, Request $request, PictureRepository $pictureRepository,  FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         return $this->render('user_picture/show.html.twig', [
             'picture' => $picture,
             'eventList' => $eventList,
+
+            'user' => $user,
         ]);
     }
 
