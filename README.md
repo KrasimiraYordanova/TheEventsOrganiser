@@ -3,6 +3,7 @@
 1	Résumé du projet 
 
 1.1	Présentation du projet 
+
 Organisatrice dans l’âme depuis mon adolescence, j’ai été inspirée de créer The Event Planner : 
 une application pour ceux qui, comme moi, aiment planifier et organiser leurs propres événements tels que les mariages, 
 les fêtes prénatales, les enterrements de vie de jeune fille, les anniversaires, les conférences et même les voyages, ou encore des funérailles. 
@@ -15,9 +16,11 @@ pour aider les indécises, il y aurait des suggestions et des thèmes dans lesqu
 planifier sans stress et en douceur sa journée de mariage.
 
 1.2	Objectif
+
 L'objectif du projet est de permettre à tout un chacun de planifier facilement son ou ses événement(s) : un anniversaire, une fête entre filles, 
 une Baby-shower et plus encore. Et ce serait le planificateur d'événements qui aiderait à rester bien organisé et éviter de se perdre dans les détails. 
 Chacun serait alors en mesure de maîtriser à partir d’un seul outil, à tout moment, sans craindre d'oublier quelque chose ou d’égarer un post-it quelque part.
 
 1.3	Cible 
+
 Les personnes ciblées sont toutes celles qui souhaitent organiser leur propre événement.
