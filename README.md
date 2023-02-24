@@ -37,5 +37,3 @@ The main targets of the app are all people who wants to organize their own event
 ![ep9](https://user-images.githubusercontent.com/118458989/221163305-95d19484-c91e-4387-92a5-d2e253b7e3b2.png)
 ![ep10](https://user-images.githubusercontent.com/118458989/221163321-34d2eac3-e483-484f-9072-3287358440fa.png)
 ![ep11](https://user-images.githubusercontent.com/118458989/221163324-f112affc-485f-46f5-8c68-e58b774f8d19.png)
-
-P.S. The project has been done in 2.5 weeks. Front and back, client sid and admin side
