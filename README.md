@@ -26,3 +26,4 @@ somewhere.
 2.3 Target
 
 The main targets of the app are all people who wants to organize their own event.
+![ep1](https://user-images.githubusercontent.com/118458989/221163088-62cfa48b-261c-4645-9d80-ab8250feb52e.png)
