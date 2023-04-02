@@ -1,0 +1,46 @@
+.event-menu {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    gap: 0.5rem;
+    width: 70%;
+    margin: 5rem auto;
+
+    &__active {
+        background-color: $color-primary;
+    }
+
+    &__button {
+        align-items: center;
+        background-color: 1px solid #fff;
+        border-radius: .5rem;
+        box-shadow: 0 .5em .5em -.125em hsla(0, 0%, 4%, .1), 0 0 0 .5px hsla(0, 0%, 4%, .02);
+        padding: 1rem;
+        flex: 1;
+
+        &:hover {
+            background-color: $color-primary;
+        }
+    }
+
+    &__link {
+        color: #1d1d1d;
+        display: block;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        width: 100%;
+    }
+
+    &__icon {
+        font-size: 3rem;
+        align-self: center;
+    }
+
+    &__text {
+        align-self: center;
+        font-size: 1.4rem;
+        font-weight: 700;
+
+    }
+}

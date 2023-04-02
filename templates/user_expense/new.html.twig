@@ -1,27 +1,33 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Budget{% endblock %}
 
 {% block body %}
+
+    <section class="form-container">
+	    <div class="form-container__square">
+	    	<h3 class="dashboard-tertiary form-container__title">Add/Edit budget</h3>
+	    	<div class="form__bkgrnd-block">
+	    		{{ form_start(expenseForm, {'attr': {'class': 'form'}}) }}
+    
+                <div class="form__items">
+	    		    {{ form_label(expenseForm.name, null, {'label_attr': {'class': 'form__label'}}) }}
+	    		    {{ form_widget(expenseForm.name, {'attr': {'class': 'form__input form__input--text'}}) }}
+	    			{{ form_label(expenseForm.description, null, {'label_attr': {'class': 'form__label'}}) }}
+	    		    {{ form_widget(expenseForm.description, {'attr': {'class': 'form__input form__input--text'}}) }}
+	    			{{ form_label(expenseForm.totalCost, null, {'label_attr': {'class': 'form__label'}}) }}
+	    		    {{ form_widget(expenseForm.totalCost, {'attr': {'class': 'form__input form__input--text'}}) }}
+	    			{{ form_label(expenseForm.totalPaid, null, {'label_attr': {'class': 'form__label'}}) }}
+	    		    {{ form_widget(expenseForm.totalPaid, {'attr': {'class': 'form__input form__input--text'}}) }}
+	    		</div>
     
     
-
-	<div class="dashboard-center-container">
-		<h3 class="dashboard-tertiary dashboard-tertiary-center">budget</h3>
-		<div class="bkgrnd-block-itemform">
-			{{ form_start(expenseForm, {'attr': {'class': 'bkgrnd-block-itemform'}}) }}
-
-			{{ form_row(expenseForm.name) }}
-			{{ form_row(expenseForm.description) }}
-			{{ form_row(expenseForm.totalCost) }}
-			{{ form_row(expenseForm.totalPaid) }}
-
-
-			<div class="items-actions">
-				<button class="item-button-i btn-save">{{ button_label|default('Save') }}</button>
-				<a href="{{ path('app_user_expense_index', {'id': eventList.id}) }}" class="btn btn-item">retour</a>
-			</div>
-			{{ form_end(expenseForm) }}
-		</div>
-	</div>    
+	    		<div class="form__actions">
+	    			<button class="btn form__button-i btn-save">{{ button_label|default('Save') }}</button>
+	    			<a class="form__return" href="{{ path('app_user_expense_index', {'id': eventList.id}) }}">&larr; back</a>
+	    		</div>
+	    		{{ form_end(expenseForm) }}
+	    	</div>
+	    </div>
+	</section>    
 {% endblock %}

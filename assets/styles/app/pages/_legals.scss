@@ -1,0 +1,21 @@
+.legals {
+    padding: 3rem;
+
+    &__container {
+        text-align: center;
+    }
+    
+    &__content {
+        margin: 0 auto;
+        max-width: 80rem;
+    }
+    
+    &__content p {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+    }
+    
+    &__strong {
+        font-weight: bold;
+    }
+}

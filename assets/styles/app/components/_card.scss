@@ -1,0 +1,29 @@
+.card {
+    flex: 1;
+    text-align: center;
+    background-color: $color-primary-light;
+    border-radius: 0.3rem;
+    padding: 3rem 3rem 1rem 3rem;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+
+    &__icon {
+        font-size: 25px;
+        color: #26442d;
+        border: 0.5px transparent solid;
+        border-radius: 24%;
+        padding: 1rem;
+        line-height: 20px;
+    }
+    &__content {
+        margin-top: 2rem;
+    }
+    &__p {
+        font-size: 1.5rem;
+    }
+}
+
+
+
+
+
+

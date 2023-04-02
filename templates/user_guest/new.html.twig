@@ -1,42 +1,51 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}Guest
-{% endblock %}
+{% block title %}Guest{% endblock %}
 
 {% block body %}
 
-	<div class="dashboard-center-container">
-		<h3 class="dashboard-tertiary dashboard-tertiary-center">guest-list</h3>
-		<div class="bkgrnd-block-itemform">
-				{{ form_start(form, {'attr': {'class': 'item-form'}}) }}
+	<section class="form-container">
+            <div class="form-container__square">
+                <h3 class="dashboard-tertiary form-container__title">Add/Edit guest</h3>
+                <div class="form__bkgrnd-block">
+                    {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                        <div class="form__items">
+							{{ form_label(form.name, null, {'label_attr': {'class': 'form__label'}}) }}
+							{{ form_widget(form.name, {'attr': {'class': 'form__input form__input--text'}} ) }}
 
-				{{ form_row(form.name, {'attr': {'class': 'item-form'}} ) }}
-                <div class="form-guest-container">
+                            <div class="form__guest-container">
+                                <div class="form__guest">
+                                   {{ form_row(form.rdsvp) }}
+                                </div>
+        
+                                <div class="form__guest">
+                                    {{ form_row(form.diet) }}
+                                </div>
+        
+                                <div class="form__guest">
+                                    {{ form_row(form.tabletab) }}
+                                </div>
+                            </div>
+                            
 
-                <div class="form-guest">
-				{{ form_row(form.rdsvp) }}
+							{{ form_label(form.email, null, {'label_attr': {'class': 'form__label'}}) }}
+							{{ form_widget(form.email, {'attr': {'class': 'form__input form__input--text'}}) }}
+							{{ form_label(form.phone, null, {'label_attr': {'class': 'form__label'}}) }}
+							{{ form_widget(form.phone, {'attr': {'class': 'form__input form__input--text'}}) }}
+							{{ form_label(form.address, null, {'label_attr': {'class': 'form__label'}}) }}
+							{{ form_widget(form.address, {'attr': {'class': 'form__input form__input--text'}}) }}
+                        </div>
+
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <div class="form__actions">
+                            <button class="btn form__button-i btn-save">{{ button_label|default('Save') }}</button>
+                            <a href="{{ path('app_user_guest_index', {'id': eventList.id}) }}" class="form__return">&larr; back</a>
+						</div>
+                    </form>
                 </div>
+            </div>
+        </section>
 
-                <div class="form-guest">
-				{{ form_row(form.diet) }}
-                </div>
+{% endblock %}
 
-                <div class="form-guest">
-				{{ form_row(form.tabletab) }}
-                </div>
-                </div>
-
-				{{ form_row(form.address) }}
-				{{ form_row(form.email) }}
-				{{ form_row(form.phone) }}
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                <div class="items-actions">
-					<button class="item-button-i btn-save">{{ button_label|default('Save') }}</button>
-                    <a href="{{ path('app_user_guest_index', {'id': eventList.id}) }}" class="btn btn-item">retour</a>
-				</div>
-				{{ form_end(form) }}
-        </div>
-	</div>
-
-		
-	{% endblock %}

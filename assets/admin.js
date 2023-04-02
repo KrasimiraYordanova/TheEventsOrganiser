@@ -6,7 +6,7 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/admin.scss';
+import './styles/admin/admin.scss';
 
 // import js bootstrap
 import 'bootstrap';

@@ -1,0 +1,23 @@
+.website {
+
+    &__btn {
+        padding: 1rem 5rem;
+        display: inline-block;
+        background-color: $color-primary;
+        border-radius: .2rem;
+
+        display: flex;
+        gap: 5rem;
+        align-items: center;
+        width: 23%;
+
+        &:not(:last-child) {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    &__icon {
+        font-size: 2rem;
+        color: black;
+    }
+}

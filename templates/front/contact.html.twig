@@ -2,38 +2,36 @@
 
 {% block body %}
 
-	<!-- SECTION FORM -->
-	<section id="contact-a" class="text-center py-3">
+	<section id="contact-section">
 
-		<div class="container">
-
-			<div class="contactform__container">
-				<h2 class="section-title">Contactez Nous</h2>
-				<p class="lead">Vouz pouvez nous contacter en envoyant ce formulaire rempli</p>
-				<form class="form-contact" action="process.php" method="POST">
-					<div class="text-fields">
-						<input type="text" name="name" class="text-input name-input" placeholder="Name" required/>
-						<input type="text" name="subject" class="text-input subject-input" placeholder="Subject"/>
-						<input type="email" name="email" class="text-input email-input" placeholder="Email Address" required/>
-						<input type="text" name="phone" class="text-input phone-input" placeholder="Phone Number"/>
-						<textarea name="message" class="text-input message-input" placeholder="Enter Message" required></textarea>
-					</div>
-					<button type="submit" class="btn btn__light formBtn">Envoyer</button>
-				</form>
-			</div>
-
-			<div class="address">
-				<p>Adresse: Event Planner - UK</p>
-				<p>114 Hampshere street London SW1W8SS</p>
-				<p>Tel: 07.52.17.98.779</p>
-				<p>
-					<a href="krasynova@yahoo.com.com">
-						<i class="icon fa-solid fa-envelope"></i>
-					</a>
-				</p>
-			</div>
-
-		</div>
-	</section>
+        <div class="contact-section__containermain">
+    
+            <div class="contact-section__container">
+                <div class="section-header">
+                    <h2 class="htwo">Contactez Nous</h2>
+                    <p class="main-paragraph">Vouz pouvez nous contacter en envoyant ce formulaire rempli</p>
+                </div>
+      
+                <form class="contact-section__contact-form" action="process.php" method="POST">
+                    <div class="contact-section__text-fields">
+                      <input type="text" name="name" class="contact-section__input contact-section__name-input" placeholder="Name" required />
+                      <input type="text" name="subject" class="contact-section__input contact-section__subject-input" placeholder="Subject" />
+                      <input type="email" name="email" class="contact-section__input contact-section__email-input" placeholder="Email Address" required />
+                      <input type="text" name="phone" class="contact-section__input contact-section__phone-input" placeholder="Phone Number" />
+                      <textarea name="message" class="contact-section__input contact-section__message-input" placeholder="Enter Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn--form-contact">Envoyer</button>
+                </form>
+            </div>
+    
+            <div class="contact-section__address">
+              <p class="contact-section__p">Adresse: Event Planner - UK</p>
+              <p class="contact-section__p">London</p>
+              <p class="contact-section__p">Tel: </p>
+              <p class="contact-section__p"><a href="krasynova@yahoo.com.com"><i class="footer__social-icon fa-solid fa-envelope"></i></a></p>
+            </div>
+    
+        </div>
+  </section>
 
 {% endblock %}

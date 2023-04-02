@@ -1,0 +1,67 @@
+.contact-section {
+    &__containermain {
+        max-width: 100rem;
+        margin: 7rem auto 15rem auto;
+        display: flex;
+        text-align: center;
+    }
+
+    &__container {
+        flex: 2;
+        padding-right: 5rem;
+        border-right: 0.5px solid $color-grey-light-2;
+    }
+
+    &__contact-form {
+        text-align: center;
+    }
+
+    &__text-fields {
+        display: grid;
+        grid-template-areas: "name email"
+            "subject phone"
+            "message message";
+        grid-gap: 1.2rem;
+        margin-bottom: 1.2rem;
+    }
+
+    &__input {
+        padding: 0.5rem 1rem;
+
+        &:focus {
+            outline-style: none;
+            color: $color-grey-dark-3;
+        }
+    }
+
+    &__name-input {
+        grid-area: name;
+    }
+
+    &__subject-input {
+        grid-area: subject;
+    }
+
+    &__email-input {
+        grid-area: email;
+    }
+
+    &__phone-input {
+        grid-area: phone;
+    }
+
+    &__message-input {
+        grid-area: message;
+        height: 100px;
+    }
+
+    &__address {
+        flex: 1;
+        padding-left: 4rem;
+        align-self: center;
+    }
+
+    &__p {
+        font-size: 1.2rem;
+    }
+}

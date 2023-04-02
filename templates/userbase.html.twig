@@ -1,51 +1,60 @@
 {% extends 'base.html.twig' %}
 
 {% block nav %} 
-<div class="eventType-menu">
-        <div class="menu-button">
-        <a href="{{ path('app_user_eventdashboard', {'id': eventList.id}) }}" class="frontmenu-link">
-            <i class="icon-button fa-solid fa-compass"></i>
-            <p class="text-button">Tableau de bord</a></p>
+<div class="event-menu">
+        <div class="event-menu__button" data-id="0">
+            <a href="href="{{ path('app_user_eventdashboard', {'id': eventList.id}) }}"" class="event-menu__link">
+            <i class="event-menu__icon fa-solid fa-compass"></i>
+            <p class="event-menu__text">Dashboard</p>
+            </a>
         </div>
-        <div class="menu-button">
-        <a href="{{ path('app_user_checklist_index', {'id': eventList.id}) }}" class="frontmenu-link">
-            <i class="icon-button fa-solid fa-list-check"></i>
-            <p class="text-button">Tâches</a></p>
+        <div class="event-menu__button" data-id="1">
+            <a href="{{ path('app_user_checklist_index', {'id': eventList.id}) }}" class="event-menu__link">
+            <i class="event-menu__icon fa-solid fa-list-check"></i>
+            <p class="event-menu__text">Checklist</p>
+            </a>
         </div>
-        <div class="menu-button">
-        <a href="{{path('app_user_expense_index', {'id': eventList.id})}}" class="frontmenu-link">
-            <i class="icon-button fa-solid fa-file-invoice-dollar"></i>
-            <p class="text-button">Budget</a></p>
+        <div class="event-menu__button" data-id="2">
+            <a href="{{path('app_user_expense_index', {'id': eventList.id})}}" class="event-menu__link">
+            <i class="event-menu__icon fa-solid fa-file-invoice-dollar"></i>
+            <p class="event-menu__text">Budget</p>
+            </a>
         </div>
-        <div class="menu-button">
-        <a href="{{path('app_user_guest_index', {'id': eventList.id}) }}" class="frontmenu-link">
-            <i class="icon-button fa-solid fa-users"></i>
-            <p class="text-button">Invités</a></p>
+        <div class="event-menu__button" data-id="3">
+            <a href="{{path('app_user_guest_index', {'id': eventList.id}) }}" class="event-menu__link">
+            <i class="event-menu__icon fa-solid fa-users"></i>
+            <p class="event-menu__text">Guests</p>
+            </a>
         </div>
-        <div class="menu-button">
-        <a href="{{path('app_user_tabletab_index', {'id': eventList.id}) }}" class="frontmenu-link">
-            <i class="icon-button fa-solid fa-utensils"></i>
-            <p class="text-button">Tables</a></p>
+        <div class="event-menu__button" data-id="4">
+            <a href="{{path('app_user_tabletab_index', {'id': eventList.id}) }}" class="event-menu__link">
+            <i class="event-menu__icon fa-solid fa-utensils"></i>
+            <p class="event-menu__text">Tables</p>
+            </a>
         </div>
-        <div class="menu-button">
-        <a href="{{ path('app_user_website_theme', {'id': eventList.id})}}" class="frontmenu-link">
-            <i class="icon-button fa-solid fa-globe"></i>
-            <p class="text-button">Site internet</a></p>
+        <div class="event-menu__button" data-id="5">
+            <a href="{{ path('app_user_website_theme', {'id': eventList.id})}}" class="event-menu__link">
+            <i class="event-menu__icon fa-solid fa-globe"></i>
+            <p class="event-menu__text">Website</p>
+            </a>
         </div>
-        <div class="menu-button">
-        <a href="{{ path('app_user_picture_index', {'id': eventList.id}) }}" class="frontmenu-link">
-            <i class="icon-button fa-solid fa-images"></i>
-            <p class="text-button">Galerie photos</a></p>
+        <div class="event-menu__button" data-id="6">
+            <a href="{{ path('app_user_picture_index', {'id': eventList.id}) }}" class="event-menu__link">
+            <i class="event-menu__icon fa-solid fa-images"></i>
+            <p class="event-menu__text">Pre-event photos</p>
+            </a>
         </div>
-        <div class="menu-button">
-        <a href="{{ path('app_user_wedding_index', {'id': eventList.id}) }}" class="frontmenu-link">
-            <i class="icon-button fa-regular fa-images"></i>
-            <p class="text-button">Galerie mariage</a></p>
+        <div class="event-menu__button" data-id="7">
+            <a href="{{ path('app_user_wedding_index', {'id': eventList.id}) }}" class="event-menu__link">
+            <i class="event-menu__icon fa-regular fa-images"></i>
+            <p class="event-menu__text">Event photos</p>
+            </a>
         </div>
-        <div class="menu-button">
-        <a href="{{ path('app_user_eventlist_edit', {'id': eventList.id}) }}" class="frontmenu-link">
-            <i class="icon-button fa-solid fa-gear"></i>
-            <p class="text-button">Propriétés</a></p>
+        <div class="event-menu__button" data-id="8">
+            <a href="{{ path('app_user_eventlist_edit', {'id': eventList.id}) }}" class="event-menu__link">
+            <i class="event-menu__icon fa-solid fa-gear"></i>
+            <p class="event-menu__text">Event properties</p>
+            </a>
         </div>
     </div>
     <button class="hamburger">
@@ -55,15 +64,15 @@
 
     <div class="mobile-nav hidden">
         <div class="eventType-menu-burger hidden">
-            <p class="text-button-burger"><a href="{{ path('app_user_eventdashboard', {'id': eventList.id}) }}" class="frontmenu-link-burger">tableau de bord</a></p>
-            <p class="text-button-burger"><a href="{{ path('app_user_checklist_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">tâches</a></p>
-            <p class="text-button-burger"><a href="{{path('app_user_expense_index', {'id': eventList.id})}}" class="frontmenu-link-burger">budget</a></p>
-            <p class="text-button-burger"><a href="{{path('app_user_guest_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">invités</a></p>
-            <p class="text-button-burger"><a href="{{path('app_user_tabletab_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">tables</a></p>
-            <p class="text-button-burger"><a href="{{ path('app_user_website_theme', {'id': eventList.id})}}" class="frontmenu-link-burger">site internet</a></p>
-            <p class="text-button-burger"><a href="{{ path('app_user_picture_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">galerie pré-évént</a></p>
-            <p class="text-button-burger"><a href="{{ path('app_user_wedding_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">galerie mariage</a></p>
-            <p class="text-button-burger"><a href="{{ path('app_user_eventlist_edit', {'id': eventList.id}) }}" class="frontmenu-link-burger">propriétés d'évént</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_eventdashboard', {'id': eventList.id}) }}" class="frontmenu-link-burger">Dashboard</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_checklist_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">Tasks</a></p>
+            <p class="text-button-burger"><a href="{{path('app_user_expense_index', {'id': eventList.id})}}" class="frontmenu-link-burger">Budget</a></p>
+            <p class="text-button-burger"><a href="{{path('app_user_guest_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">Guests</a></p>
+            <p class="text-button-burger"><a href="{{path('app_user_tabletab_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">Tables</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_website_theme', {'id': eventList.id})}}" class="frontmenu-link-burger">Website</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_picture_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">Pre-event photos</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_wedding_index', {'id': eventList.id}) }}" class="frontmenu-link-burger">Event photos</a></p>
+            <p class="text-button-burger"><a href="{{ path('app_user_eventlist_edit', {'id': eventList.id}) }}" class="frontmenu-link-burger">Event properties</a></p>
         </div>
     </div>
     {% endblock %}

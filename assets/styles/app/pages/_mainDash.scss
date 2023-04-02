@@ -1,0 +1,23 @@
+.main-dashboard {
+    &__flex {
+        display: flex;
+        gap: 5rem;
+    }
+
+    &__left {
+        flex: 1;
+    }
+    
+    &__right {
+        flex: 1;
+        text-align: center;
+    }
+    
+    &__list {
+        margin: 1rem 0;
+    }
+    
+    &__eventtype h3:not(:last-child) {
+        margin: 2rem 0;
+    }
+}

@@ -5,28 +5,34 @@
 
 {% block body %}
 
-	<div class="dashboard-center-container">
-		<h3 class="dashboard-tertiary dashboard-tertiary-center">Créer votre événement {{ eventType }}</h3>
-		<div class="bkgrnd-block-registerform">
-			{# <div class="icon-close">
-				<i class="close fa-solid fa-xmark"></i>
-			</div> #}
-			{{ form_start(form, {'attr': {'class': 'register-form'}}) }}
-			{{ form_row(form.eventName, {'attr': {'class': 'evname'}}) }}
-			{{ form_row(form.eventDate, {'attr': {'class': 'evdate'}}) }}
-			{{ form_row(form.eventBudget, {'attr': {'class': 'evbudget'}}) }}
-			{{ form_row(form.eventLocation, {'attr': {'class': 'evlocation'}}) }}
+	<section class="form-container">
+        <div class="form-container__square">
+            <h3 class="dashboard-tertiary form-container__title">Event Name</h3>
+            <div class="form__bkgrnd-block">
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                    <div class="form__items">
+					
+					    {{ form_label(form.eventName, null, {'label_attr': {'class': 'form__label'}}) }}
+			            {{ form_widget(form.eventName, {'attr': {'class': 'form__input form__input--text'}}) }}
+						{{ form_label(form.eventDate, null, {'label_attr': {'class': 'form__label'}}) }}
+			            {{ form_widget(form.eventDate, {'attr': {'class': 'form__input form__input--text'}}) }}
+						{{ form_label(form.eventBudget, null, {'label_attr': {'class': 'form__label'}}) }}
+			            {{ form_widget(form.eventBudget, {'attr': {'class': 'form__input form__input--text'}}) }}
+						{{ form_label(form.eventLocation, null, {'label_attr': {'class': 'form__label'}}) }}
+			            {{ form_widget(form.eventLocation, {'attr': {'class': 'form__input form__input--text'}}) }}
+			            {{ form_widget(form.image, {'attr': {'class': 'form__input form__input--text'}}) }}
 			
-
-			{% for eventProperty in eventProperties %}
-			    <label for="eventProperty">{{ eventProperty.name}}</label>
-                <input type="text" name="property_{{ eventProperty.id}}" id="eventProperty" class="eventProperty" required>
-			{% endfor %}
-			
-            {{ form_row(form.image) }}
-			<button class="btn">{{ button_label|default('Save') }}</button>
-			{{ form_end(form) }}
+			            {% for eventProperty in eventProperties %}
+			                <label for="eventProperty">{{ eventProperty.name}}</label>
+                            <input type="text" name="property_{{ eventProperty.id}}" id="eventProperty" class="form__input form__input--text" required>
+			            {% endfor %}
+					</div>
+					<div class="form__actions">
+                        <button class="form__button-i btn btn__form">{{ button_label|default('Save') }}</button>
+                    </div>
+				{{ form_end(form) }}
+		    </div>
 		</div>
-	</div>
+	</section>
 	{# <a href="{{ path('app_user_eventlist_index') }}">back to list</a> #}
 {% endblock %}

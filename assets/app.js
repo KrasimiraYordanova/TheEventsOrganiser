@@ -6,14 +6,13 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/app.css';
-import './js/main.js';
-import './styles/appF.scss';
+import './styles/app/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
 
+import './js/app/eventMenu.js';
+import './js/app/dropdownonclick.js';
 import './js/script.js';
-import './js/modal.js';
 import './js/main.js';
 

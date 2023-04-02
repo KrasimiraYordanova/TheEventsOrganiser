@@ -1,0 +1,15 @@
+.politics {
+    padding: 5rem 5rem;
+
+    &__container {
+        max-width: 100rem;
+        margin: 0 auto;
+    }
+    
+    &__content p,
+    ul {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+    }
+}
+

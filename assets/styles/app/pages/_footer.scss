@@ -1,0 +1,72 @@
+.footer {
+    margin-top: 5rem;
+    background: $color-primary;
+    color: #fff;
+    padding: 5rem 5rem 1rem 5rem;
+
+    &__top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+        margin-bottom: 7rem;
+    }
+    &__links {
+        list-style: none;
+        text-align: center;
+    }
+    &__social {
+        display: flex;
+        flex-direction: row;
+        gap: 3rem;
+
+        &-icon {
+            font-size: 25px;
+            color: $color-grey-dark-3;
+            border: 0.5px transparent solid;
+            border-radius: 24%;
+            padding: 1rem;
+            line-height: 20px;
+            transition: all 0.5s;
+
+            &:hover {
+                background: $color-primary-light;
+            }
+        }
+    }
+    &__address-p {
+        font-size: 1.2rem;
+    }
+    &__nav-address {
+        display: flex;
+        flex-direction: row;
+        gap: 5rem;
+        justify-content: center;
+        margin-bottom: 5rem;
+        color: $color-grey-dark-3;
+    }
+    &__link:link,
+    &__link:visited {
+        font-size: 1.2rem;
+        font-weight: 200;
+        text-decoration: none;
+        color: $color-grey-dark-3;
+        display: inline-block;
+        transition: all 0.3s;
+    }
+    &__link:hover,
+    &__link:active {
+        text-decoration: underline;
+        color: $color-primary-light;
+    }
+    &__rights-p {
+        text-align: center;
+        color: $color-grey-dark;
+        font-size: 1.5rem;
+        
+    }
+    &__rights-anchor {
+        text-decoration: underline;
+    }
+}
+

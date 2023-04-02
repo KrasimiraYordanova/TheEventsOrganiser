@@ -1,0 +1,89 @@
+.form-container {
+    margin: 0 auto;
+    width: 80%;
+
+    &__square {
+        width: 50%;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    &__title {}
+}
+
+.form {
+    &__items {
+        margin-bottom: 3rem;
+    }
+
+    &__items--checklist {
+        display: flex;
+        gap: 2rem;
+    }
+
+    &__bkgrnd-block {
+        background-color: $color-primary;
+        padding: 5rem;
+        border-radius: 0.1rem;
+    }
+
+    &__label {
+        margin-bottom: 3rem;
+    }
+
+    &__input {
+        margin-bottom: 1rem;
+        background-color: $color-primary;
+        border: none;
+        border-bottom-color: currentcolor;
+        border-bottom-style: none;
+        border-bottom-width: medium;
+        border-bottom: .3px solid #333;
+        outline: none;
+        padding: .5rem;
+
+        &--check {
+            width: 5%;
+        }
+        &--text {
+            width: 100%;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__return {
+        display: block;
+        background-color: $color-white;
+        padding: 0.6rem 2.2rem;
+        border-radius: 0.2rem;
+    }
+
+    &__guest-container {
+        display: flex;
+        justify-content: center;
+        gap: 6rem;
+        width: 100%;
+        margin: 2rem 0;
+    }
+
+    &__guest {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        width: 100%;
+
+        select {
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: white;
+            margin-top: -1rem;
+        }
+    }
+}

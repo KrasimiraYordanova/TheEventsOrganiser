@@ -1,0 +1,28 @@
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,800;1,400;1,800&display=swap');
+
+
+@import "abstracts/variables";
+
+@import "base/base";
+@import "base/typography";
+@import "base/utilities";
+
+@import "components/button";
+@import "components/card";
+@import "components/eventMenu";
+@import "components/form";
+@import "components/photoGallery";
+
+@import "layout/headnav";
+
+@import "pages/contact";
+@import "pages/eventDash";
+@import "pages/footer";
+@import "pages/home";
+@import "pages/invitation";
+@import "pages/legals";
+@import "pages/mainDash";
+@import "pages/politics";
+@import "pages/tasks";
+@import "pages/website";

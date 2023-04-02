@@ -1,0 +1,20 @@
+.hidden {
+    display: none;
+}
+
+.inactives {
+    color: $color-grey-dark-2;
+}
+
+.dashboard-container {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.bkgrnd-block {
+    background-color: $color-primary;
+    border-radius: 0.2rem;
+    padding: 3rem;
+    margin-bottom: 2rem;
+}
+
