@@ -5,27 +5,30 @@
 {% block body %}
 
 
-    <div class="dashboard-center-container">
-        <div class="item-border">
-            <h2 class="item-title">My pre-event photos</h2>
-        </div>
-
-        <div class="bkgrnd-block">
-            <div class="photo-list">
-            {% for picture in pictures %}
-                <div class="item-list-photo">
-                    <p>{{ include('user_picture/_delete_form.html.twig') }}</p>
-                    <img class="wedding-img" src="{{ asset('uploads/Pre-Event-Photos/'~ picture.namePath )}}" alt="wedding">
-                </div>
-            {% endfor %}
+   <section class="dashboard-container">
+        <div class="items-container">
+            <div class="items-container__item-space">
+                <h2 class="items-container__item-title">Event photos</h2>
             </div>
+
+            <div class="bkgrnd-block">
+
+                <div class="event-photos">
+                    {% for picture in pictures %}
+                    <div class="event-photos__imgbox">
+                        <p>{{ include('user_picture/_delete_form.html.twig') }}</p>
+                        <img class="event-photos__img" src="{{ asset('uploads/Pre-Event-Photos/'~ picture.namePath )}}" alt="image">
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            {# <a href="{{ path('app_user_picture_new', {'id': eventList.id}) }}" class="btn btn-item">Ajouter image</a> #}
+            {{ form_start(form, {'attr': {'class': 'event-photos__form'}}) }}
+            {{ form_row(form.image) }}
+            <button class="btn event-photos__btn">{{ button_label|default('Save') }}</button>
+            {{ form_end(form) }}
         </div>
-        {# <a href="{{ path('app_user_picture_new', {'id': eventList.id}) }}" class="btn btn-item">Ajouter image</a> #}
-        {{ form_start(form, {'attr': {'class': 'photo-form'}}) }}
-        {{ form_row(form.image) }}
-        <button class="file-btn">{{ button_label|default('Save') }}</button>
-        {{ form_end(form) }}
-    </div>
-    
+    </section>
 
 {% endblock %}

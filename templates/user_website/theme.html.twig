@@ -6,31 +6,32 @@
 
 {% block body %}
 
-	<div class="dashboard-center-container">
-        <div class="item-border">
-            <h2 class="item-title">Guests</h2>
-        </div>
-
-        <div class="bkgrnd-block">
-            <div class="item-list">
-            {% for guest in guests %}
-                <div class="item-list-single">
-                    <div class="guest-list-single">
-                        <p class="item-parag">L'invitation de {{ guest.name }}</p>
-                        <p class="item-parag"><a href="{{ path('app_user_website_index', {'id': eventList.id, 'token': guest.token }) }}" class="btn btn-item"><i class="fa-solid fa-user"></i></a></p>
-                    </div>
-                </div>
-            {% else %}
-                <p>aucun resultat trouvé</p>
-            {% endfor %}
+    <section class="dashboard-container">
+        <div class="items-container">
+            <div class="items-container__item-space">
+                <h2 class="items-container__item-title">Invitations, Change Layout</h2>
             </div>
-                <p>* Ajouter d'abord une table avant d'insérer l'invitée, si vous voulez choisir sa table tout de suite
+
+            <div class="bkgrnd-block ">
+                <div class="items-container__bkgrnd-block">
+                {% for guest in guests %}
+                    <a class="website__btn" href="{{ path('app_user_website_index', {'id': eventList.id, 'token': guest.token }) }}" class="btn btn-item"></a>">
+                        <i class="website__icon fa-solid fa-user"></i>
+                        <p class="website__paragraph">{{ guest.name }}'s invitation</p>
+                    </a>
+                {% else %}
+                    <p>no results found</p>
+                {% endfor %}
+                </div>
+            </div>
         </div>
-        
-</div>   
+    </section>  
 
 {% endblock %}
 
 {# <div class="image-box-websiteTheme">
             <img class="img-website" src="{{ asset('images/Présentation1.jpg' )}}" alt="wedding ideas">
         </div> #}
+
+
+        

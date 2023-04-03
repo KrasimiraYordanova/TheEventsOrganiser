@@ -13,6 +13,6 @@ import './bootstrap';
 
 import './js/app/eventMenu.js';
 import './js/app/dropdownonclick.js';
-import './js/script.js';
-import './js/main.js';
+import './js/app/script.js';
+import './js/app/main.js';
 

@@ -1,42 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dashboard principal
-{% endblock %}
+{% block title %}Main dashboard{% endblock %}
 
 {% block body %}
 
-	 <div class="dashboard-center-container">
-        <h1 class="dashboard-title">My Event Planner</h1>
-        <div class="bkgrnd-block">
-            <div class="flex-block">
-                <div class="left">
-				
-                    <h2 class="dashboard-secondary"><a href="{{ path('app_user_eventlist_index') }}">Tous mes événements</a></h2>
-                    <h2 class="dashboard-secondary">Mes événements actuels</h2>
-                    <div class="list">
-                    {% for eventList in eventLists %}
-                        <h3 class="dashboard-tertiary-two"><a href="{{ path('app_user_eventdashboard', {'id': eventList.id}) }}">{{ eventList.eventName }}</a></h3>
-                    {% endfor %}
+	<section class="dashboard-container">
+        <div class="items-container">
+            <div class="items-container__top">
+                <h1 class="title">My Event Organiser</h1>
+            </div>
+            
+            <div class="bkgrnd-block">
+                <div class="main-dashboard__flex">
+                    <div class="main-dashboard__left">
+                        <h2 class="dashboard-secondary"><a href="{{ path('app_user_eventlist_index') }}">List of all my events</a></h2>
+                        <h2 class="dashboard-secondary">My last three current events</h2>
+                        <div class="main-dashboard__list">
+                            {% for eventList in eventLists %}
+                            <h3 class="dashboard-tertiary"><a href="{{ path('app_user_eventdashboard', {'id': eventList.id}) }}">{{ eventList.eventName }}</a></h3>
+                            {% endfor %}
+                        </div>
+                        <h2 class="dashboard-secondary">My last three past events</h2>
+                        <div class="main-dashboard__list">
+                            {% for pastEvent in pastEventLists %}
+                            <h3 class="dashboard-tertiary"><a href="{{ path('app_user_eventdashboard', {'id': pastEvent.id}) }}">{{ pastEvent.eventName }}</a></h3>
+                        </div>
                     </div>
-                    <h2 class="dashboard-secondary">Mes trois derniers événements passés</h2>
-                    <div class="list">
-                    {% for pastEvent in pastEventLists %}
-                        <h3 class="dashboard-tertiary-two"><a href="{{ path('app_user_eventdashboard', {'id': pastEvent.id}) }}">{{ pastEvent.eventName }}</a></h3>
-                    {% endfor %}
-                    </div>
-                </div>
-                <div class="right">
-                    <h2 class="dashboard-secondary">Créez votre événement</h2>
-                    <div class="eventtype-list list">
-					{% for eventType in eventTypes %}
-                        <h3 class="dashboard-tertiary-two"><a href="{{ path('app_user_eventlist_form', {'slug': eventType.slug}) }}"> {{ eventType.name }} </a></h3>
-					{% endfor %}
+                    <div class="main-dashboard__right">
+                        <h2 class="dashboard-secondary">Create your event</h2>
+                        <div class="main-dashboard__list main-dashboard__eventtype">
+                            {% for eventType in eventTypes %}
+                            <h3 class="dashboard-tertiary"><a href="{{ path('app_user_eventlist_form', {'slug': eventType.slug}) }}"> {{ eventType.name }}</a></h3>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
+    </section>
 
 {% endblock %}

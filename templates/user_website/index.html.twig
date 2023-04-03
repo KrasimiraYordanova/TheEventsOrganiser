@@ -5,62 +5,43 @@
 
 {% block body %}
 
-<div class="dashboard-center-container">
-
-        <div class="margin"></div>
+    <section class="dashboard-container">
 
         <div class="bkgrnd-block">
-            <div class="website-image-div">
-                <img src="{{ asset('uploads/eventImage/'~ eventList.image )}}" alt="weddingPhoto" class="website-image">
-                <div class="currentWeddingInfo">
-                    <h1 class="dashboard-secondary web-info">{{ eventList.eventName }}</h1>
-                    <h2 class="dashboard-title web-info">{{ eventList.eventDate | date('Y-m-d') }}</h2>
+            <div class="invitation__imagebox">
+                <img src="{{ asset('uploads/eventImage/'~ eventList.image )}}" alt="weddingPhoto" class="invitation__image">
+                <div class="invitation__info">
+                    <h1 class="dashboard-secondary">{{ eventList.eventName }}</h1>
+                    <h2 class="dashboard-tertiary ">{{ eventList.eventDate | date('Y-m-d') }}</h2>
                 </div>
             </div>
 
-            
+            <div class="invitation__content">
+                <h3 class="dashboard-tertiary">Rdsvp</h3>
+                <h3 class="dashboard-tertiary">{{ guest.name }}</h3>
 
-            <div class="form-content">
-                <h4 class="dashboard-tertiary">Renseginer votre présence</h4>
-                
-
-                    {# <input type="text" id="fname" name="fname" placeholder="prénom">
-                    <input type="text" id="lname" name="lname" placeholder="nom">
-                    <input type="tel" id="tel" name="tel" placeholder="phone">
-                    <input type="email" id="email" name="email" placeholder="email"> #}
-                    <div class="guest-info">
-                    <h3 class="dashboard-tertiary">{{ guest.name }}</h3>
-                    </div>
-                    
-                    {{ form_start(form, {'attr': {'class': 'form-info'}}) }}
+                {{ form_start(form, {'attr': {'class': 'invitation__form'}}) }}
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                    {# <div class="radio"> #}
-                        {# <div> #}
-                            {# <input type="radio" id="attending" name="attendance" value="attending">
-                            <label for="attendance">attending</label> #}
-                            {{ form_row(form.rdsvp, {'attr': {'class': 'radio'}}) }}
-                        {# </div> #}
-                        {# <div>
-                            <input type="radio" id="declined" name="attendance" value="declined">
-                            <label for="attendance">declined</label>
-                        </div> #}
-                    {# </div>
-                    <div class="radio"> #}
-                    {{ form_row(form.diet, {'attr': {'class': 'radio'}}) }}
-                    {# <label for="diet">Spécificité alimentaire</label>
-                    <select name="diet" id="diet">
-                        <option value="">Select diet</option>
-                        <option value="vegan">Végétalien/ne</option>
-                        <option value="vegetarian">Végétarien/ne</option>
-                        <option value="omnivore">Omnivore</option>
-                        <option value="pescatarian">Pescatarien</option>
-                    </select> #}
-                    {# </div> #}
-                    <input class="btn btn-light formBtn" type="submit" value="Submit">
+
+                    <div class="invitation__select">
+                        <p>Marquez votre présence</p>
+                        <div class="invitation__radio">
+                            <div>
+                                {{ form_widget(form.rdsvp) }}
+                                {{ form_label(form.rdsvp, null, {'label_attr': {'class': 'form__label'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="invitation__select">
+                    {{ form_label(form.diet, 'Spécificité alimentaire', {'label_attr': {'class': 'form__label'}}) }}
+                    {{ form_widget(form.diet) }}
+                    </div>
+                    <input class="btn invitation__btn" type="submit" value="Submit">
                 {{ form_end(form) }}
+
             </div>
         </div>
-        <div class="margin"></div>
-    </div>
+    </section>
 
 {% endblock %}

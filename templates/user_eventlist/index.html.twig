@@ -4,36 +4,36 @@
 
 {% block body %}
 
-    <div class="dashboard-center-container">
-        <a href="{{ path('app_maindashboard') }}" class="back-dashboard">Retour au dashboard</a>
-        <h1 class="dashboard-title">My Event Planner</h1>
-        <div class="bkgrnd-block">
-                    <h2 class="dashboard-secondary">Liste de tous mes événements</h2>
-                    {% for event_list in event_lists %}
-                    <div class="item-list">
-                        <div class="item-list-single">
-                            <p class="eitem-parag"><a class="eitem-parag-link" href="{{ path('app_user_eventdashboard', {id: event_list.id}) }}">{{ event_list.eventName }}</a></p>
-                            <p class="eitem-parag">{{ event_list.eventDate ? event_list.eventDate|date('Y-m-d') : '' }}</p>
-                            <p class="eitem-parag">{{ event_list.eventBudget |format_currency('EUR') }}</p>
-                            <p class="eitem-parag">{{ event_list.eventLocation }}</p>
-                            {% if event_list.image %}
-                            <div class="eitem-parag eimage-box">
-                            <img class="event-image" src="{{ asset('uploads/eventImage/'~ event_list.image )}}">
-                            </div>
-                            {% endif %}
-                            <div class="action-buttons">
-                                {# <p><a href="{{ path('app_user_eventlist_edit', {'id': event_list.id}) }}">
-									<i class="icon fa-solid fa-pen"></i></a></p> #}
-                                <p>{{ include('user_eventlist/_delete_form.html.twig') }}</p>
+     <section class="dashboard-container">
+        <div class="items-container">
+            <div class="items-container__top">
+                <p class="items-container__back"><a class="items-container__a items-container__a--2" href="{{ path('app_maindashboard') }}">&lt;Back</a></p>
+                <h1 class="title">My Event Organiser</h1>
+            </div>
+            <div class="bkgrnd-block ">
+                <div class="items-container__item-space">
+                    <h2 class="items-container__item-title">My events</h2>
+                </div>
+                {% for event_list in event_lists %}
+                <div class="items-container__bkgrnd-block items-container__flex">
+                    <div class="items-container__item-info">
+                        <div class="items-container__additionl3">
+                            <div class="items-container__additional">
+                                <p class="items-container__item-parag"><a class="" href="{{ path('app_user_eventdashboard', {id: event_list.id}) }}">{{ event_list.eventName }}</a></p>
+                                <p class="items-container__item-parag">{{ event_list.eventDate ? event_list.eventDate|date('Y-m-d') : '' }}</p>
+                                <p class="items-container__item-parag">{{ event_list.eventBudget |format_currency('EUR') }}</p>
+                                <p class="items-container__item-parag">{{ event_list.eventLocation }}</p>
+                                <p class="items-container__item-parag"><img src="{{ asset('uploads/eventImage/'~ event_list.image )}}" alt=""></p>
+                                <p class="items-container__p"{{ include('user_eventlist/_delete_form.html.twig') }}</p>
                             </div>
                         </div>
                     </div>
-                             {% else %}
-                             <p>no records found</p>
-                             {% endfor %}
-                        </div>
-                    </div>
+                {% else %}
+                    <p>no records found</p>
+                {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
 {% endblock %}
