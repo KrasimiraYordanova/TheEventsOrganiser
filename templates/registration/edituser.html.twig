@@ -3,27 +3,46 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-<div class="dashboard-center-container">
-        <h3 class="dashboard-tertiary dashboard-tertiary-center">Registration</h3>
-        <div class="bkgrnd-block-registerform">
-        {{ form_start(registrationForm, {'attr': {'class': 'register-form'}}) }}
-        {{ form_row(registrationForm.firstname, {'attr': {'class': 'rfirstname'}}) }}
-        {{ form_row(registrationForm.lastname, {'attr': {'class': 'rlastname'}}) }}
-        {{ form_row(registrationForm.email, {'attr': {'class': 'remaill'}}) }}
-		{{ form_row(registrationForm.plainPassword, {'attr': {'class': 'rpassword'}}, {
-            label: 'Password'
-        }) }}
-        {# {{ form_row(registrationForm.client) }} #}
-        {{ form_row(registrationForm.client.phone, {'attr': {'class': 'rphone'}}) }}
-        {{ form_row(registrationForm.client.address, {'attr': {'class': 'raddress'}}) }}
-        {{ form_row(registrationForm.client.city, {'attr': {'class': 'rcity'}}) }}
-        {{ form_row(registrationForm.client.zipCode, {'attr': {'class': 'rzip'}}) }}
-        {{ form_row(registrationForm.client.country, {'attr': {'class': 'rcountry'}}) }}
-        
-        
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
-    </div>
-    </div>
+    <section class="form-container">
+        <div class="form-container__square">
+            <h3 class="dashboard-tertiary form-container__title">Edit user parameters</h3>
+            <div class="form__bkgrnd-block">
+
+        {{ form_start(registrationForm, {'attr': {'class': 'form'}}) }}
+        <div class="form__items">
+
+        {{ form_label(registrationForm.firstname, null, {'label_attr': {'class': 'form__label'}}) }}
+        {{ form_widget(registrationForm.firstname, {'attr': {'class': 'form__input form__input--text'}}) }}
+        {{ form_label(registrationForm.lastname, null, {'label_attr': {'class': 'form__label'}}) }}
+        {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form__input form__input--text'}}) }}
+        {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'form__label'}}) }}
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'form__input form__input--text'}}) }}
+        {{ form_label(registrationForm.plainPassword, null, {'label_attr': {'class': 'form__label'}}) }}
+        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form__input form__input--text'}}) }}
+        {# {{ form_widget(registrationForm.client) }} #}
+        {{ form_label(registrationForm.client.phone, null, {'label_attr': {'class': 'form__label'}}) }}
+        {{ form_widget(registrationForm.client.phone,  {'attr': {'class': 'form__input form__input--text'}}) }}
+        {{ form_label(registrationForm.client.address, null, {'label_attr': {'class': 'form__label'}}) }}
+        {{ form_widget(registrationForm.client.address,  {'attr': {'class': 'form__input form__input--text'}}) }}
+        {{ form_label(registrationForm.client.city, null, {'label_attr': {'class': 'form__label'}}) }}
+        {{ form_widget(registrationForm.client.city,  {'attr': {'class': 'form__input form__input--text'}}) }}
+        {{ form_label(registrationForm.client.zipCode, null, {'label_attr': {'class': 'form__label'}}) }}
+        {{ form_widget(registrationForm.client.zipCode,  {'attr': {'class': 'form__input form__input--text'}}) }}
+        {{ form_label(registrationForm.client.country, null, {'label_attr': {'class': 'form__label'}}) }}
+        {{ form_widget(registrationForm.client.country,  {'attr': {'class': 'form__input form__input--text'}}) }}
+        
+        
+        </div>
+
+        <div class="form__actions">
+            <button type="submit" class="form__button-i btn btn__form">Edit</button>
+        </div>
+        {{ form_end(registrationForm) }}
+        </div>
+        </div>
+    </section>
+
 {% endblock %}
+
+{# {{ form_row(form.name, {'attr': {'class': 'name-input'}}) }} #}

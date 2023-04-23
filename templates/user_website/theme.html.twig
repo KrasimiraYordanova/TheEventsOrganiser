@@ -15,7 +15,7 @@
             <div class="bkgrnd-block ">
                 <div class="items-container__bkgrnd-block">
                 {% for guest in guests %}
-                    <a class="website__btn" href="{{ path('app_user_website_index', {'id': eventList.id, 'token': guest.token }) }}" class="btn btn-item"></a>">
+                    <a class="website__btn" href="{{ path('app_user_website_index', {'id': eventList.id, 'token': guest.token }) }}" class="btn btn-item">
                         <i class="website__icon fa-solid fa-user"></i>
                         <p class="website__paragraph">{{ guest.name }}'s invitation</p>
                     </a>
@@ -28,10 +28,6 @@
     </section>  
 
 {% endblock %}
-
-{# <div class="image-box-websiteTheme">
-            <img class="img-website" src="{{ asset('images/Présentation1.jpg' )}}" alt="wedding ideas">
-        </div> #}
 
 
         

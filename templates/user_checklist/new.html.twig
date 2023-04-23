@@ -1,25 +1,23 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}{% if edit %}Edit{% else %}New{% endif %} task{% endblock %}
 
 {% block body %}
 
         <section class="form-container">
 		    <div class="form-container__square">
-			    <h3 class="dashboard-tertiary form-container__title">
-			    {# {% if edit %}Edit{% else %}Create{% endif %} a task #}</h3>
+			    <h3 class="dashboard-tertiary form-container__title">{% if edit %}Edit{% else %}Add{% endif %} a task</h3>
 
 			    <div class="form__bkgrnd-block">
 			    	{{ form_start(form, {'attr': {'class': 'form'}}) }}
                         <div class="form__items form__items--checklist">
-						    {{ form_label(form.isChecked, null, {'label_attr': {'class': 'form__label'}}) }}
 			    	        {{ form_widget(form.isChecked, {'attr': {'class': 'form__input form__input--check'}}) }}
-						    {{ form_label(form.description, null, {'label_attr': {'class': 'form__label'}}) }}
-			    	        {{ form_widget(form.description, , {'attr': {'class': 'form'}}) }}
+						    {{ form_label(form.description, 'task', {'label_attr': {'class': 'form__label'}}) }}
+			    	        {{ form_widget(form.description, {'attr': {'class': 'form__input form__input--text'}}) }}
 			            </div>
 						<div class="form__actions">
 						    <button class="form__button-i btn btn-save">{{ button_label|default('Save') }}</button>
-                            <a class="form__return" href="{{ path('app_user_checklist_index', {'id': eventList.id}) }}">&larr; back</a>
+                            <a class="form__return" href="{{ path('app_user_checklist_index', {'eventSlug': eventList.eventSlug}) }}">&larr; back</a>
 			            </div>
 			    	{{ form_end(form) }}
 			    </div>

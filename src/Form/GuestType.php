@@ -32,10 +32,10 @@ class GuestType extends AbstractType
             ->add('phone')
             ->add('diet', ChoiceType::class, [
                 'choices' => [
-                    'Omnivore' => 'Omnivore',
-                    'Vegetarian' => 'Vegetarian',
-                    'Prescetarian' => 'Prescetarian',
-                    'Vegan' => 'Vegan',
+                    'omnivore' => 'Omnivore',
+                    'vegetarian' => 'Vegetarian',
+                    'pescatarian' => 'Pescatarian',
+                    'vegan' => 'Vegan',
                 ],
                 'expanded' => false,
                 'multiple'=>false,

@@ -9,17 +9,16 @@ function onClick(ev) {
         if(ev.target.tagName == 'A') {
             target = ev.target.parentElement;
         }
+
         if(ev.target.tagName == 'P' || ev.target.tagName == 'I') {
             target = ev.target.parentElement.parentElement;
+            
         }
 
         if(target.dataset.id == i) {
-            console.log(target);
-            console.log(Number(target.dataset.id));
-            console.log(menu[i].dataset.id);
-            console.log(i);
-            target.classList.add('event-menu__active');
+            target.style.background = '#faebd7';
+        } else  {
+            target.classList.remove('event-menu__active');
         }
-        target.classList.remove('event-menu__active');
     }
 }

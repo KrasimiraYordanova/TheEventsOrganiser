@@ -17,13 +17,14 @@
                         <h2 class="dashboard-secondary">My last three current events</h2>
                         <div class="main-dashboard__list">
                             {% for eventList in eventLists %}
-                            <h3 class="dashboard-tertiary"><a href="{{ path('app_user_eventdashboard', {'id': eventList.id}) }}">{{ eventList.eventName }}</a></h3>
+                            <h3 class="dashboard-tertiary"><a href="{{ path('app_user_eventdashboard', {'eventSlug': eventList.eventSlug}) }}">{{ eventList.eventName }}</a></h3>
                             {% endfor %}
                         </div>
                         <h2 class="dashboard-secondary">My last three past events</h2>
                         <div class="main-dashboard__list">
                             {% for pastEvent in pastEventLists %}
-                            <h3 class="dashboard-tertiary"><a href="{{ path('app_user_eventdashboard', {'id': pastEvent.id}) }}">{{ pastEvent.eventName }}</a></h3>
+                            <h3 class="dashboard-tertiary"><a href="{{ path('app_user_eventdashboard', {'eventSlug': pastEvent.eventSlug}) }}">{{ pastEvent.eventName }}</a></h3>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="main-dashboard__right">

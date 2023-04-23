@@ -21,6 +21,6 @@ function show() {
 }
 
 function reveal() {
-    hamburger.classList.toggle('is-active');
+    hamburger.classList.toggle('inactives');
     mobileEventNav.classList.toggle('hidden');
 }

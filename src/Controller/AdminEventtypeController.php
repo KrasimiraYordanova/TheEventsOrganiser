@@ -30,7 +30,6 @@ class AdminEventtypeController extends AbstractController
         // $isNew = false;
         if(!$eventType) {
             $eventType = new EventType();
-            // $isNew = true;
         }
 
         $form = $this->createForm(EventTypeType::class, $eventType);
@@ -41,12 +40,6 @@ class AdminEventtypeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $eventType->setSlug($slugger->slug($eventType->getName())->lower());
             $eventTypeRepository->save($eventType, true);
-
-            // if($isNew) {
-            //     $message = " was succesfully added";
-            // } else {
-            //     $message = " was succesfully modified";
-            // }
 
             return $this->redirectToRoute('app_admin_eventtype_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -65,24 +58,6 @@ class AdminEventtypeController extends AbstractController
             'event_type' => $eventType,
         ]);
     }
-
-    // #[Route('/{id}/edit', name: 'app_admin_eventtype_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, EventType $eventType, EventTypeRepository $eventTypeRepository): Response
-    // {
-    //     $form = $this->createForm(EventTypeType::class, $eventType);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $eventTypeRepository->save($eventType, true);
-
-    //         return $this->redirectToRoute('app_admin_eventtype_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->renderForm('admin_eventtype/edit.html.twig', [
-    //         'event_type' => $eventType,
-    //         'form' => $form,
-    //     ]);
-    // }
 
     #[Route('/{slug}', name: 'app_admin_eventtype_delete', methods: ['POST'])]
     public function delete(Request $request, EventType $eventType, EventTypeRepository $eventTypeRepository): Response

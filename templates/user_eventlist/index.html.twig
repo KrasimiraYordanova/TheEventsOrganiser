@@ -14,19 +14,19 @@
                 <div class="items-container__item-space">
                     <h2 class="items-container__item-title">My events</h2>
                 </div>
+                <div class="items-container__bkgrnd-block items-container__grid">
                 {% for event_list in event_lists %}
-                <div class="items-container__bkgrnd-block items-container__flex">
                     <div class="items-container__item-info">
-                        <div class="items-container__additionl3">
+                        {# <div class="items-container__additionl3"> #}
                             <div class="items-container__additional">
-                                <p class="items-container__item-parag"><a class="" href="{{ path('app_user_eventdashboard', {id: event_list.id}) }}">{{ event_list.eventName }}</a></p>
+                                <p class="items-container__item-parag"><a class="" href="{{ path('app_user_eventdashboard', {'eventSlug': event_list.eventSlug}) }}">{{ event_list.eventName }}</a></p>
                                 <p class="items-container__item-parag">{{ event_list.eventDate ? event_list.eventDate|date('Y-m-d') : '' }}</p>
                                 <p class="items-container__item-parag">{{ event_list.eventBudget |format_currency('EUR') }}</p>
                                 <p class="items-container__item-parag">{{ event_list.eventLocation }}</p>
-                                <p class="items-container__item-parag"><img src="{{ asset('uploads/eventImage/'~ event_list.image )}}" alt=""></p>
-                                <p class="items-container__p"{{ include('user_eventlist/_delete_form.html.twig') }}</p>
+                                <p class="items-container__item-parag"><img class="items-container__event-image" src="{{ asset('uploads/eventImage/'~ event_list.image )}}" alt=""></p>
+                                <p class="items-container__p">{{ include('user_eventlist/_delete_form.html.twig') }}</p>
                             </div>
-                        </div>
+                        {# </div> #}
                     </div>
                 {% else %}
                     <p>no records found</p>

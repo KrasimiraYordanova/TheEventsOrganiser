@@ -28,6 +28,7 @@ class UserWebsiteController extends AbstractController
     #[Route('/website/{id}/{token}', defaults: ["token" => null], name: 'app_user_website_index', methods: ['GET', 'POST'])]
     public function website(EventList $eventList, string $token = null, Request $request, GuestRepository $guestRepository, EventListRepository $eventListRepo): Response
     {
+        $user = $this->getUser();
         // récupérer le guest via son token
         if (!$token)
             throw new AccessDeniedException('Accès non autorisé !');
@@ -47,22 +48,16 @@ class UserWebsiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $params = $request->request->all();
-            $params = array_pop($params);
-            // dd($params);
-            foreach($params as $key=>$value) {
-                dump($value);
-            }
             $guestRepository->save($guest, true);
 
             return $this->redirectToRoute('front_index', [], Response::HTTP_SEE_OTHER);
         }
-
-
+        
         return $this->renderForm('user_website/index.html.twig', [
             'eventList' => $eventList,
             'guest' => $guest,
             'form' => $form,
+            'user' => $user,
         ]);
     }
 }

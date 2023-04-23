@@ -1,12 +1,12 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}Budget{% endblock %}
+{% block title %}{% if edit %}Edit{% else %}New{% endif %} expense{% endblock %}
 
 {% block body %}
 
     <section class="form-container">
 	    <div class="form-container__square">
-	    	<h3 class="dashboard-tertiary form-container__title">Add/Edit budget</h3>
+	    	<h3 class="dashboard-tertiary form-container__title">{% if edit %}Edit{% else %}Create{% endif %} expense</h3>
 	    	<div class="form__bkgrnd-block">
 	    		{{ form_start(expenseForm, {'attr': {'class': 'form'}}) }}
     
@@ -24,7 +24,7 @@
     
 	    		<div class="form__actions">
 	    			<button class="btn form__button-i btn-save">{{ button_label|default('Save') }}</button>
-	    			<a class="form__return" href="{{ path('app_user_expense_index', {'id': eventList.id}) }}">&larr; back</a>
+	    			<a class="form__return" href="{{ path('app_user_expense_index', {'eventSlug': eventList.eventSlug}) }}">&larr; back</a>
 	    		</div>
 	    		{{ form_end(expenseForm) }}
 	    	</div>

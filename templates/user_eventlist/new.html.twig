@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Event
-{% endblock %}
+{% block title %}New Event{% endblock %}
 
 {% block body %}
 
@@ -24,7 +23,7 @@
 			
 			            {% for eventProperty in eventProperties %}
 			                <label for="eventProperty">{{ eventProperty.name}}</label>
-                            <input type="text" name="property_{{ eventProperty.id}}" id="eventProperty" class="form__input form__input--text" required>
+                            <input type="{{eventProperty.dataType}}" name="property_{{ eventProperty.id}}" id="eventProperty" class="form__input form__input--text" required>
 			            {% endfor %}
 					</div>
 					<div class="form__actions">
@@ -34,5 +33,4 @@
 		    </div>
 		</div>
 	</section>
-	{# <a href="{{ path('app_user_eventlist_index') }}">back to list</a> #}
 {% endblock %}

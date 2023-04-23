@@ -22,7 +22,7 @@ class PropertyType extends AbstractType
         ['required' => false,
         ])
         ->add('createdAt')
-        ->add('slug')
+        // ->add('slug')
         ->add('updatedAt')
         ->add('eventType', EntityType::class, [
             'class' => EventType::class,

@@ -7,14 +7,14 @@
 <section class="dashboard-container">
         <div class="items-container">
             <div class="items-container__item-space">
-                <h2 class="items-container__item-title">Guest</h2>
+                <h2 class="items-container__item-title">Guests</h2>
                 <div class="items-container__items">
-                    <h3 class="items-container__item">Participe: {{attendings}}</h3>
-                    <h3 class="items-container__item">Décliné: {{declines }}</h3>
-                    <h3 class="items-container__item">En attente de réponse: {{ guestNumber - (attendings + declines) }}</h3>
+                    <h3 class="items-container__item">Attending: {{attendings}}</h3>
+                    <h3 class="items-container__item">Declined: {{declines }}</h3>
+                    <h3 class="items-container__item">Awaiting for a response: {{ guestNumber - (attendings + declines) }}</h3>
                     <h3 class="items-container__item">Vegans: {{vegans }}</h3>
                     <h3 class="items-container__item">Vegetarians: {{vegetarians }}</h3>
-                    <h3 class="items-container__item">Pescatarian: {{ pescatarian }}</h3>
+                    <h3 class="items-container__item">Pescatarians: {{ pescatarians }}</h3>
                     <h3 class="items-container__item">Omnivore: {{omnivores }}</h3>
                 </div>
             </div>
@@ -30,18 +30,19 @@
                             <p class="items-container__item-parag">{{ guest.diet }}</p>
                         </div>
                         <div class="items-container__action-buttons">
-                            <p class="items-container__p"><a href="{{ path('app_user_guest_edit', {'id': eventList.id, 'guest_id': guest.id}) }}" class="items-container__a items-container__a--1"><i class="icon fa-solid fa-pen"></i></a></p>
+                            <p class="items-container__p"><a href="{{ path('app_user_guest_edit', {'eventSlug': eventList.eventSlug, 'guest_id': guest.id}) }}" class="items-container__a items-container__a--1"><i class="icon fa-solid fa-pen"></i></a></p>
                             <p class="items-container__p">{{ include('user_guest/_delete_form.html.twig') }}</p>
                         </div>
                     </div>
-                {% else %}
-                    <p>no result found</p>
-                {% endfor %}
                 </div>
-                <p>*First add a table to be able to sit a guest on one</p>
+                {% else %}
+                    <p>no added guest yet</p>
+                {% endfor %}
+                <p>*First create a table to be able to place a guest</p>
+                
                 
             </div>
-            <a href="{{ path('app_user_guest_new', {'id': eventList.id}) }}" class="btn btn-item">Add checklist</a>
+            <a href="{{ path('app_user_guest_new', {'eventSlug': eventList.eventSlug}) }}" class="btn btn-item">Add a guest</a>
         </div>
     </section>
 

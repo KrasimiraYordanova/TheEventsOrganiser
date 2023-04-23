@@ -1,23 +1,23 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}Tables{% endblock %}
+{% block title %}{% if edit %}Edit{% else %}New{% endif %} table{% endblock %}
 
 {% block body %}
 
     <section class="form-container">
         <div class="form-container__square">
-            <h3 class="dashboard-tertiary form-container__title">New/Edit table</h3>
+            <h3 class="dashboard-tertiary form-container__title">{% if edit %}Edit{% else %}Add{% endif %} table</h3>
             <div class="form__bkgrnd-block">
 
 				{{ form_start(form, {'attr': {'class': 'form'}}) }}
 				<div class="form__items">
 					{{ form_label(form.name, null, {'label_attr': {'class': 'form__label'}}) }}
-				    {{ form_start(form.name, {'attr': {'class': 'form__input form__input--text'}}) }}
+				    {{ form_widget(form.name, {'attr': {'class': 'form__input form__input--text'}}) }}
 				</div>
 
                 <div class="form__actions">
 				    <button class="form__button-i btn btn-save">{{ button_label|default('Save') }}</button>
-                    <a href="{{ path('app_user_tabletab_index', {'id': eventList.id}) }}" class="form__return">&larr; back</a>
+                    <a href="{{ path('app_user_tabletab_index', {'eventSlug': eventList.eventSlug}) }}" class="form__return">&larr; back</a>
                 </div>
 			    {{ form_end(form) }}
 

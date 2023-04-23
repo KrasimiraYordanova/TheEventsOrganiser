@@ -10,8 +10,8 @@
 		    <div class="items-container__item-space">
                 <h2 class="items-container__item-title">Checklist</h2>
                 <div class="items-container__items">
-                    <h3 class="items-container__item">Tâches terminées: {{ checked.check }}</h3>
-                    <h3 class="items-container__item">Tâches restantes: {{ unchecked.uncheck }}</h3>
+                    <h3 class="items-container__item">Tasks completed: {{ checked.check }}</h3>
+                    <h3 class="items-container__item">Tasks remaining: {{ unchecked.uncheck }}</h3>
                 </div>
             </div>
 
@@ -23,9 +23,8 @@
                         <div class="items-container__item-info">
                             <p class="item-parag">{{ checklist.description }}</p>
                             <div class="items-container__action-buttons">
-                                <p class="items-container__p"><a class="items-container__a items-container__a--1" href="{{ path('app_user_checklist_edit', {'id': eventList.id, 'checklist_id': checklist.id}) }}"><i class="icon fa-solid fa-pen"></i></a></p>
+                                <p class="items-container__p"><a class="items-container__a items-container__a--1" href="{{ path('app_user_checklist_edit', {'eventSlug': eventList.eventSlug, 'checklist_id': checklist.id}) }}"><i class="icon fa-solid fa-pen"></i></a></p>
                                 <p class="items-container__p">{{ include('user_checklist/_delete_form.html.twig') }}</p>
-                                <p class="items-container__p"><a class="items-container__a items-container__a--2" href="#">delete</a></p>
                             </div>
                         </div>
                     </div>
@@ -35,7 +34,7 @@
 		    	{% endfor %}
 				
 		    </div>
-		    <a href="{{ path('app_user_checklist_new', {'id': eventList.id}) }}" class="btn btn-item">Add a task</a>
+		    <a href="{{ path('app_user_checklist_new', {'eventSlug': eventList.eventSlug}) }}" class="btn btn-item">Add a task</a>
 	   </div>
 	</section>
 {% endblock %}

@@ -38,7 +38,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-#[Route('/user/event/{id}')]
+#[Route('/user/event/{eventSlug}')]
 class UserEventController extends AbstractController
 {
 
@@ -79,8 +79,15 @@ class UserEventController extends AbstractController
         // taking the values of the event
         $valuesNeeded = $eventPropertyRepository->findBy(['eventList' => $eventList->getId()]); 
 
-        $bride = $valuesNeeded[0];
-        $groom = $valuesNeeded[2];
+        if($valuesNeeded) {
+            $bride = $valuesNeeded[0];
+            if(count($valuesNeeded) > 1) {
+                $groom = $valuesNeeded[2];
+            } else {
+                $groom = '';
+            }
+        }
+        
 
         return $this->render('user_eventdashboard/index.html.twig', [
             'user' => $user,
@@ -149,7 +156,7 @@ class UserEventController extends AbstractController
             'checklist' => $checklist,
             'form' => $form,
             'eventList' => $eventList,
-
+            'edit' => $checklist->getId(),
             'user' => $user,
         ]);
     }
@@ -182,16 +189,6 @@ class UserEventController extends AbstractController
             'user' => $user,
         ]);
     }
-
-    // CHECKLIST ROUT WITH EVENT ID - SHOW
-    // #[Route('/checklist/{checklist_id}', name: 'app_user_checklist_show', methods: ['GET'])]
-    // public function showChecklist(EventLIst $eventList, Checklist $checklist): Response
-    // {
-    //     return $this->render('user_checklist/show.html.twig', [
-    //         'checklist' => $checklist,
-    //         'eventList' => $eventList,
-    //     ]);
-    // }
 
     // CHECKLIST ROUT WITH EVENT ID - DELETE
     #[Route('/checklist/{checklist_id}', name: 'app_user_checklist_delete', methods: ['POST'])]
@@ -251,7 +248,7 @@ class UserEventController extends AbstractController
 
         return $this->renderForm('user_expense/new.html.twig', [
             'expense' => $expense,
-            // 'edit' => $expense->getId(),
+            'edit' => $expense->getId(),
             'expenseForm' => $form,
             'eventList' => $eventList,
 
@@ -287,16 +284,6 @@ class UserEventController extends AbstractController
         ]);
     }
 
-    // EXPENSE ROUT WITH EVENT ID - SHOW
-    // #[Route('/budget/{budget_id}', name: 'app_user_expense_show', methods: ['GET'])]
-    // public function showExpense(Expense $expense): Response
-    // {
-    //     return $this->render('user_expense/show.html.twig', [
-    //         'expense' => $expense,
-    //         'eventList' => $eventList,
-    //     ]);
-    // }
-
     // EXPENSE ROUT WITH EVENT ID - DELETE
     #[Route('/budget/{expense_id}', name: 'app_user_expense_delete', methods: ['POST'])]
     #[Entity('expense', expr: 'repository.find(expense_id)')]
@@ -328,6 +315,7 @@ class UserEventController extends AbstractController
         $vegans = $repository->dietCount($eventList->getId(),'vegan');
         $vegetarians = $repository->dietCount($eventList->getId(),'vegetarian');
         $omnivores = $repository->dietCount($eventList->getId(),'omnivore');
+        $pescatarians = $repository->dietCount($eventList->getId(),'pescatarian');
 
 
         return $this->render('user_guest/index.html.twig', [
@@ -338,6 +326,7 @@ class UserEventController extends AbstractController
             'vegans' => $vegans,
             'vegetarians' => $vegetarians,
             'omnivores' => $omnivores,
+            'pescatarians' => $pescatarians,
 
             'eventList' => $eventList,
 
@@ -481,7 +470,7 @@ class UserEventController extends AbstractController
             'tabletab' => $tabletab,
             'form' => $form,
             'eventList' => $eventList,
-
+            'edit' => $tabletab->getId(),
             'user' => $user,
         ]);
 
@@ -515,16 +504,6 @@ class UserEventController extends AbstractController
 
     }
     
-    
-    // TABLE ROUT WITH EVENT ID - SHOW
-    // #[Route('/table/{table_id}', name: 'app_user_tabletab_show', methods: ['GET'])]
-    // public function showTable(Tabletab $tabletab): Response
-    // {
-    //     return $this->render('user_tabletab/show.html.twig', [
-    //         'tabletab' => $tabletab,
-    //         'eventList' => $eventList,
-    //     ]);
-    // }
 
     // TABLE ROUT WITH EVENT ID - DELETE
     #[Route('/table/{tabletab_id}', name: 'app_user_tabletab_delete', methods: ['POST'])]
@@ -585,7 +564,7 @@ class UserEventController extends AbstractController
             $picture->setEventList($eventList);
             $pictureRepository->save($picture, true);
 
-            return $this->redirectToRoute('app_user_picture_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_picture_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
        
         
@@ -663,7 +642,7 @@ class UserEventController extends AbstractController
             $pictureRepository->remove($picture, true);
         }
 
-        return $this->redirectToRoute('app_user_picture_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_picture_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
     }
 
 
@@ -673,6 +652,7 @@ class UserEventController extends AbstractController
     #[Route('/wedding_photos', name: 'app_user_wedding_index', methods: ['GET', 'POST'])]
     public function indexWedding(EventList $eventList, Request $request, PictureRepository $pictureRepository, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $pictures = $pictureRepository->findBy(['eventList' => $eventList->getId(), 'album' => 'wedding']);
@@ -693,7 +673,7 @@ class UserEventController extends AbstractController
             $picture->setEventList($eventList);
             $pictureRepository->save($picture, true);
 
-            return $this->redirectToRoute('app_user_wedding_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_wedding_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
        
         
@@ -701,14 +681,16 @@ class UserEventController extends AbstractController
             'pictures' => $pictures,
             'form' => $form,
             'eventList' => $eventList,
+            'user' => $user,
         ]);
     }
 
 
-    // PRE-EVENT PHOTOS CREATE
+    // WEDDING PHOTOS CREATE
     #[Route('/wedding_photos/new', name: 'app_user_wedding_new', methods: ['GET', 'POST'])]
     public function newWedding(EventList $eventList, Request $request, PictureRepository $pictureRepository,  FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
+        $user = $this->getUser();
         $this->verifyOwner($eventList);
 
         $picture = new Picture();
@@ -727,13 +709,14 @@ class UserEventController extends AbstractController
             $picture->setEventList($eventList);
             $pictureRepository->save($picture, true);
 
-            return $this->redirectToRoute('app_user_wedding_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_wedding_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_wedding/new.html.twig', [
             'picture' => $picture,
             'form' => $form,
             'eventList' => $eventList,
+            'user' => $user,
         ]);
     }
 
@@ -750,13 +733,10 @@ class UserEventController extends AbstractController
              $pictureRepository->remove($picture, true);
          }
  
-         return $this->redirectToRoute('app_user_wedding_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+         return $this->redirectToRoute('app_user_wedding_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
      }
      
-     
-     
-     
-     
+
      // EVENT PROPERTY
     #[Route('/edit', name: 'app_user_eventlist_edit', methods: ['GET', 'POST'])]
     // #[Entity('eventtype', expr: 'repository.find(tabletab_id)')]
@@ -773,16 +753,10 @@ class UserEventController extends AbstractController
 
         // dd($eventList);
         $eventType = $eventList->getEventType();
-        // dd($eventType);
-        //$eventType = $eventTypeRepo->findOneBy(['id' => $eventTypeNeeded->getId()]);
-        // taking the right eventType via eventList table to be able to...
-        // ... find the right properties
-        //$propsNeeded = $propertyRepo->findBy(['eventType' => $eventType->getId()]);
-        // and get the values for that event - eventProperty table and get the values for eventListId
-        $valuesNeeded = $eventPropertyRepo->findBy(['eventList' => $eventList->getId()]);
-        // dump($valuesNeeded);
 
-    
+        $valuesNeeded = $eventPropertyRepo->findBy(['eventList' => $eventList->getId()]);
+        // dd($valuesNeeded);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $image = $eventList->getImage();
             $imageFile = $form->get('image')->getData();
@@ -791,8 +765,6 @@ class UserEventController extends AbstractController
             $eventDelete = array_shift($params);
             // dump($params);
             
-
-
             if ($imageFile) {
                 if ($image) { 
                     $fileUploader->delete($image, 'eventImages');
@@ -812,14 +784,6 @@ class UserEventController extends AbstractController
             $entityValues = [];
             foreach($params as $key=>$value){
                 $entityValues [] = $value;
-                
-                // dump($value);
-                // dump($key);
-                // $id = (int)explode('_', $key)[1];
-                // $updatedEventProperties = $valuesNeeded->setValue($value);
-                // dump($valuesNeeded);
-                // dd($key);
-                // $eventPropertyRepo->save($updatedEventProperties,true);
             }
 
             for($i = 0; $i < count($valuesNeeded); $i++) {
@@ -828,7 +792,7 @@ class UserEventController extends AbstractController
                     $eventPropertyRepo->save($valuesNeeded[$i],true);
                 }
                 
-            return $this->redirectToRoute('app_user_eventdashboard', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_eventdashboard', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_eventlist/edit.html.twig', [

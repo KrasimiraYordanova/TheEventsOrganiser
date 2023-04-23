@@ -26,11 +26,12 @@
     }
 
     &__delete {
-        background-color: $color-white;
+        // background-color: $color-white;
         padding: .1rem;
         position: absolute;
-        right: .4rem;
-        top: 2rem;
+        right: .6rem;
+        top: 3rem;
+        cursor: pointer;
     }
 }
 

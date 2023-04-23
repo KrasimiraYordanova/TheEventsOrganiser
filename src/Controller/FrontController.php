@@ -26,6 +26,9 @@ class FrontController extends AbstractController
     #[Route('/contact', name: 'front_contact', methods: ['GET'])]
     public function contact(): Response
     {
-        return $this->render('front/contact.html.twig');
+        $user = $this->getUser();
+        return $this->render('front/contact.html.twig', [
+            'user' => $user,
+        ]);
     }
 }

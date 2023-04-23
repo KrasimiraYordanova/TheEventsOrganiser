@@ -1,116 +1,88 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}Dashboard principal
-{% endblock %}
+{% block title %}{{ eventList.eventName }} ashboard{% endblock %}
 
 {% block body %}
 
-	<div class="dashboard-center-container">
-	<a href="{{ path('app_user_eventlist_index') }}" class="back-dashboard">Mes événements</a>
-		<h3 class="dashboard-tertiary dashboard-tertiary-center">{{ eventList.eventName }}</h3>
-		<div class="bkgrnd-block">
+	<section class="dashboard-container">
+        <div class="items-container">
+            <div class="items-container__top">
+                <a href="{{ path('app_user_eventlist_index') }}" class="back-dashboard">Mes événements</a>
+                <h1 class="title">{{ eventList.eventName }}</h1>
+            </div>
 
-			<div class="main">
-				<div class="main-event-dashboard">
-					<div class="dash-item dash-item1">
-						<div class="dash-wedding-img">
-							<img class="wedding-img" src="{{ asset('uploads/eventImage/'~ eventList.image )}}" alt="wedding">
-						</div>
-						<div class="wedding-info">
-							<p class="dash-event">
-								{{ bride.value }}
-								and
-								{{ groom.value }}
-							</p>
-							<p class="dash-event">{{ eventList.eventDate | date('Y-m-d') }}</p>
-							<p class="dash-event">{{ diff.days }} days untill our big day</p>
-						</div>
-					</div>
+            <div class="bkgrnd-block">
 
-					<div class="two-items">
-						<div class="dash-item dash-item2">
-							<h3 class="dashboard-tertiary-smaller">Invitées</h3>
-							<div class="wedding-info2">
-								<p class="dash-event">{{ attend }}
-									guests attending the wedding</p>
-								<p class="dash-event">{{ awaiting }} awaiting for a reply</p>
-							</div>
-							<p class="wedding-go-to">
-								<a class="wedding-go-to-link" href="{{ path('app_user_guest_index', {id: eventList.id}) }}">voir tous les invitées
-									                                    &rarr;</a>
-							</p>
-						</div>
-						<div class="dash-item dash-item3">
-							<h3 class="dashboard-tertiary-smaller">Budget</h3>
-							<div class="wedding-info2">
-								<p class="dash-event">Coût total: {{ totalCost.totalCost | format_currency('EUR') }}
-								</p>
-								<p class="dash-event">Total payé: {{ totalPaid.paidTotal | format_currency('EUR') }}
-								</p>
-								<p class="dash-event">A payé: {{ (totalCost.totalCost - totalPaid.paidTotal) | format_currency('EUR') }}
-								</p>
-							</div>
-							<p class="wedding-go-to">
-								<a class="wedding-go-to-link" href="{{ path('app_user_expense_index', {id: eventList.id})}}">voir mon budget &rarr;</a>
-							</p>
-						</div>
-					</div>
-
-					<div class="dash-item dash-item4">
-						<h3 class="dashboard-tertiary-smaller">Tâches à faire</h3>
-							{% for uncheck in unchecked %}
-						    <div class="item-list-check">
-								<div
-									class="item-list-single"><p class="dash-event">{{ uncheck.description }}</p>
-
-								</div>
+                <div class="event-dashboard">
+                    <div class="event-dashboard__top">
+                        <div class="event-dashboard__square">
+                            <div class="event-dashboard__imgbox">
+                                <img class="event-dashboard__img" src="{{ asset('uploads/eventImage/'~ eventList.image )}}" alt="wedding">
                             </div>
-							{% else %}
-								<p class="dash-event">tout mes tâches sont faites</p>
+                            <div class="event-dashboard__info">
+                                <p class="event-dashboard__paragraph">{{ bride.value }} {% if groom %} and {{ groom.value }} {% endif %}</p>
+                                <p class="event-dashboard__paragraph">{{ eventList.eventDate | date('Y-m-d') }}</p>
+                                <p class="event-dashboard__paragraph">{{ diff.days }} days untill our big day</p>
+                            </div>
+                        </div>
+
+                        <div class="event-dashboard__middle">
+                            <div class="event-dashboard__square">
+                                <h3 class="event-dashboard__h3">Guests</h3>
+                                <div>
+                                    <p class="event-dashboard__paragraph">{{ attend }} guests attending the wedding</p>
+                                    <p class="event-dashboard__paragraph">{{ awaiting }} awaiting for a reply</p>
+                                </div>
+                                <a class="event-dashboard__link" href="{{ path('app_user_guest_index', {'eventSlug': eventList.eventSlug}) }}">all guests &rarr;</a>
+                            </div>
+
+                            <div class="event-dashboard__square">
+                                <h3 class="event-dashboard__h3">Budget</h3>
+                                <div>
+                                    <p class="event-dashboard__paragraph">Total cost: {{ totalCost.totalCost | format_currency('EUR') }}</p>
+                                    <p class="event-dashboard__paragraph">Total payed: {{ totalPaid.paidTotal | format_currency('EUR') }} </p>
+                                    <p class="event-dashboard__paragraph">To be payed: {{ (totalCost.totalCost - totalPaid.paidTotal) | format_currency('EUR') }} </p>
+                                </div>
+                                <a class="event-dashboard__link" href="{{ path('app_user_expense_index', {'eventSlug': eventList.eventSlug})}}">my budget &rarr;</a>
+                            </div>
+                        </div>
+
+                        <div class="event-dashboard__square">
+                            <h3 class="event-dashboard__h3">Check-list</h3>
+                            {% for uncheck in unchecked %}
+                            <div class="event-dashboard__list">
+                                <div>
+                                    <p class="event-dashboard__paragraph">{{ uncheck.description }}</p>
+                                </div>
+                            </div>
+                            {% else %}
+                            <p class="event-dashboard__paragraph">all tasks completed</p>
 							{% endfor %}
-						
-						<p class="wedding-go-to">
-							<a class="wedding-go-to-link" href="{{ path('app_user_checklist_index', {id: eventList.id})}}">voir mes taches &rarr;</a>
-						</p>
-					</div>
-				</div>
-				<div class="dash-item dash-item5">
-					<h3 class="dashboard-tertiary-smaller">Mes rendez-vous</h3>
-					<div class="item-list-check">
-						<div class="item-list-single">
-							<p class="dash-event">8am - Workout</p>
-							<div class="action-buttons action-btns2">
-								<p>
-									<a class="rdv" href="#">edit</a>
-								</p>
-								<p>
-									<a class="rdv" href="#">delete</a>
-								</p>
-							</div>
-						</div>
 
-					</div>
-					<div class="item-list-check">
-						<div class="item-list-single">
-							<p class="dash-event">10am - GP</p>
-							<div class="action-buttons action-btns2">
-								<p>
-									<a class="rdv" href="#">edit</a>
-								</p>
-								<p>
-									<a class="rdv" href="#">delete</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<p class="wedding-go-to">
-						<a class="wedding-go-to-link" href="#">voir mon to dos list &rarr;</a>
-					</p>
-				</div>
-			</div>
-
-		</div>
-	</div>
+                            <a class="event-dashboard__link" href="{{ path('app_user_checklist_index', {'eventSlug': eventList.eventSlug})}}">all my tasks &rarr;</a>
+                        </div>
+                    </div>
+                    
+                    <div class="event-dashboard__square">
+                        <h3 class="event-dashboard__h3">My RDVs</h3>
+                        <div class="event-dashboard__list">
+                            <div class="event-dashboard__rdv">
+                                <p class="event-dashboard__paragraph">Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Odit
+                                    enim quas et, laborum nemo sint voluptates cupiditate. Quisquam, veritatis tempore?
+                                </p>
+                                <div class="items-container__action-buttons">
+                                    <p class="items-container__p"><a class="items-container__a items-container__a--1" href="#">edit</a>
+                                    <p class="items-container__p"><a class="items-container__a items-container__a--2" href="#">delete</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="event-dashboard__link" href="javascript:void(0)">rdvs for the day &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 {% endblock %}

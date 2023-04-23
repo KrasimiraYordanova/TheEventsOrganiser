@@ -30,7 +30,7 @@
 	    			        	</div>
 	    			        </div>
 	    			        <div class="items-container__action-buttons">
-	    			        	<p class="items-container__p"><a href="{{ path('app_user_expense_edit', {'id': eventList.id, 'expense_id': expense.id}) }}"><i class="icon fa-solid fa-pen"></i></a></p>
+	    			        	<p class="items-container__p"><a href="{{ path('app_user_expense_edit', {'eventSlug': eventList.eventSlug, 'expense_id': expense.id}) }}"><i class="icon fa-solid fa-pen"></i></a></p>
 	    			        	<p class="items-container__p">{{ include('user_expense/_delete_form.html.twig') }}</p>
 	    			        </div>
                         </div>
@@ -40,7 +40,7 @@
 	    		{% endfor %}
 	    		
 	    	</div>
-	    	<a href="{{ path('app_user_expense_new', {'id': eventList.id}) }}" class="btn btn-item">Add a to-do</a>
+	    	<a href="{{ path('app_user_expense_new', {'eventSlug': eventList.eventSlug}) }}" class="btn btn-item">Add an expense</a>
 	    </div>
 	</section>
 

@@ -1,35 +1,39 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}Edit EventList{% endblock %}
+{% block title %}Edit Event{% endblock %}
 
 {% block body %}
 
-	<div class="dashboard-center-container">
-		<h3 class="dashboard-tertiary dashboard-tertiary-center">Editez votre événement {{ eventType.name }}</h3>
-		<div class="bkgrnd-block-registerform">
-			{# <div class="icon-close">
-				<i class="close fa-solid fa-xmark"></i>
-			</div> #}
-			{{ form_start(form, {'attr': {'class': 'register-form'}}) }}
-			{{ form_row(form.eventName, {'attr': {'class': 'evname'}}) }}
-			{{ form_row(form.eventDate, {'attr': {'class': 'evdate'}}) }}
-			{{ form_row(form.eventBudget, {'attr': {'class': 'evbudget'}}) }}
-			{{ form_row(form.eventLocation, {'attr': {'class': 'evlocation'}}) }}
+	<section class="form-container">
+        <div class="form-container__square">
+            <h3 class="dashboard-tertiary form-container__title">Edit your event</h3>
+            <div class="form__bkgrnd-block">
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                    <div class="form__items">
+					
+					    {{ form_label(form.eventName, null, {'label_attr': {'class': 'form__label'}}) }}
+			            {{ form_widget(form.eventName, {'attr': {'class': 'form__input form__input--text'}}) }}
+						{{ form_label(form.eventDate, null, {'label_attr': {'class': 'form__label'}}) }}
+			            {{ form_widget(form.eventDate, {'attr': {'class': 'form__input form__input--text'}}) }}
+						{{ form_label(form.eventBudget, null, {'label_attr': {'class': 'form__label'}}) }}
+			            {{ form_widget(form.eventBudget, {'attr': {'class': 'form__input form__input--text'}}) }}
+						{{ form_label(form.eventLocation, null, {'label_attr': {'class': 'form__label'}}) }}
+			            {{ form_widget(form.eventLocation, {'attr': {'class': 'form__input form__input--text'}}) }}
+			            {{ form_widget(form.image, {'attr': {'class': 'form__input form__input--text'}}) }}
 			
+			            {% for value in eventValues %}
+			            <label for="eventProperty" class="form__label">{{ value.property.name}}</label>
+                        <input type="{{ value.property.dataType}}" name="property_{{ value.id }}" value="{{ value.value }}" id="eventProperty" class="form__input form__input--text" required>
+			            {% endfor %}
 
-			{% for value in eventValues %}
-			    <label for="eventProperty">{{ value.property.name}}</label>
-                <input type="text" name="property_{{ value.id }}" value="{{ value.value }}" id="eventProperty" class="eventProperty" required>
-			{% endfor %}
-			
-            {{ form_row(form.image) }}
-			<button class="btn">{{ button_label|default('Save') }}</button>
-			{{ form_end(form) }}
+					</div>
+					<div class="form__actions">
+                        <button class="form__button-i btn btn__form">{{ button_label|default('Edit') }}</button>
+                    </div>
+				{{ form_end(form) }}
+		    </div>
 		</div>
-	</div>
-	{# <a href="{{ path('app_user_eventlist_index') }}">back to list</a> #}
+	</section>
+
 {% endblock %}
 
-    {# {{ include('user_eventlist/_form.html.twig', {'button_label': 'Update'}) }}
-    <a href="{{ path('app_user_eventlist_index') }}">back to list</a>
-    {{ include('user_eventlist/_delete_form.html.twig') }} #}

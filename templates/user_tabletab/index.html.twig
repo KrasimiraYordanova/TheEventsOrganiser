@@ -1,46 +1,51 @@
 {% extends 'userbase.html.twig' %}
 
-{% block title %}Tabletab index
-{% endblock %}
+{% block title %} Tables {% endblock %}
 
 {% block body %}
 
-	<div class="dashboard-center-container">
-		<div class="item-border">
-			<h2 class="item-title">Table</h2>
-			<div class="item-summery">
-				<h3 class="item-count">Nombre de tables:
-					{{tableCount['numberTables']}}
-				</h3>
-			</div>
-		</div>
+    <section class="dashboard-container"> 
+        <div class="items-container">
+            <div class="items-container__item-space">
+                <h2 class="items-container__item-title">Table</h2>
+                <div class="items-container__items">
+                    <h3 class="items-container__item">Tables total: {{tableCount['numberTables']}}</h3>
+                </div>
+            </div>
 
-		<div class="bkgrnd-block">
-			<div class="table-list">
-				{% for tabletab in tabletabs %}
-					<div class="item-list">
-						<div class="item-list-single">
-							<p class="item-parag underline">{{ tabletab.name}}</p>
-							<div class="action-buttons marg">
-								<p>
-									<a href="{{ path('app_user_tabletab_edit', {'id': eventList.id, 'tabletab_id': tabletab.id}) }}">
-										<i class="icon fa-solid fa-pen"></i>
-									</a>
-								</p>
-								<p>{{ include('user_tabletab/_delete_form.html.twig') }}</p>
-							</div>
-						</div>
-						{% for guest in tabletab.guests %}
-						<p class="item-parag table-item-parag">{{ guest.name }}</p>
-						{% else %}
-					    <p>aucun invité ajouté</p>
-				        {% endfor %}
-					</div>
-				{% else %}
-					<p>aucun table ajoutée</p>
-				{% endfor %}
-			</div>
-		</div>
-		<a href="{{ path('app_user_tabletab_new', {'id': eventList.id}) }}" class="btn btn-item">ajouter table</a>
-	</div>
+            <div class="bkgrnd-block ">
+
+                <div class="items-container__grid">
+                    
+					{% for tabletab in tabletabs %}
+                        <div class="items-container__bkgrnd-block items-container__bkgrnd-block--noMargin">
+                            <div class="items-container__additionl3">
+                                <div class="items-container__item-info">
+                                        <p class="items-container__additional2 items-container__bold">{{ tabletab.name }}</p>
+                                        <div class="items-container__action-buttons">
+                                            <p class="items-container__p">
+					    	    			    <a class="items-container__a items-container__a--1" href="{{ path('app_user_tabletab_edit', {'eventSlug': eventList.eventSlug, 'tabletab_id': tabletab.id}) }}"><i class="icon fa-solid fa-pen"></i></a>
+					    	    		    </p>
+                                            <p class="items-container__p">{{ include('user_tabletab/_delete_form.html.twig') }}</p>
+                                        </div>
+                                </div>
+					    	    	{% for guest in tabletab.guests %}
+                                        <div class="items-container__additional">
+                                            <p class="items-container__item-parag">{{ guest.name }}</p>
+                                        </div>
+					    	    	    {% else %}
+					    	    	    <p>no guest added to table {{ tabletab.name }}</p>
+					    	    	{% endfor %}
+                            </div>
+                        </div>
+					{% else %}
+					    <p>no table added</p>
+					{% endfor %}
+                </div>
+
+            </div>
+			<a href="{{ path('app_user_tabletab_new', {'eventSlug': eventList.eventSlug}) }}" class="btn btn-item">Add a table</a>
+        </div>
+    </section>
+
 {% endblock %}

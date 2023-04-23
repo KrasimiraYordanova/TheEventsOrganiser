@@ -82,7 +82,7 @@ class UserEventlistController extends AbstractController
                 $eventPropertyRepo->save($eventProp,true);
             }
 
-            return $this->redirectToRoute('app_user_eventdashboard', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_eventdashboard', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
         
         return $this->renderForm('user_eventlist/new.html.twig', [
