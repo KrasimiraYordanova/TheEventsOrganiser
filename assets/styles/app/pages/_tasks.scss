@@ -47,6 +47,11 @@
         gap: 2rem;
     }
 
+    &__additional {
+        display: flex;
+        gap: 2rem;
+    }
+
     &__event-image {
         width: 60%;
     }

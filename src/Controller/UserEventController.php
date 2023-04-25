@@ -149,7 +149,7 @@ class UserEventController extends AbstractController
             $checklist->setEventList($eventList);
             $checklistRepository->save($checklist, true);
 
-            return $this->redirectToRoute('app_user_checklist_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_checklist_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_checklist/new.html.twig', [
@@ -177,7 +177,7 @@ class UserEventController extends AbstractController
             $checklist->setEventList($eventList);
             $checklistRepository->save($checklist, true);
 
-            return $this->redirectToRoute('app_user_checklist_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_checklist_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_checklist/new.html.twig', [
@@ -202,7 +202,7 @@ class UserEventController extends AbstractController
             $checklistRepository->remove($checklist, true);
         }
 
-        return $this->redirectToRoute('app_user_checklist_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_checklist_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
     }
 
 
@@ -243,7 +243,7 @@ class UserEventController extends AbstractController
             $expense->setEventList($eventList);
             $expenseRepository->save($expense, true);
 
-            return $this->redirectToRoute('app_user_expense_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_expense_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_expense/new.html.twig', [
@@ -271,7 +271,7 @@ class UserEventController extends AbstractController
             $expense->setEventList($eventList);
             $expenseRepository->save($expense, true);
 
-            return $this->redirectToRoute('app_user_expense_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_expense_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_expense/new.html.twig', [
@@ -295,7 +295,7 @@ class UserEventController extends AbstractController
             $expenseRepository->remove($expense, true);
         }
 
-        return $this->redirectToRoute('app_user_expense_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_expense_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
     }
 
 
@@ -354,7 +354,7 @@ class UserEventController extends AbstractController
             $guest->setToken($token);
             $guestRepository->save($guest, true);
 
-            return $this->redirectToRoute('app_user_guest_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_guest_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_guest/new.html.twig', [
@@ -382,7 +382,7 @@ class UserEventController extends AbstractController
             $guest->setEventList($eventList);
             $guestRepository->save($guest, true);
 
-            return $this->redirectToRoute('app_user_guest_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_guest_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_guest/new.html.twig', [
@@ -423,7 +423,7 @@ class UserEventController extends AbstractController
             $guestRepository->remove($guest, true);
         }
 
-        return $this->redirectToRoute('app_user_guest_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_guest_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
     }
     
     
@@ -463,7 +463,7 @@ class UserEventController extends AbstractController
             $tabletab->setEventList($eventList);
             $tabletabRepository->save($tabletab, true);
 
-            return $this->redirectToRoute('app_user_tabletab_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_tabletab_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_tabletab/new.html.twig', [
@@ -490,7 +490,7 @@ class UserEventController extends AbstractController
             $tabletab->setEventList($eventList);
             $tabletabRepository->save($tabletab, true);
 
-            return $this->redirectToRoute('app_user_tabletab_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_tabletab_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_tabletab/new.html.twig', [
@@ -516,7 +516,7 @@ class UserEventController extends AbstractController
             $tabletabRepository->remove($tabletab, true);
         }
 
-        return $this->redirectToRoute('app_user_tabletab_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_tabletab_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
     }
 
     // WEBSITE
@@ -602,7 +602,7 @@ class UserEventController extends AbstractController
             $picture->setEventList($eventList);
             $pictureRepository->save($picture, true);
 
-            return $this->redirectToRoute('app_user_picture_index', ['id' => $eventList->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_picture_index', ['eventSlug' => $eventList->getEventSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_picture/new.html.twig', [

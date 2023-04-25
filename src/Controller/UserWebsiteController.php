@@ -25,7 +25,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class UserWebsiteController extends AbstractController
 {
 
-    #[Route('/website/{id}/{token}', defaults: ["token" => null], name: 'app_user_website_index', methods: ['GET', 'POST'])]
+    #[Route('/website/{eventSlug}/{token}', defaults: ["token" => null], name: 'app_user_website_index', methods: ['GET', 'POST'])]
     public function website(EventList $eventList, string $token = null, Request $request, GuestRepository $guestRepository, EventListRepository $eventListRepo): Response
     {
         $user = $this->getUser();

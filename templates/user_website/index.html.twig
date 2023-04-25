@@ -24,11 +24,10 @@
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <div class="invitation__select">
-                        <p>Marquez votre présence</p>
+                        <p>{{ form_label(form.rdsvp, null, {'label_attr': {'class': 'form__label'}}) }}</p>
                         <div class="invitation__radio">
                             <div>
-                                {{ form_widget(form.rdsvp) }}
-                                {{ form_label(form.rdsvp, null, {'label_attr': {'class': 'form__label'}}) }}
+                            {{ form_widget(form.rdsvp) }}
                             </div>
                         </div>
                     </div>
