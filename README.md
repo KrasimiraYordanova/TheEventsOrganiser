@@ -1,8 +1,12 @@
 # Events Organiser Project
 
+## Programming languages used
+
+
+
 ## Summery of the project
 
-2.1 Project presentation
+ - Project presentation
 
 Since my teenage years I have been very organized in everything I do and this inspired me to create The
 Events Organiser. An app for those who, like myself, like being organized and want to plan their own event. 
@@ -16,7 +20,7 @@ there is a tracker. A toDo list and many more
 The functionalities I will apply in the future are calander so you can take an appointment in a particular date and themes. 
 I would like to use to be able to change its theme color.
 
-2.2 Objective
+ - Objective
 
 The objective of the project is to allow to people to plan with ease their own event(s). Whether it be
 Birthday, Anniversary, Hen Party, Baby-shower and many more. And it will be the Event Planner that
@@ -24,7 +28,7 @@ will help them stay well organized and on track. They will be able to manage and
 place whenever they are without worrying they might forget something or a sticky note might be lost
 somewhere.
 
-2.3 Target
+ - Target
 
 The main targets of the app are all people who wants to organize their own event.
 
