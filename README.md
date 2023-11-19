@@ -27,3 +27,15 @@ somewhere.
 2.3 Target
 
 The main targets of the app are all people who wants to organize their own event.
+
+![Screenshot 2023-04-23 140948](https://github.com/KrasimiraYordanova/TheEventsOrganiser/assets/118458989/ab838c42-ff05-4d92-a6a7-02487f8dbe11)
+![Screenshot 2023-04-23 141015](https://github.com/KrasimiraYordanova/TheEventsOrganiser/assets/118458989/baed587b-4954-45bd-9400-45c5c6775798)
+![Screenshot 2023-04-23 140034](https://github.com/KrasimiraYordanova/TheEventsOrganiser/assets/118458989/1820e11a-627d-44c4-ab89-c29daded1480)
+![Screenshot 2023-04-23 140214](https://github.com/KrasimiraYordanova/TheEventsOrganiser/assets/118458989/e2a57804-5368-4e9a-8de3-66c55ba4b44d)
+![Screenshot 2023-04-23 140245](https://github.com/KrasimiraYordanova/TheEventsOrganiser/assets/118458989/54e9587a-396b-454c-96cc-a1ebfaff94de)
+![Screenshot 2023-04-23 140529](https://github.com/KrasimiraYordanova/TheEventsOrganiser/assets/118458989/777c55ef-cc4a-4a6f-8d33-ca5c8a517159)
+![Screenshot 2023-04-23 140618](https://github.com/KrasimiraYordanova/TheEventsOrganiser/assets/118458989/ff370f25-801e-4847-b9d9-63eddc17392b)
+![Screenshot 2023-04-23 140705](https://github.com/KrasimiraYordanova/TheEventsOrganiser/assets/118458989/45a66db7-07b3-49cb-aa06-a59b38895320)
+![Screenshot 2023-04-23 140745](https://github.com/KrasimiraYordanova/TheEventsOrganiser/assets/118458989/9186e422-1e4c-4461-8807-48364463d8b0)
+![Screenshot 2023-04-23 140912](https://github.com/KrasimiraYordanova/TheEventsOrganiser/assets/118458989/c0801949-03a1-494b-a37c-02fdfdaf097a)
+![Screenshot 2023-04-23 140948](https://github.com/KrasimiraYordanova/TheEventsOrganiser/assets/118458989/16816ba4-9da0-414b-9af2-e258a9af2c9b)
