@@ -1,7 +1,14 @@
 # Events Organiser Project
 
 ## Programming languages used
-
+ - PHP
+ - Symfony framework
+ - HTML
+ - CSS
+ - SCSS
+ - BEM notation
+ - WebPack
+ - Composer
 
 
 ## Summery of the project
